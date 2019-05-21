@@ -1,0 +1,299 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+        <div class="py-4 px-3 px-md-4" >
+
+          <div class="row">
+              <div class="col-md-6 col-xl-5 mb-3 mb-md-4 mb-xl-5">
+                  <section class="card">
+                    <header class="card-header p-2">
+                      <h2 class="panel__title">Current Issued </h2>
+                    </header>
+                    <div class="card-body p-2">
+                      <canvas id="chart-area" width="318" height="158" class="chartjs-render-monitor" style="display: block; width: 318px; height: 158px;"></canvas>
+                    </div>
+                  </section>
+                </div>
+
+            <div class="col-md-6 col-xl-5 mb-3 mb-md-4 mb-xl-5">
+                <section class="card">
+                  <header class="card-header p-2">
+                    <h2 class="panel__title">Current Newspaper</h2>
+                  </header>
+                  <div class="card-body p-2">
+                    <canvas id="chart-area2" width="318" height="158" class="chartjs-render-monitor" style="display: block; width: 318px; height: 158px;"></canvas>
+                  </div>
+                </section>
+              </div>
+
+            <!--script>
+
+              var config = {
+                type: 'doughnut',//doughnut , pie
+                data: {
+                  datasets: [{
+                    data: [
+                      100,
+                      200,
+                      20,
+                    ],
+                    backgroundColor: [
+                      window.chartColors.red,
+                      window.chartColors.orange,
+                      window.chartColors.yellow,
+                    ],
+                    label: 'Dataset 1'
+                  }],
+                  labels: [
+                    'Red',
+                    'Orange',
+                    'Yellow',
+                  ]
+                },
+               // cutoutPercentage:40,
+                options: {
+                  responsive: true
+                }
+              };
+
+              window.onload = function() {
+                let ctx1 = document.getElementById('chart-area').getContext('2d');
+                window.myPie1 = new Chart(ctx1, config);
+                let ctx2 = document.getElementById('chart-area2').getContext('2d');
+                window.myPie2 = new Chart(ctx2, config);
+              };
+
+
+            </script-->
+
+
+          </div>
+
+
+
+          <div class="row align-items-center mb-3 mb-md-5">
+              <div class="col-md mb-2 mb-md-0">
+                <h1 class="h3 mb-0">This Session Report</h1>
+              </div>
+
+            </div>
+
+          <div class="row">
+              <div class="col-md-6 col-xl-4 mb-3 mb-xl-5">
+                <!-- Card -->
+                <div class="card flex-row align-items-center p-3 p-md-4">
+                  <img class="d-flex icon-img icon-img-xl mr-2 mr-md-3" src="{% static '/preview/nova-v1-0/assets/svg/crypto/bitcoin-cash.svg' %}" alt="Image description">
+                  <div>
+                    <h4 class="lh-1 mb-1">452</h4>
+                    <small>Total Book Issues</small>
+                  </div>
+                  <div class="ml-auto text-muted">
+                    ≈ 0.00 USD
+                  </div>
+                </div>
+                <!-- End Card -->
+              </div>
+              <div class="col-md-6 col-xl-4 mb-3 mb-xl-5">
+                <!-- Card -->
+                <div class="card flex-row align-items-center p-3 p-md-4">
+                  <img class="d-flex icon-img icon-img-xl mr-2 mr-md-3" src="{% static '/preview/nova-v1-0/assets/svg/crypto/eos.svg' %}" alt="Image description">
+                  <div>
+                    <h4 class="lh-1 mb-1">374</h4>
+                    <small>Total Returns</small>
+                  </div>
+                  <div class="ml-auto text-muted">
+                    ≈ 0.00 USD
+                  </div>
+                </div>
+                <!-- End Card -->
+              </div>
+              <div class="col-md-6 col-xl-4 mb-3 mb-xl-5">
+                <!-- Card -->
+                <div class="card flex-row align-items-center p-3 p-md-4">
+                  <img class="d-flex icon-img icon-img-xl mr-2 mr-md-3" src=" {% static 'preview/nova-v1-0/assets/svg/crypto/ripple.svg' %}" alt="Image description">
+                  <div>
+                    <h4 class="lh-1 mb-1">456/600</h4>
+                    <small>Revenue</small>
+                  </div>
+                  <div class="ml-auto text-muted">
+                    ≈ 0.00 USD
+                  </div>
+                </div>
+                <!-- End Card -->
+              </div>
+            </div>
+
+
+
+
+          <div class="row" ></div>
+          <div class="row">
+            <div class="col">
+      <div class="card mb-3 mb-md-4">
+              <div class="card-header">
+                <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">Area Chart #1</h5>
+              </div>
+
+              <div class="card-body">
+              <canvas id="issueReturn" style="display: block; width: 640px; height: 319px;" width="640" height="319" class="chartjs-render-monitor"></canvas>
+              </div>
+            </div>
+  </div>
+
+
+  <script>
+
+
+  var configCurrentIssued = {
+                type: 'pie',//doughnut , pie
+
+
+                data: {
+                  datasets: [{
+                    data: [
+                      100,
+                      200,
+                    ],
+                    backgroundColor: [
+                      window.chartColors.red,
+                      window.chartColors.green,
+                    ],
+                    label: 'Dataset 1'
+                  }],
+
+                  labels: [
+                    'OverDue',
+                    'Total Issued',
+                  ]
+                },
+               // cutoutPercentage:40,
+                options: {
+                  responsive: true
+                }
+              };
+
+              var configRevenue = {
+                type: 'pie',//doughnut , pie
+                data: {
+                  datasets: [{
+                    data: [
+                      600,
+                      456,
+                    ],
+                    backgroundColor: [
+                      window.chartColors.red,
+                      window.chartColors.green,
+                    ],
+                    label: 'Dataset 1'
+                  }],
+
+                  labels: [
+                    'Pending',
+                    'Collected',
+                  ]
+                    ,
+
+
+                },
+               // cutoutPercentage:40,
+                options: {
+                  responsive: true
+                }
+              };
+
+
+
+      var lineChartData = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+          label: 'My First dataset',
+          borderColor: window.chartColors.red,
+          backgroundColor: window.chartColors.red,
+          fill: false,
+          data: [
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor()
+          ],
+          yAxisID: 'y-axis-1',
+        }, {
+          label: 'My Second dataset',
+          borderColor: window.chartColors.blue,
+          backgroundColor: window.chartColors.blue,
+          fill: false,
+          data: [
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor(),
+            randomScalingFactor()
+          ],
+          yAxisID: 'y-axis-2'
+        }]
+      };
+
+      window.onload = function() {
+
+
+
+        let ctx1 = document.getElementById('chart-area').getContext('2d');
+                window.myPie1 = new Chart(ctx1, configCurrentIssued);
+                let ctx2 = document.getElementById('chart-area2').getContext('2d');
+                window.myPie2 = new Chart(ctx2, configRevenue);
+
+
+
+
+        let ctx3 = document.getElementById('issueReturn').getContext('2d');
+        //window.myLine =
+   Chart.Line(ctx3, {
+          data: lineChartData,
+          options: {
+            responsive: true,
+            hoverMode: 'base.html',
+            stacked: false,
+            title: {
+              display: true,
+              text: 'Chart.js Line Chart - Multi Axis'
+            },
+            scales: {
+              yAxes: [{
+                type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                display: true,
+                position: 'left',
+                id: 'y-axis-1',
+              }, {
+                type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                display: true,
+                position: 'right',
+                id: 'y-axis-2',
+
+                // grid line settings
+                gridLines: {
+                  drawOnChartArea: false, // only want the grid lines for one axis to show up
+                },
+              }],
+            }
+          }
+        });
+      };
+
+  </script>
+          </div>
+
+
+
+
+
+        </div>
+
+{% endblock %}

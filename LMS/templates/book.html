@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+        <div class="py-4 px-3 px-md-4">
+
+          <div class="card mb-3 mb-md-4">
+            <div class="card-header">
+              <h5 class="font-weight-semi-bold mb-0">Table Filters</h5>
+            </div>
+
+            <div class="card-body pt-0">
+
+
+              <div class="row">
+
+
+                  <div class="col-xl mb-3">
+
+
+                    <div class="d-flex align-items-center flex-wrap pt-1">
+                      <div class="form-check position-relative mb-2 mb-md-0 mr-4">
+                        <input type="checkbox" class="form-check-input d-none" id="overconfident">
+                        <label class="checkbox checkbox-xxs form-check-label ml-1" for="overconfident" data-icon="">Overconfident</label>
+                      </div>
+
+                      <div class="form-check position-relative mb-2 mb-md-0 mr-4">
+                        <input type="checkbox" class="form-check-input d-none" id="disillusioned">
+                        <label class="checkbox checkbox-xxs form-check-label ml-1" for="disillusioned" data-icon="">Disillusioned</label>
+                      </div>
+
+                      <div class="form-check position-relative mb-2 mb-md-0">
+                        <input type="checkbox" class="form-check-input d-none" id="receptive">
+                        <label class="checkbox checkbox-xxs form-check-label ml-1" for="receptive" data-icon="">Receptive</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+  <div class="table-responsive-xl">
+
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Book ID</th>
+          <th>ISBN</th>
+          <th>Status</th>
+          <th>Available</th>
+          <th>Title</th>
+          <th>Author</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>12569</td>
+          <td>569874123</td>
+          <td class="py-3">
+            <span class="badge badge-pill badge-success">Active</span>
+          </td>
+          <td class="py-3">
+            <span class="badge badge-pill badge-success">Available</span>
+          </td>
+          <td>Advance Enginering Mathmatics</td>
+          <td>RK Jain,SRK Linger</td>
+        </tr>
+        <tr>
+          <td>12569</td>
+          <td>569874123</td>
+          <td class="py-3">
+            <span class="badge badge-pill badge-danger">Deactive</span>
+          </td>
+          <td class="py-3">
+            <span class="badge badge-pill badge-danger">Not Available</span>
+          </td>
+          <td>Advance Enginering Mathmatics</td>
+          <td>RK Jain,SRK Linger</td>
+        </tr>
+        <tr>
+          <td>July</td>
+          <td>Dooley</td>
+          <td>july@example.com</td>
+          <td>
+            <div class="form-group">
+              <select style="width:auto;height:calc(2.25rem + 3px)" class="form-control" >
+                <option>Delete</option>
+                <option>Return</option>
+                <option>ReIssue</option>
+              </select>
+            </div>
+          </td>
+
+      </tbody>
+    </table>
+
+
+              </div>
+            </div>
+
+
+          </div>
+
+
+
+
+        </div>
+
+{% endblock %}
