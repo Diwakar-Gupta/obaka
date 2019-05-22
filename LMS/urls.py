@@ -8,8 +8,11 @@ urlpatterns = [
     path('books/',views.books,name='books'),
     path('members/',views.members,name='members'),
 
-    path('issueReturn',views.issueReturn,name='issueReturn'),
     path('notifiedDelayed/',views.notifiedDelayed,name='notifiedDelayed'),
     path('report/',views.report,name='report'),
+
+    path('issueReturn',views.issueReturn,name='issueReturn'),
+    path('issueReturn/book/<int:pk>',views.issueReturnBook,name='issueReturn'),
+    path('issueReturn/member/<int:pk>',views.issueReturnMember,name='issueReturn'),
 
 ]

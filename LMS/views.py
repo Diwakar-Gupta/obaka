@@ -6,7 +6,10 @@ from django.contrib.auth.views import redirect_to_login
 
 
 def index(request):
-    print(auth.get_user(request).is_staff)
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
+
     return render(request, 'index.html')
 
 
@@ -26,6 +29,16 @@ def notifiedDelayed(request):
 
 
 def issueReturn(request):
+    print(auth.get_user(request).is_staff)
+    return render(request, 'issueReturn.html')
+
+
+def issueReturnBook(request,pk):
+    print(auth.get_user(request).is_staff)
+    return render(request, 'issueReturn.html')
+
+
+def issueReturnMember(request,pk):
     print(auth.get_user(request).is_staff)
     return render(request, 'issueReturn.html')
 
