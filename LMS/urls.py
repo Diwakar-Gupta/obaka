@@ -12,7 +12,8 @@ urlpatterns = [
     path('report/',views.report,name='report'),
 
     path('issueReturn',views.issueReturn,name='issueReturn'),
-    path('issueReturn/book/<int:pk>',views.issueReturnBook,name='issueReturn'),
-    path('issueReturn/member/<int:pk>',views.issueReturnMember,name='issueReturn'),
+    path('issueReturn/book/<int:bookID>',views.issueReturnBook,name='issueReturn'),
+
+    path('issueReturn/member/<int:memberID>',views.issueReturnMember,name='issueReturn'),
 
 ]
