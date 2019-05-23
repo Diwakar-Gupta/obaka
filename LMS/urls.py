@@ -5,7 +5,9 @@ from LMS import views
 name='LMS'
 urlpatterns = [
     path('',views.index),
+
     path('books/',views.books,name='books'),
+    path('books/add',views.booksAdd,name='addBook'),
     path('members/',views.members,name='members'),
 
     path('notifiedDelayed/',views.notifiedDelayed,name='notifiedDelayed'),

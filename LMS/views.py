@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.views import redirect_to_login
-
+from . import handler
 # Create your views here.
 
 
@@ -16,6 +16,16 @@ def index(request):
 def books(request):
     print(auth.get_user(request).is_staff)
     return render(request, 'book.html')
+
+
+def booksAdd(request):
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
+    context={}
+    if request.method == 'POST':
+        context = handler.addBook(request.POST)
+    return render(request, 'addBook.html',context=context)
 
 
 def members(request):
