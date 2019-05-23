@@ -14,7 +14,9 @@ def index(request):
 
 
 def books(request):
-    print(auth.get_user(request).is_staff)
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
     return render(request, 'book.html')
 
 
@@ -29,32 +31,44 @@ def booksAdd(request):
 
 
 def members(request):
-    print(auth.get_user(request).is_staff)
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
     return render(request, 'member.html')
 
 
 def notifiedDelayed(request):
-    print(auth.get_user(request).is_staff)
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
     return render(request, 'notifiedDealyed.html')
 
 
 def issueReturn(request):
-    print(auth.get_user(request).is_staff)
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
     return render(request, 'issueReturn.html')
 
 
 def issueReturnBook(request,pk):
-    print(auth.get_user(request).is_staff)
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
     return render(request, 'issueReturn.html')
 
 
 def issueReturnMember(request,pk):
-    print(auth.get_user(request).is_staff)
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
     return render(request, 'issueReturn.html')
 
 
 def report(request):
-    print(auth.get_user(request).is_staff)
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
     return render(request, 'report.html')
 
 

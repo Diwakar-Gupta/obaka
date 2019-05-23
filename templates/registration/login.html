@@ -1,37 +1,102 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en-us"><head>
+<title>Log in | Django site admin</title>
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/base.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'admin/css/login.css' %}">
+
+
+
+
+
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/css/responsive.css' %}">
+    
+
+<meta name="robots" content="NONE,NOARCHIVE">
+</head>
+
+
+<body class=" login" data-admin-utc-offset="0">
+
+<!-- Container -->
+<div id="container">
+
+    
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+        
+<h1 id="site-name"><a href="http://localhost:8000/admin/">Login</a></h1>
+
+        </div>
+        
+        
+    </div>
+    <!-- END Header -->
+    
+    
+
+    
+        
+    
+
+    <!-- Content -->
+    <div id="content" class="colM">
+        
+        
+        
+
 
 
 {% if form.errors %}
-  <p>Your username and password didn't match. Please try again.</p>
+<p class="errornote">
+    Please enter the correct username and password for a staff account. Note that both fields may be case-sensitive.
 {% endif %}
+
 
 {% if next %}
   {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
+    <p class="errornote">Your account doesn't have access to this page. To proceed,
     please login with an account that has access.</p>
-  {% else %}
-    <p>Please login to see this page.</p>
   {% endif %}
 {% endif %}
 
-<form method="post" action="{% url 'login' %}">
+
+<div id="content-main">
+
+
+
+<form action="{% url 'login' %}" method="post" id="login-form">
 {% csrf_token %}
-<table>
-
-<tr>
-  <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
-</tr>
-
-<tr>
-  <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
-</tr>
-</table>
-
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
+  <div class="form-row">
+    
+    {{ form.username.label_tag }} {{ form.username }}
+  </div>
+  <div class="form-row">
+    
+    {{ form.password.label_tag }} {{ form.password }}
+    <input type="hidden" name="next" value="/admin/">
+  </div>
+  
+  
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Log in">
+  </div>
 </form>
 
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+</div>
 
+        
+        <br class="clear">
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+
+
+</body></html>
