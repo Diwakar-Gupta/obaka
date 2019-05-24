@@ -44,25 +44,32 @@ def notifiedDelayed(request):
     return render(request, 'notifiedDealyed.html')
 
 
-def issueReturn(request):
+def circulation(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-    return render(request, 'issueReturn.html')
+    return render(request, 'circulation.html')
 
 
-def issueReturnBook(request,pk):
+def checkout(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-    return render(request, 'issueReturn.html')
+    return render(request, 'checkout.html')
 
 
-def issueReturnMember(request,pk):
+def checkin(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-    return render(request, 'issueReturn.html')
+    return render(request, 'checkin.html')
+
+
+def renew(request):
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
+    return render(request, 'renew.html')
 
 
 def report(request):

@@ -687,7 +687,7 @@
               </span>
               <span class="side-nav-fadeout-on-closed media-body">Member</span>
               <span class="side-nav-control-icon d-flex">
-                <i class="nova-angle-right side-nav-fadeout-on-closed"></i>
+                <i class="nova-angle-right  side-nav-fadeout-on-closed"></i>
               </span>
               <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
             </a>
@@ -722,7 +722,7 @@
                 <a class="side-nav-menu-link" href="  #">Circulation Settings</a>
               </li>
               <li class="side-nav-menu-item">
-                <a class="side-nav-menu-link" href="{% url 'issueReturn' %}">Issue & Return</a>
+                <a class="side-nav-menu-link" href="{% url 'circulation' %}">Issue & Return</a>
               </li>
             </ul>
           </li>
@@ -833,7 +833,14 @@
       </aside>
       <!-- End Sidebar Nav -->
       <div class="content">
-
+<nav class="pl-3 pt-3 d-none d-md-block" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="{% url 'circulation' %}">Circulation</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">Widgets</li>
+            </ol>
+          </nav>
           {% block content %}
             {% endblock %}
 
@@ -929,16 +936,6 @@
         // initialization of show on type module
         $.HSCore.components.HSSelect2.init('.js-custom-select');
         // initialization of charts
-        $.HSCore.components.HSChartistArea.init('.js-area-chart');
-        $.HSCore.components.HSChartistBar.init('.js-bar-chart');
-        $.HSCore.components.HSChartistDonut.init('.js-donut-chart');
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-          $(e.currentTarget.hash).find('.js-area-chart').each(function(el, tab) {
-            tab.__chartist__.update();
-          });
-        });
-        // initialization of datatables
-        $.HSCore.components.HSDatatables.init('.js-datatable');
       });
     </script>
   </body>

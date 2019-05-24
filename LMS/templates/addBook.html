@@ -10,82 +10,57 @@
     {% endif %}
 
             <div class="py-4 px-3 px-md-4">
+<form method="post" action="{% url 'addBook'  %}">
+{% csrf_token %}
 
-
-                <div class="card">
-
-                    <div class="card-header p-3">
-                        <h2>Add Book</h2>
-                    </div>
-                    <form method="post" action="{% url 'addBook' %}">
-                       {% csrf_token %}
-                        <div class="card-body">
-
-                            <div class="form-group row">
-                                <label for="isbn" class="col-sm-2 col-form-label">ISBN</label>
-                                <div class="col-sm-10">
-                                    <input min=1000000000 max=9999999999999 type="number" class="form-control" name="isbn"
-                                        placeholder="ISBN">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="author" class="col-sm-2 col-form-label">Author</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="author"
-                                        placeholder="Author">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="title" class="col-sm-2 col-form-label">Title</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="title"
-                                        placeholder="Title">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="category" class="col-sm-2 col-form-label">Category</label>
-                                <div class="col-sm-10">
-                                    <select type="text" class="form-control" name="category"
-                                        placeholder="Category">
-                                        <option></option>
-                                        <option></option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="publisher" class="col-sm-2 col-form-label">Publisher</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="publisher"
-                                        placeholder="Publisher">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="price" class="col-sm-2 col-form-label">Price</label>
-                                <div class="col-sm-10">
-                                    <input type="number" min=1 class="form-control" name="price"
-                                        placeholder="price">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="quantity" class="col-sm-2 col-form-label">Quantity</label>
-                                <div class="col-sm-10">
-                                    <input  type="number" min=1 class="form-control" name="quantity"
-                                        placeholder="Quantity">
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="card-footer"><input class="btn btn-primary" type="submit" ></div>
-                    </form>
+                    <div class="row-sm-12 row-xl-8">
+            <div class="card mb-3 mb-md-4">
+                <div class="card-header">
+                  <h5 class="font-weight-semi-bold mb-0">CheckOut</h5>
                 </div>
+                <div class="card-body pt-0">
+
+                  <h6 class="font-weight-semi-bold mb-3">ISBN</h6>
+                  <div class="mb-3 mb-md-4">
+                    <input name="isbn" required class="form-control bg-lighter" min="1000000000" max="9999999999999" placeholder="ISBN" type="number">
+                  </div>
+
+                  <h6 class="font-weight-semi-bold mb-3">Author</h6>
+                  <div class="mb-3 mb-md-4">
+                    <input name="author" class="form-control" placeholder="Author" type="text">
+                  </div>
+
+                    <h6 class="font-weight-semi-bold mb-3">Title</h6>
+                  <div class="mb-3 mb-md-4">
+                    <input name="title" class="form-control bg-lighter" placeholder="Title" type="text">
+                  </div>
+
+                  <h6 class="font-weight-semi-bold mb-3">Category</h6>
+                  <div class="mb-3 mb-md-4">
+                    <input required name="category" class="form-control" placeholder="Category" type="text">
+                  </div>
+
+                    <h6 class="font-weight-semi-bold mb-3">Publisher</h6>
+                  <div class="mb-3 mb-md-4">
+                    <input name="publisher" class="form-control bg-lighter" placeholder="Publisher" type="text">
+                  </div>
+
+                  <h6 class="font-weight-semi-bold mb-3">Price</h6>
+                  <div class="mb-3 mb-md-4">
+                    <input name="price" class="form-control" placeholder="Price" min="0" type="number">
+                  </div>
 
 
 
 
 
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-outline-primary" type="submit">Save Changes</button>
+                </div>
+              </div>
 
+      </div>
 
-
-            </div>
-
+</form>
 {% endblock %}

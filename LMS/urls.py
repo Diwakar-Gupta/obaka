@@ -13,9 +13,10 @@ urlpatterns = [
     path('notifiedDelayed/',views.notifiedDelayed,name='notifiedDelayed'),
     path('report/',views.report,name='report'),
 
-    path('issueReturn',views.issueReturn,name='issueReturn'),
-    path('issueReturn/book/<int:bookID>',views.issueReturnBook,name='issueReturn'),
+    path('circulation',views.circulation,name='circulation'),
+    path('circulation/checkout',views.checkout,name='checkout'),
+    path('circulation/checkin',views.checkin,name='checkin'),
+    path('circulation/renew',views.renew,name='renew'),
 
-    path('issueReturn/member/<int:memberID>',views.issueReturnMember,name='issueReturn'),
 
 ]

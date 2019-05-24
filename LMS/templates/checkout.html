@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+
+
+
+    <div class="py-4 px-3 px-md-4">
+<form>
+
+<div class="row">
+
+            <div class="col-lg-6 col-sm-6 ">
+              <!-- Text Inputs -->
+              <div class="card mb-3 mb-md-4">
+                <div class="card-header">
+                  <h5 class="font-weight-semi-bold mb-0">CheckOut</h5>
+                </div>
+                <div class="card-body pt-0">
+                  <h6 class="font-weight-semi-bold mb-3">MemberID</h6>
+                  <div class="mb-3 mb-md-4">
+                    <input class="form-control bg-lighter" placeholder="MemberID" type="text">
+                  </div>
+
+                  <h6 class="font-weight-semi-bold mb-3">BookID</h6>
+                  <div class="mb-3 mb-md-4">
+                    <input class="form-control" placeholder="Placeholder" type="text">
+                  </div>
+                </div>
+<div class="card-footer">
+                    <button class="btn btn-outline-primary" type="submit">Save Changes</button>
+                </div>
+              </div>
+
+
+
+            </div>
+
+
+<div class="col-lg-6 col-sm-6 ">
+              <!-- Text Inputs -->
+<div class="card mb-3 mb-md-4">
+                <div class="card-header">
+                  <h5 class="font-weight-semi-bold mb-0">Actions</h5>
+                </div>
+                <div class="card-body pt-0">
+
+                  <div class="row mb-3 mb-md-4">
+                    <div class="col-md">
+                      <div class="form-check position-relative mb-2">
+                        <input name="forgiveoverdue" type="checkbox" class="form-check-input d-none" id="customCheckboxes1">
+                        <label class="checkbox checkbox-xxs form-check-label ml-1" for="customCheckboxes1" data-icon="">Forgive OverDue</label>
+                      </div>
+
+                      <div class="form-check position-relative mb-2">
+                        <input type="checkbox" class="form-check-input d-none" id="customCheckboxes2">
+                        <label class="checkbox checkbox-xxs form-check-label ml-1" for="customCheckboxes2" data-icon="">Checkbox label</label>
+                      </div>
+
+                    </div>
+
+
+                  </div>
+
+
+
+                </div>
+              </div>
+
+
+
+            </div>
+
+
+          </div>
+
+</form>
+
+</div>
+
+{% endblock %}
+
