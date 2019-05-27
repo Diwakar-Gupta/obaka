@@ -8,8 +8,8 @@
 
 
     <div class="py-4 px-3 px-md-4">
-<form>
-
+<form method="post" action="{% url 'checkout' %}">
+{% csrf_token %}
 <div class="row">
 
             <div class="col-lg-6 col-sm-6 ">
@@ -21,12 +21,12 @@
                 <div class="card-body pt-0">
                   <h6 class="font-weight-semi-bold mb-3">MemberID</h6>
                   <div class="mb-3 mb-md-4">
-                    <input class="form-control bg-lighter" placeholder="MemberID" type="text">
+                    <input class="form-control bg-lighter" placeholder="MemberID" name="memberid" type="number">
                   </div>
 
                   <h6 class="font-weight-semi-bold mb-3">BookID</h6>
                   <div class="mb-3 mb-md-4">
-                    <input class="form-control" placeholder="Placeholder" type="text">
+                    <input class="form-control" placeholder="BookID" name="bookid" type="number">
                   </div>
                 </div>
 <div class="card-footer">

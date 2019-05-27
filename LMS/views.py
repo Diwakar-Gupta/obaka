@@ -7,7 +7,7 @@ from . import handler
 
 def index(request):
     user = auth.get_user(request)
-    if not user.is_staff:
+    if user.is_anonymous or not user.is_staff:
         return redirect_to_login(next=request.path)
 
     return render(request, 'index.html')
@@ -55,7 +55,10 @@ def checkout(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-    return render(request, 'checkout.html')
+    context = {}
+    if request.method == 'POST':
+        context = handler.checkout(request.POST)
+    return render(request, 'checkout.html' ,context=context)
 
 
 def checkin(request):
