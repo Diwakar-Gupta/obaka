@@ -25,18 +25,18 @@
 
                       <div class="d-flex align-items-center flex-wrap pt-1">
                         <div class="form-check position-relative mb-2 mb-md-0 mr-4">
-                          <input type="checkbox" class="form-check-input d-none" id="overconfident">
-                          <label class="checkbox checkbox-xxs form-check-label ml-1" for="overconfident" data-icon="">Overconfident</label>
+                          <input type="checkbox" checked class="form-check-input d-none" id="overconfident">
+                          <label class="checkbox checkbox-xxs form-check-label ml-1" for="overconfident" data-icon="">Student</label>
                         </div>
 
                         <div class="form-check position-relative mb-2 mb-md-0 mr-4">
-                          <input type="checkbox" class="form-check-input d-none" id="disillusioned">
-                          <label class="checkbox checkbox-xxs form-check-label ml-1" for="disillusioned" data-icon="">Disillusioned</label>
+                          <input type="checkbox" checked class="form-check-input d-none" id="disillusioned">
+                          <label class="checkbox checkbox-xxs form-check-label ml-1" for="disillusioned" data-icon="">Faculty</label>
                         </div>
 
                         <div class="form-check position-relative mb-2 mb-md-0">
-                          <input type="checkbox" class="form-check-input d-none" id="receptive">
-                          <label class="checkbox checkbox-xxs form-check-label ml-1" for="receptive" data-icon="">Receptive</label>
+                          <input type="checkbox" checked class="form-check-input d-none" id="receptive">
+                          <label class="checkbox checkbox-xxs form-check-label ml-1" for="receptive" data-icon="">others</label>
                         </div>
                       </div>
                     </div>
@@ -51,43 +51,37 @@
                       <tr>
                         <th>Name</th>
                         <th>User Type</th>
-                        <th>Email</th>
+                        <th>Issued Books</th>
                         <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>John</td>
-                        <td>Student</td>
-                        <td>john@example.com</td>
+
+                    {% for member in members %}
+
+                        <tr>
+                        <td>{{ member.name }}</td>
+                            <td><a target="_blank" href="/admin/LMS/userbasicsetting/{{ member.settings.pk }}/change/">{{ member.settings }}</a></td>
+                        <td>{{ member.count_books }}</td>
+                            {% if member.active %}
                         <td class="py-3">
                           <span class="badge badge-pill badge-success">Active</span>
                         </td>
-                      </tr>
-                      <tr>
-                        <td>Mary</td>
-                        <td>Admin</td>
-                        <td>mary@example.com</td>
+                        {% else %}
                         <td class="py-3">
                           <span class="badge badge-pill badge-danger">Deactive</span>
                         </td>
+                        {% endif %}
                       </tr>
-                      <tr>
-                        <td>Mary</td>
-                        <td>Admin</td>
-                        <td>mary@example.com</td>
-                        <td class="py-3">
-                          <span class="badge badge-pill badge-warning">warning</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Mary</td>
-                        <td>Admin</td>
-                        <td>mary@example.com</td>
-                        <td class="py-3">
-                          <span class="badge badge-pill badge-primary">primary</span>
-                        </td>
-                      </tr>
+
+                    {% endfor %}
+
+                    {% if not members %}
+                    <tr>
+                    <td colspan=100% align="center"><h3 class="active">No Members to show</h3></td>
+                    </tr>
+                    {% endif %}
+
                     </tbody>
                   </table>
 

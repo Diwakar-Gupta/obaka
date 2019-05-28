@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib import auth
 from django.contrib.auth.views import redirect_to_login
 from . import handler
+from .models import *
 # Create your views here.
 
 
@@ -34,7 +35,12 @@ def members(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-    return render(request, 'member.html')
+
+    allmembers = list(Student.objects.all())
+    for f in Faculty.objects.all():
+        allmembers.append(f)
+
+    return render(request, 'member.html',context={'members':allmembers})
 
 
 def notifiedDelayed(request):

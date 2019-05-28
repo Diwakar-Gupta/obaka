@@ -6,7 +6,7 @@ from datetime import datetime , timedelta
 
 
 class UserBasicSetting(models.Model):
-    type = models.CharField(max_length=20,primary_key=True)
+    type = models.CharField(max_length=20)
     maxBook = models.PositiveSmallIntegerField()
     maxDay = models.IntegerField()
     finePerDay = models.IntegerField()
@@ -20,6 +20,7 @@ class Student(models.Model):
     name = models.CharField(max_length=20,blank=True)
     count_books = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
+    active = models.BooleanField(default=True)
     from django.contrib.auth.models import User
 
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
@@ -35,6 +36,7 @@ class Faculty(models.Model):
     subject = models.CharField(max_length=20)
     count_books = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
+    active = models.BooleanField(default=True)
     from django.contrib.auth.models import User
 
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
