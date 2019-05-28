@@ -18,7 +18,7 @@ class UserBasicSetting(models.Model):
 class Student(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=20,blank=True)
-
+    count_books = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     from django.contrib.auth.models import User
 
@@ -33,6 +33,7 @@ class Faculty(models.Model):
     name = models.CharField(max_length=20,blank=True)
     isHOD = models.BooleanField(default=False)
     subject = models.CharField(max_length=20)
+    count_books = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     from django.contrib.auth.models import User
 
@@ -58,7 +59,7 @@ class Book(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     details = models.ForeignKey(ISBN,on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
-    issued = models.BooleanField(default=False)
+    is_issued = models.BooleanField(default=False)
 
     def __str__(self):
         return self.details.title+"  "+str(self.id)
@@ -82,3 +83,9 @@ class Issue(models.Model):
         if self.isLate():
             return (datetime.now() - self.return_day).days
         return 0
+
+    def fine(self):
+        return self.lateby()*self.member.settings.finePerDay
+
+    def send_mail(self):
+        pass
