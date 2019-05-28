@@ -1,10 +1,13 @@
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from datetime import datetime , timedelta
 # Create your models here.
 
 
 class UserBasicSetting(models.Model):
     type = models.CharField(max_length=20,primary_key=True)
-    maxBook = models.IntegerField()
+    maxBook = models.PositiveSmallIntegerField()
     maxDay = models.IntegerField()
     finePerDay = models.IntegerField()
 
@@ -13,7 +16,7 @@ class UserBasicSetting(models.Model):
 
 
 class Student(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=20,blank=True)
 
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
@@ -26,7 +29,7 @@ class Student(models.Model):
 
 
 class Faculty(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=20,blank=True)
     isHOD = models.BooleanField(default=False)
     subject = models.CharField(max_length=20)
@@ -40,19 +43,19 @@ class Faculty(models.Model):
 
 
 class ISBN(models.Model):
-    isbn = models.IntegerField(primary_key=True)
+    isbn = models.PositiveIntegerField(primary_key=True)
     author = models.CharField(max_length=30)
     title = models.CharField(max_length=100)
     category = models.CharField(max_length=30)
     publisher = models.CharField(max_length=30)
-    price = models.IntegerField()
+    price = models.PositiveIntegerField()
 
     def __str__(self):
         return str(self.isbn)
 
 
 class Book(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     details = models.ForeignKey(ISBN,on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     issued = models.BooleanField(default=False)
@@ -61,3 +64,21 @@ class Book(models.Model):
         return self.details.title+"  "+str(self.id)
 
 
+class Issue(models.Model):
+    book = models.ForeignKey(Book,models.CASCADE)
+    member_type = models.ForeignKey(ContentType,on_delete=models.CASCADE)
+    member_id = models.PositiveIntegerField()
+    member = GenericForeignKey('member_type', 'member_id')
+
+    is_returned=models.BooleanField(default=False)
+    issue_day = models.DateTimeField(auto_now=True)
+    return_day = models.DateTimeField(auto_now=True)
+    mail_send = models.BooleanField(default=False)
+
+    def isLate(self):
+        return self.return_day > datetime.now() + timedelta(days=self.member.settings.maxDay)
+
+    def lateby(self):
+        if self.isLate():
+            return (datetime.now() - self.return_day).days
+        return 0
