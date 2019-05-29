@@ -88,3 +88,5 @@ def report(request):
     return render(request, 'report.html')
 
 
+def demo(request):
+    return render(request,'demo.html')

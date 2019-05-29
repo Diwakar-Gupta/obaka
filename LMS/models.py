@@ -73,9 +73,12 @@ class Issue(models.Model):
     member_id = models.PositiveIntegerField()
     member = GenericForeignKey('member_type', 'member_id')
 
+    checkoutfrom = models.ForeignKey(Faculty,on_delete=models.DO_NOTHING,blank=False)
     is_returned=models.BooleanField(default=False)
-    issue_day = models.DateTimeField(auto_now=True)
-    return_day = models.DateTimeField(auto_now=True)
+    countrenewal = models.PositiveIntegerField(default=0)
+    checkedout = models.DateTimeField(auto_now=True)
+    date = models.DateTimeField(auto_now=True)
+    duedate = models.DateTimeField(auto_now=True)
     mail_send = models.BooleanField(default=False)
 
     def isLate(self):
