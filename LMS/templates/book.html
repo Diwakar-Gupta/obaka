@@ -23,13 +23,13 @@
 
                     <div class="d-flex align-items-center flex-wrap pt-1">
                       <div class="form-check position-relative mb-2 mb-md-0 mr-4">
-                        <input type="checkbox" class="form-check-input d-none" id="overconfident">
-                        <label class="checkbox checkbox-xxs form-check-label ml-1" for="overconfident" data-icon="">Overconfident</label>
+                        <input type="checkbox" class="form-check-input d-none" id="available">
+                        <label class="checkbox checkbox-xxs form-check-label ml-1" for="available" data-icon="">Available</label>
                       </div>
 
                       <div class="form-check position-relative mb-2 mb-md-0 mr-4">
-                        <input type="checkbox" class="form-check-input d-none" id="disillusioned">
-                        <label class="checkbox checkbox-xxs form-check-label ml-1" for="disillusioned" data-icon="">Disillusioned</label>
+                        <input type="checkbox" class="form-check-input d-none" id="active">
+                        <label class="checkbox checkbox-xxs form-check-label ml-1" for="active" data-icon="">Active</label>
                       </div>
 
                       <div class="form-check position-relative mb-2 mb-md-0">
@@ -56,43 +56,36 @@
         </tr>
       </thead>
       <tbody>
+
+      {% for book in books %}
+
         <tr>
-          <td>12569</td>
-          <td>569874123</td>
+          <td>{{ book.id }}</td>
+          <td>{{ book.details }}</td>
+            {% if book.active %}
           <td class="py-3">
             <span class="badge badge-pill badge-success">Active</span>
           </td>
-          <td class="py-3">
-            <span class="badge badge-pill badge-success">Available</span>
-          </td>
-          <td>Advance Enginering Mathmatics</td>
-          <td>RK Jain,SRK Linger</td>
-        </tr>
-        <tr>
-          <td>12569</td>
-          <td>569874123</td>
-          <td class="py-3">
+            {% else %}
+            <td class="py-3">
             <span class="badge badge-pill badge-danger">Deactive</span>
           </td>
+            {% endif %}
+          {% if book.is_issued %}
           <td class="py-3">
-            <span class="badge badge-pill badge-danger">Not Available</span>
+            <span class="badge badge-pill badge-danger">not Available</span>
           </td>
-          <td>Advance Enginering Mathmatics</td>
-          <td>RK Jain,SRK Linger</td>
+            {% else %}
+            <td class="py-3">
+            <span class="badge badge-pill badge-success">Available</span>
+          </td>
+            {% endif %}
+          <td>{{ book.details.title }}</td>
+          <td>{{ book.details.author }}</td>
         </tr>
-        <tr>
-          <td>July</td>
-          <td>Dooley</td>
-          <td>july@example.com</td>
-          <td>
-            <div class="form-group">
-              <select style="width:auto;height:calc(2.25rem + 3px)" class="form-control" >
-                <option>Delete</option>
-                <option>Return</option>
-                <option>ReIssue</option>
-              </select>
-            </div>
-          </td>
+
+      {% endfor %}
+
 
       </tbody>
     </table>

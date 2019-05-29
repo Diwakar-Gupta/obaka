@@ -18,7 +18,7 @@ def books(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-    return render(request, 'book.html')
+    return render(request, 'book.html',context={'books':Book.objects.all()})
 
 
 def booksAdd(request):
