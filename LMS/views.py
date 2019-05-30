@@ -31,16 +31,35 @@ def booksAdd(request):
     return render(request, 'addBook.html',context=context)
 
 
-def members(request):
+def member(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
 
-    allmembers = list(Student.objects.all())
+    members = list(Student.objects.all())
     for f in Faculty.objects.all():
-        allmembers.append(f)
+        members.append(f)
 
-    return render(request, 'member.html',context={'members':allmembers})
+    return render(request, 'member.html', context={'members':members})
+
+
+def member_profile(request):
+    pass
+
+
+def member_checkout(request):
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
+
+    context = {}
+    if request.method == 'POST':
+        context = handler.checkout(request)
+    return render(request, 'member/checkout.html', context=context)
+
+
+def member_circulation(request):
+    return render(request,'member/circulation.html')
 
 
 def notifiedDelayed(request):
@@ -63,7 +82,7 @@ def checkout(request):
         return redirect_to_login(next=request.path)
     context = {}
     if request.method == 'POST':
-        context = handler.checkout(request.POST)
+        context = handler.checkout(request)
     return render(request, 'checkout.html' ,context=context)
 
 

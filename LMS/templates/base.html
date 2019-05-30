@@ -699,7 +699,7 @@
                 <a class="side-nav-menu-link" href=" base.html">Member Type</a>
               </li>
               <li class="side-nav-menu-item">
-                <a class="side-nav-menu-link" href="{% url 'members' %}">All Member</a>
+                <a class="side-nav-menu-link" href="{% url 'member' %}">All Member</a>
               </li>
             </ul>
           </li>
@@ -836,14 +836,7 @@
       </aside>
       <!-- End Sidebar Nav -->
       <div class="content">
-<nav class="pl-3 pt-3 d-none d-md-block" aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item">
-                <a href="{% url 'circulation' %}">Circulation</a>
-              </li>
-              <li class="breadcrumb-item active" aria-current="page">Widgets</li>
-            </ol>
-          </nav>
+
           {% block content %}
             {% endblock %}
 

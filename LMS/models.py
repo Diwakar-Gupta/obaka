@@ -52,13 +52,14 @@ class ISBN(models.Model):
     category = models.CharField(max_length=30)
     publisher = models.CharField(max_length=30)
     price = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField(default=0)
+    count_issued = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return str(self.isbn)
 
 
 class Book(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)
     details = models.ForeignKey(ISBN,on_delete=models.CASCADE)
     active = models.BooleanField(default=True)
     is_issued = models.BooleanField(default=False)
@@ -69,17 +70,19 @@ class Book(models.Model):
 
 class Issue(models.Model):
     book = models.ForeignKey(Book,models.CASCADE)
+
     member_type = models.ForeignKey(ContentType,on_delete=models.CASCADE)
     member_id = models.PositiveIntegerField()
     member = GenericForeignKey('member_type', 'member_id')
 
-    checkoutfrom = models.ForeignKey(Faculty,on_delete=models.DO_NOTHING,blank=False)
-    is_returned=models.BooleanField(default=False)
+    checkoutfrom = models.CharField(max_length=20)
+    is_returned = models.BooleanField(default=False)
     countrenewal = models.PositiveIntegerField(default=0)
     checkedout = models.DateTimeField(auto_now=True)
     date = models.DateTimeField(auto_now=True)
     duedate = models.DateTimeField(auto_now=True)
     mail_send = models.BooleanField(default=False)
+    autorenew = models.BooleanField(default=False)
 
     def isLate(self):
         return self.return_day > datetime.now() + timedelta(days=self.member.settings.maxDay)

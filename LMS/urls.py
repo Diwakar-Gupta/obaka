@@ -9,7 +9,10 @@ urlpatterns = [
     path('books/',views.books,name='books'),
     path('books/add',views.booksAdd,name='addBook'),
 
-    path('members/',views.members,name='members'),
+    path('member/',views.member,name='member'),
+    path('member/profile',views.member_profile,name='member-profile'),
+    path('member/checkout',views.member_checkout,name='member-checkout'),
+    path('member/circulation',views.member_circulation,name='member-circulation'),
 
     path('notifiedDelayed/',views.notifiedDelayed,name='notifiedDelayed'),
     path('report/',views.report,name='report'),
