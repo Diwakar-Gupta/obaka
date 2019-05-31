@@ -98,3 +98,4 @@ class Issue(models.Model):
 
     def send_mail(self):
         pass
+

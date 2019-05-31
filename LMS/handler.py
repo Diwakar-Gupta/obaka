@@ -32,13 +32,17 @@ def checkout(request):
     from django.contrib import auth
     checkoutfrom = auth.get_user(request).get_username()
     member.count_books += 1
-    contentype = ContentType(app_label='LMS', model=membertype)
-    contentype.save()
+    contentype = ContentType.objects.get_or_create(app_label='LMS', model=membertype)
+    if contentype[1]:
+        contentype.save()
+    contentype = contentype[0]
     issue = Issue(book=book,member_type=contentype,checkoutfrom=checkoutfrom,duedate=duedate,autorenew=autorenew)
     issue.member = member
+    isbn.count_issued += 1
     issue.save()
     member.save()
     book.save()
+    isbn.save()
 
     return {'success':True}
 

@@ -76,9 +76,11 @@ def member_circulation(request,membertype,memberpk):
     if membertype == 'Student':
         member = Student.objects.get(pk=memberpk)
         context['member'] = member
+        context['issues'] = member.Issue_set.all()
     elif membertype == 'Faculty':
         member = Faculty.objects.get(pk=memberpk)
         context['member'] = member
+        context['issues'] = member.Issue_set.all()
     return render(request,'member/circulation.html',context=context)
 
 
