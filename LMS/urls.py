@@ -10,9 +10,9 @@ urlpatterns = [
     path('books/add',views.booksAdd,name='addBook'),
 
     path('member/',views.member,name='member'),
-    path('member/profile',views.member_profile,name='member-profile'),
-    path('member/checkout',views.member_checkout,name='member-checkout'),
-    path('member/circulation',views.member_circulation,name='member-circulation'),
+    path('member/<str:membertype>/<int:memberpk>/profile',views.member_profile,name='member-profile'),
+    path('member/<str:membertype>/<int:memberpk>/checkout',views.member_checkout,name='member-checkout'),
+    path('member/<str:membertype>/<int:memberpk>/circulation',views.member_circulation,name='member-circulation'),
 
     path('notifiedDelayed/',views.notifiedDelayed,name='notifiedDelayed'),
     path('report/',views.report,name='report'),
@@ -26,3 +26,4 @@ urlpatterns = [
 
 
 ]
+

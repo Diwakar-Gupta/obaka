@@ -6,7 +6,7 @@
 {% block content %}
 
 
-            <div class="py-4 px-3 px-md-4">
+         <div class="py-4 px-3 px-md-4">
           <!-- Breadcrumb -->
 
           <!-- End Breadcrumb -->
@@ -22,11 +22,11 @@
                    data-transform-resolution="1199.98"
                    data-tabs-mobile-type="slide-up-down"
                    data-btn-classes="btn btn-primary">
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="{% url 'member-profile' membertype=member.settings.type  memberpk=member.pk %}">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2 active " href="{% url 'member-profile' membertype=member.settings.type  memberpk=member.pk %}">
                   <i class="nova-shield icon-text align-middle mr-2"></i>
                   <span class="align-middle">Profile</span>
                 </a>
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2 active " href="{% url 'member-checkout' membertype=member.settings.type  memberpk=member.pk %}">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2  " href="{% url 'member-checkout' membertype=member.settings.type  memberpk=member.pk %}">
                   <i class="nova-user icon-text align-middle mr-2"></i>
                   <span class="align-middle">Check Out</span>
                 </a>
@@ -51,39 +51,9 @@
 
             <a class="link-dark ml-auto" href="#">Close Account</a>
           </div>
-          <div class="row">
-            <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
 
-              <form method="post" action="{% url 'member-checkout' membertype=member.settings.type  memberpk=member.pk %}">
-                  {% csrf_token %}
-                  <input type="hidden" value="{{ member.settings.type }}" name="membertype">
-                  <input type="hidden" value="{{ member.pk }}" name="memberid">
-              <h6 class="font-weight-semi-bold mb-3">Book Barcode</h6>
-              <input class="form-control bg-lighter" placeholder="barcode" name="isbn" type="number">
-              <button class="btn btn-outline-primary" type="submit">Save Changes</button>
-              <br>
-              <a href="" data-toggle="collapse" data-target="#demo">Checkout settings</a>
-              <div id="demo" class="collapse hide">
-
-                    <input type="date" name="duedate">
-
-                   <div class="form-check position-relative mb-2">
-                        <input type="checkbox" name="autorenewal" class="form-check-input d-none" id="autorenewal">
-                        <label class="checkbox checkbox-xxs form-check-label ml-1" for="autorenewal" data-icon="">Automatic renewal</label>
-                    </div>
-              </div>
-
-            </form>
-            </div>
-            <div class="col-md-6 col-xl-4 mb-3 mb-md-4">
-
-            </div>
-            <div class="col-xl-4 mx-md-auto mb-3 mb-md-4">
-
-            </div>
-          </div>
+         Profile
 
         </div>
-
 
 {% endblock %}>

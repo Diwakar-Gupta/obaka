@@ -21,6 +21,8 @@ class Student(models.Model):
     count_books = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
+    branch = models.CharField(max_length=20)
+
     from django.contrib.auth.models import User
 
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
@@ -30,10 +32,9 @@ class Student(models.Model):
 
 
 class Faculty(models.Model):
-    id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=20,blank=True)
     isHOD = models.BooleanField(default=False)
-    subject = models.CharField(max_length=20)
+    branch = models.CharField(max_length=20)
     count_books = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)

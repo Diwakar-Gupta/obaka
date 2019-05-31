@@ -50,6 +50,7 @@
                     <thead>
                       <tr>
                         <th>Name</th>
+                        <th>ID</th>
                         <th>User Type</th>
                         <th>Issued Books</th>
                         <th>Status</th>
@@ -61,7 +62,8 @@
 
                         <tr>
                         <td>{{ member.name }}</td>
-                            <td><a target="_blank" href="/admin/LMS/userbasicsetting/{{ member.settings.pk }}/change/">{{ member.settings }}</a></td>
+                        <td><a href="{% url 'member-profile' membertype=member.settings.type  memberpk=member.pk %}">{{ member.pk }}</a></td>
+                        <td><a target="_blank" href="/admin/LMS/userbasicsetting/{{ member.settings.pk }}/change/">{{ member.settings }}</a></td>
                         <td>{{ member.count_books }}</td>
                             {% if member.active %}
                         <td class="py-3">

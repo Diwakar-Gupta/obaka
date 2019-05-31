@@ -12,7 +12,7 @@
           <!-- End Breadcrumb -->
           <div class="row align-items-center mb-3 mb-md-4">
             <div class="col-md mb-2 mb-md-0">
-              <h1 class="h3 mb-0">Name</h1>
+              <h1 class="h3 mb-0">{{ member.name }}</h1>
             </div>
           </div>
           <div class="d-flex flex-wrap align-items-center mb-3 d-print-none">
@@ -22,15 +22,15 @@
                    data-transform-resolution="1199.98"
                    data-tabs-mobile-type="slide-up-down"
                    data-btn-classes="btn btn-primary">
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="{% url 'member-profile' %}">
+                 <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="{% url 'member-profile' membertype=member.settings.type memberpk=member.pk %}">
                   <i class="nova-shield icon-text align-middle mr-2"></i>
                   <span class="align-middle">Profile</span>
                 </a>
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2 " href="{% url 'member-checkout' %}">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2 " href="{% url 'member-checkout' membertype=member.settings.type memberpk=member.pk %}">
                   <i class="nova-user icon-text align-middle mr-2"></i>
                   <span class="align-middle">Check Out</span>
                 </a>
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2 active" href="{% url 'member-circulation' %}">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2 active" href="{% url 'member-circulation' membertype=member.settings.type memberpk=member.pk %}">
                   <i class="nova-panel icon-text align-middle mr-2"></i>
                   <span class="align-middle">Circumations</span>
                 </a>

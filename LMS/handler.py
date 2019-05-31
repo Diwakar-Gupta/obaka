@@ -26,6 +26,7 @@ def checkout(request):
         member = Faculty.objects.get(id=request.POST['memberid'])
     isbn = ISBN.objects.get(isbn=request.POST['isbn'])
     book = isbn.book_set.filter(is_issued=False)[0]
+    book.is_issued=True
     duedate = request.POST['duedare'] if request.POST['duedate'] else datetime.now() + timedelta(days=member.settings.maxDay)
     autorenew = True if 'autorenew' in request.POST else False
     from django.contrib import auth
@@ -37,6 +38,7 @@ def checkout(request):
     issue.member = member
     issue.save()
     member.save()
+    book.save()
 
     return {'success':True}
 

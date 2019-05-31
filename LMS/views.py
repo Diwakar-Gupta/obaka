@@ -43,11 +43,18 @@ def member(request):
     return render(request, 'member.html', context={'members':members})
 
 
-def member_profile(request):
-    pass
+def member_profile(request,membertype,memberpk):
+    member = None
+    if membertype == 'Student':
+        member = Student.objects.get(pk=memberpk)
+    elif membertype == 'Faculty':
+        member = Faculty.objects.get(pk=memberpk)
+
+    return render(request,'member/profile.html',context={'member':member})
 
 
-def member_checkout(request):
+
+def member_checkout(request,membertype,memberpk):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
@@ -55,11 +62,24 @@ def member_checkout(request):
     context = {}
     if request.method == 'POST':
         context = handler.checkout(request)
+    if membertype == 'Student':
+        member = Student.objects.get(pk=memberpk)
+        context['member'] = member
+    elif membertype == 'Faculty':
+        member = Faculty.objects.get(pk=memberpk)
+        context['member'] = member
     return render(request, 'member/checkout.html', context=context)
 
 
-def member_circulation(request):
-    return render(request,'member/circulation.html')
+def member_circulation(request,membertype,memberpk):
+    context={}
+    if membertype == 'Student':
+        member = Student.objects.get(pk=memberpk)
+        context['member'] = member
+    elif membertype == 'Faculty':
+        member = Faculty.objects.get(pk=memberpk)
+        context['member'] = member
+    return render(request,'member/circulation.html',context=context)
 
 
 def notifiedDelayed(request):
