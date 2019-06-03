@@ -10,6 +10,7 @@ urlpatterns = [
     path('books/add',views.booksAdd,name='addBook'),
 
     path('member/',views.member,name='member'),
+    path('member/<str:membertype>/<int:memberpk>/',views.member_profile,name='member-profile'),
     path('member/<str:membertype>/<int:memberpk>/profile',views.member_profile,name='member-profile'),
     path('member/<str:membertype>/<int:memberpk>/checkout',views.member_checkout,name='member-checkout'),
     path('member/<str:membertype>/<int:memberpk>/circulation',views.member_circulation,name='member-circulation'),

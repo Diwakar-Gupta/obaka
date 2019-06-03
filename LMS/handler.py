@@ -37,7 +37,7 @@ def checkout(request):
     if contentype[1]:
         contentype.save()
     contentype = contentype[0]
-    issue = Issue(book=book,member_type=contentype,checkoutfrom=checkoutfrom,duedate=duedate,autorenew=autorenew)
+    issue = Issue(book=book,member_type=contentype,member_id=member.pk,checkoutfrom=checkoutfrom,duedate=duedate,autorenew=autorenew)
     issue.member = member
     isbn.count_issued += 1
     issue.save()

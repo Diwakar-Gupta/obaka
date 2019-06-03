@@ -80,7 +80,7 @@ def member_circulation(request,membertype,memberpk):
     elif membertype == 'Faculty':
         member = Faculty.objects.get(pk=memberpk)
         context['member'] = member
-        context['issues'] = member.Issue_set.all()
+        context['issues'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Faculty),member_id=member.pk)
     return render(request,'member/circulation.html',context=context)
 
 

@@ -66,28 +66,19 @@
               </tr>
             </thead>
             <tbody>
+            {% for issue in issues %}
               <tr>
-                <td>29/05/2019 09:36</td>
-                <td>La famille Rataton</td>
-                <td>Romain Simon</td>
-                <td>00519000004712</td>
-                <td>2</td>
-                <td>15/06/2016 11:15</td>
-                <td>Pukapuka</td>
-                <td>19/06/2019 23:59</td>
-                <td>Checked out</td>
+                <td>{{ issue.date }}</td>
+                <td>{{ issue.book.details.title }}</td>
+                <td>{{ issue.book.details.author }}</td>
+                <td>{{ issue.book.details.isbn }}</td>
+                <td>{{ issue.countrenewal }}</td>
+                <td>{{ issue.checkedout }}</td>
+                <td>{{ issue.checkoutfrom }}</td>
+                <td>{{ issue.duedate }}</td>
+                <td>{{ issue.return_date }}</td>
               </tr>
-              <tr>
-                <td>29/05/2019 09:36</td>
-                <td>La famille Rataton</td>
-                <td>Romain Simon</td>
-                <td>00519000004712</td>
-                <td>2</td>
-                <td>15/06/2016 11:15</td>
-                <td>Pukapuka</td>
-                <td>19/06/2019 23:59</td>
-                <td>Checked out</td>
-                </tr>
+            {% endfor %}
             </tbody>
           </table>
           <!-- Personal Details Card -->
