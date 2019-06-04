@@ -18,7 +18,7 @@ def books(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-    return render(request, 'book.html',context={'books':Book.objects.all()})
+    return render(request, 'book.html',context={'isbns':ISBN.objects.all()})
 
 
 def booksAdd(request):
@@ -76,7 +76,7 @@ def member_circulation(request,membertype,memberpk):
     if membertype == 'Student':
         member = Student.objects.get(pk=memberpk)
         context['member'] = member
-        context['issues'] = member.Issue_set.all()
+        context['issues'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Student),member_id=member.pk)
     elif membertype == 'Faculty':
         member = Faculty.objects.get(pk=memberpk)
         context['member'] = member

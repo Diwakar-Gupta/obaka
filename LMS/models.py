@@ -81,8 +81,8 @@ class Issue(models.Model):
     countrenewal = models.PositiveIntegerField(default=0)
     checkedout = models.DateTimeField(auto_now=True)
     date = models.DateTimeField(auto_now=True)
-    return_date = models.DateTimeField(auto_now=True)
-    duedate = models.DateTimeField(auto_now=True)
+    return_date = models.DateTimeField(default=None,null=True)
+    duedate = models.DateTimeField()
     mail_send = models.BooleanField(default=False)
     autorenew = models.BooleanField(default=False)
 
