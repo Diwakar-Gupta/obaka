@@ -87,12 +87,14 @@ class Issue(models.Model):
     autorenew = models.BooleanField(default=False)
 
     def isLate(self):
-        return self.return_day > datetime.now() + timedelta(days=self.member.settings.maxDay)
+        return self.lateby() > 0
 
     def lateby(self):
-        if self.isLate():
-            return (datetime.now() - self.return_day).days
-        return 0
+        returnday = self.return_date if self.return_date else datetime.now()
+        days = (self.duedate - returnday).days
+        if days < 0:
+            days = 0
+        return days
 
     def fine(self):
         return self.lateby()*self.member.settings.finePerDay

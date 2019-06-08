@@ -88,7 +88,7 @@ def notifiedDelayed(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-    return render(request, 'notifiedDealyed.html')
+    return render(request, 'notifiedDealyed.html',context={'issues':[x for x in Issue.objects.filter(is_returned=False,autorenew=False) if x.isLate]})
 
 
 def circulation(request):

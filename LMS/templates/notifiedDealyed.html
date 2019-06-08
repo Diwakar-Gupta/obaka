@@ -5,100 +5,121 @@
 
 {% block content %}
 
-        <div class="py-4 px-3 px-md-4">
 
 
-          <div class="card mb-3 mb-md-4">
-              <div class="card-header">
-                <h5 class="font-weight-semi-bold mb-0">Table Filters</h5>
-              </div>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css">
 
-              <div class="card-body pt-0">
+<div class="py-4 px-3 px-md-4">
 
 
-                  <div class="row">
-
-
-                      <div class="col-xl mb-3">
-
-
-                        <div class="d-flex align-items-center flex-wrap pt-1">
-                          <div class="form-check position-relative mb-2 mb-md-0 mr-4">
-                            <input type="checkbox" class="form-check-input d-none" id="overconfident">
-                            <label class="checkbox checkbox-xxs form-check-label ml-1" for="overconfident" data-icon="">Overconfident</label>
-                          </div>
-
-                          <div class="form-check position-relative mb-2 mb-md-0 mr-4">
-                            <input type="checkbox" class="form-check-input d-none" id="disillusioned">
-                            <label class="checkbox checkbox-xxs form-check-label ml-1" for="disillusioned" data-icon="">Disillusioned</label>
-                          </div>
-
-                          <div class="form-check position-relative mb-2 mb-md-0">
-                            <input type="checkbox" class="form-check-input d-none" id="receptive">
-                            <label class="checkbox checkbox-xxs form-check-label ml-1" for="receptive" data-icon="">Receptive</label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-
-      <div class="table-responsive-xl"><table class="table table-striped table-hover">
-              <thead>
-                  <tr>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Issue Date</th>
-                      <th>Expiry Date</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr>
-                      <td>John</td>
-                      <td>john@example.com</td>
-                      <td>
-                              2019-july-19
-                          </td><td>
-                                  2019-july-19
-                              </td></tr>
-                  <tr>
-                      <td>Mary</td>
-                      <td>mary@example.com</td>
-                      <td>
-                           2019-july-19
-                      </td><td>
-                              2019-july-19
-                          </td></tr>
-                  <tr>
-                      <td>Mary</td>
-                      <td>mary@example.com</td>
-                      <td>
-                          2019-july-19
-                      </td>
-                      <td>
-                              2019-july-19
-                          </td></tr>
-                  <tr>
-                      <td>Mary</td>
-                      <td>mary@example.com</td>
-                      <td>
-                          2019-july-19
-                      </td>
-                      <td>
-                              2019-july-19
-                          </td></tr>
-              </tbody>
-          </table>
-
-
-                  </div>
-                </div>
+   <div class="module filtered" id="changelist">
+      <div id="toolbar">
+         <form id="changelist-search" method="get">
+            <div>
+               <!-- DIV needed for valid HTML -->
+               <label for="searchbar"><img src="/static/admin/img/search.svg" alt="Search"></label>
+               <input type="text" size="40" name="q" value="" id="searchbar" autofocus="">
+               <input type="submit" value="Search">
 
 
             </div>
-
-
-
-
+         </form>
       </div>
+
+
+
+
+
+
+
+
+
+
+      <form id="changelist-form" method="post" >
+          {% csrf_token %}
+
+         <div class="actions">
+
+
+            <label>Action: <select name="action" required="">
+                  <option value="notify" selected="">notify</option>
+
+               </select></label><input type="hidden" name="select_across" value="0" class="select-across">
+
+
+            <button type="submit" class="button" title="Run the selected action" name="index" value="0">Go</button>
+
+
+
+            <span class="action-counter" data-actions-icnt="1" style="display: inline;">0 of 1 selected</span>
+
+
+
+
+         </div>
+
+
+
+
+         <div class="results">
+            <table id="result_list" class="table table-bordered table-hover">
+               <thead>
+                  <tr>
+                      <th><center><input checked type="checkbox"></th></center></th>
+                     <th>Member Type</th>
+                      <th>Member Name</th>
+                      <th>Member ID</th>
+                      <th>Book ISBN</th>
+                      <th>Date</th>
+                      <th>DueDate</th>
+                      <th>Is Notified</th>
+                  </tr>
+               </thead>
+               <tbody>
+    {% for issue in issues %}
+                  <tr>
+                      <th><input checked type="checkbox"></th>
+                     <td>{{ issue.member.settings.type }}</td>
+                      <td>{{ issue.member.name }}</td>
+                      <td>{{ issue.member.pk }}</td>
+                      <td>{{ issue.book.details.isbn }}</td>
+                      <td>{{ issue.date }}</td>
+                      <td>{{ issue.duedate }}</td>
+                      {% if issue.mail_send %}
+                     <td class="field-is_staff">
+                        <img src="/static/admin/img/icon-yes.svg" alt="True">
+                     </td>
+                  {% else %}
+                  <td class="field-is_staff">
+                        <img src="/static/admin/img/icon-no.svg" alt="True">
+                     </td>
+                  {% endif %}
+                  </tr>
+{% endfor %}
+
+
+               </tbody>
+            </table>
+         </div>
+
+
+
+
+
+
+         <p class="paginator">
+
+            1 user
+
+
+         </p>
+
+      </form>
+   </div>
+
+
+
+
+</div>
 
 {% endblock %}>

@@ -15,39 +15,39 @@
               <h1 class="h3 mb-0">{{ member.name }}</h1>
             </div>
           </div>
-          <div class="d-flex flex-wrap align-items-center mb-3 d-print-none">
+
+
+             <div class="d-flex flex-wrap align-items-center mb-3 d-print-none">
             <!-- Settings Nav -->
             <div class="nav-mobile-container">
-              <div class="js-btn-list-to-dropdown nav-mobile nav-mobile-left nav-mobile-text-left nav-mobile-shade"
-                   data-transform-resolution="1199.98"
-                   data-tabs-mobile-type="slide-up-down"
-                   data-btn-classes="btn btn-primary">
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2 active " href="{% url 'member-profile' membertype=member.settings.type  memberpk=member.pk %}">
-                  <i class="nova-shield icon-text align-middle mr-2"></i>
-                  <span class="align-middle">Profile</span>
-                </a>
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2  " href="{% url 'member-checkout' membertype=member.settings.type  memberpk=member.pk %}">
+              <div class="js-btn-list-to-dropdown nav-mobile nav-mobile-left nav-mobile-text-left nav-mobile-shade" data-transform-resolution="1199.98" data-tabs-mobile-type="slide-up-down" data-btn-classes="btn btn-primary">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2 active" href="./my-profile.html">
                   <i class="nova-user icon-text align-middle mr-2"></i>
-                  <span class="align-middle">Check Out</span>
+                  <span class="align-middle">My Profile</span>
                 </a>
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="{% url 'member-circulation' membertype=member.settings.type  memberpk=member.pk %}">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="preferences.html">
                   <i class="nova-panel icon-text align-middle mr-2"></i>
-                  <span class="align-middle">Circumations</span>
+                  <span class="align-middle">Preferences</span>
                 </a>
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="../../../../index.html">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="security.html">
+                  <i class="nova-shield icon-text align-middle mr-2"></i>
+                  <span class="align-middle">Security</span>
+                </a>
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="linked-accounts.html">
                   <i class="nova-link icon-text align-middle mr-2"></i>
                   <span class="align-middle">Linked Accounts</span>
                 </a>
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="../../../../index.html">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="api-access.html">
                   <i class="nova-server icon-text align-middle mr-2"></i>
                   <span class="align-middle">API Access</span>
                 </a>
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="../../../../index.html">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="limits.html">
                   <i class="nova-lock icon-text align-middle mr-2"></i>
                   <span class="align-middle">Limits</span>
                 </a>
               </div>
             </div>
+            <!-- End Settings Nav -->
 
             <a class="link-dark ml-auto" href="#">Close Account</a>
           </div>

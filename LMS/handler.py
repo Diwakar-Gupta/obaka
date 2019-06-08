@@ -39,7 +39,7 @@ def checkout(request):
             contentype.save()
         contentype = contentype[0]
         issue = Issue(book=book, member_type=contentype, member_id=member.pk, checkoutfrom=checkoutfrom,
-                      duedate=duedate, autorenew=autorenew, return_date=None)
+                      duedate=duedate, autorenew=autorenew, return_date=None )
         issue.member = member
         isbn.count_issued += 1
         issue.save()
@@ -52,7 +52,12 @@ def checkout(request):
     except (Student.DoesNotExist , Faculty.DoesNotExist):
         print('member does not exist')
         return {'error': 'Member Does not exist'}
-    except :
-        print('internal error occurred')
-        return {'error': 'Illegal data error'}
     return {'success':True}
+
+
+def checkin(request):
+    print(request.POST)
+    issue = Issue.objects.get(pk=request.POST['pk'])
+
+    return
+
