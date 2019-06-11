@@ -1,5 +1,5 @@
 from .models import *
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404 ,render , render_to_response
 from datetime import datetime , timedelta
 from django.contrib.contenttypes.models import ContentType
 
@@ -15,7 +15,7 @@ def addBook(request):
         book = Book(details=isbnObject,active=True,is_issued=False)
         book.save()
     isbnObject.save()
-    return {'success':True}
+    return render_to_response('checkin.html',context={'success':True})
 
 
 def checkout(request):
@@ -48,11 +48,11 @@ def checkout(request):
         isbn.save()
     except ISBN.DoesNotExist:
         print('book not exist')
-        return {'error':'Book Does not exist'}
+        return render(request,'member/checkout.html',context={'error':'Book Does not exist'})
     except (Student.DoesNotExist , Faculty.DoesNotExist):
         print('member does not exist')
-        return {'error': 'Member Does not exist'}
-    return {'success':True}
+        return render(request,'member/checkout.html',context={'error': 'Member Does not exist'})
+    return render_to_response('member/checkout.html',context={'success':True})
 
 
 def checkin(request):
