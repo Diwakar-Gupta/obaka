@@ -61,11 +61,16 @@ def member_checkout(request,membertype,memberpk):
     context = {}
     if request.method == 'POST':
         context = handler.checkout(request)
-    if context[0]:
-        return render_to_response('member/checkout.html', context=context[1])
-    else :
-        return render(request,'member/checkout.html',context=context[1])
+    else:
+        if membertype == 'Student':
+            return render(request,'member/checkout.html',context={'member':Student.objects.get(pk=memberpk)})
+        elif membertype == 'Faculty':
+            return render(request, 'member/checkout.html', context={'member': Faculty.objects.get(pk=memberpk)})
 
+    if context['success']:
+        return render_to_response('member/checkout.html', context=context)
+    else :
+        return render(request,'member/checkout.html',context=context)
 
 
 def member_circulation(request,membertype,memberpk):

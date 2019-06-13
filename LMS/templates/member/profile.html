@@ -21,17 +21,17 @@
             <!-- Settings Nav -->
             <div class="nav-mobile-container">
               <div class="js-btn-list-to-dropdown nav-mobile nav-mobile-left nav-mobile-text-left nav-mobile-shade" data-transform-resolution="1199.98" data-tabs-mobile-type="slide-up-down" data-btn-classes="btn btn-primary">
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2 active" href="./my-profile.html">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2 active" href="{% url 'member-profile' membertype=member.settings.type  memberpk=member.pk %}">
                   <i class="nova-user icon-text align-middle mr-2"></i>
                   <span class="align-middle">My Profile</span>
                 </a>
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="preferences.html">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="{% url 'member-checkout' membertype=member.settings.type  memberpk=member.pk %}">
                   <i class="nova-panel icon-text align-middle mr-2"></i>
-                  <span class="align-middle">Preferences</span>
+                  <span class="align-middle">Checkout</span>
                 </a>
-                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="security.html">
+                <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="{% url 'member-circulation' membertype=member.settings.type  memberpk=member.pk %}">
                   <i class="nova-shield icon-text align-middle mr-2"></i>
-                  <span class="align-middle">Security</span>
+                  <span class="align-middle">Circulations</span>
                 </a>
                 <a class="nav-mobile-link btn btn-outline-primary border-0 mr-2" href="linked-accounts.html">
                   <i class="nova-link icon-text align-middle mr-2"></i>

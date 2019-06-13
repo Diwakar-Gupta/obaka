@@ -49,12 +49,11 @@ def checkout(request):
         isbn.save()
     except ISBN.DoesNotExist:
         print('book not exist')
-        return (False,{'error':'Book Does not exist','member':member})
+        return {'error':'Book Does not exist','member':member}
     except (Student.DoesNotExist , Faculty.DoesNotExist):
         print('member does not exist')
-        return (False,{'error': 'Member Does not exist','member':member})
-    return (True,{'success':True,'member':member})
-
+        return {'error': 'Member Does not exist','member':member}
+    return {'success':True,'member':member}
 
 
 def checkin(request):
