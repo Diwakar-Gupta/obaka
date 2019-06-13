@@ -20,6 +20,7 @@ def addBook(request):
 
 def checkout(request):
     print(request.POST)
+    member = None
     try :
         membertype = request.POST['membertype']
         if membertype == 'Student':
@@ -48,11 +49,12 @@ def checkout(request):
         isbn.save()
     except ISBN.DoesNotExist:
         print('book not exist')
-        return render(request,'member/checkout.html',context={'error':'Book Does not exist'})
+        return (False,{'error':'Book Does not exist','member':member})
     except (Student.DoesNotExist , Faculty.DoesNotExist):
         print('member does not exist')
-        return render(request,'member/checkout.html',context={'error': 'Member Does not exist'})
-    return render_to_response('member/checkout.html',context={'success':True})
+        return (False,{'error': 'Member Does not exist','member':member})
+    return (True,{'success':True,'member':member})
+
 
 
 def checkin(request):

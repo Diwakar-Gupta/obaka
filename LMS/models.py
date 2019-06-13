@@ -68,6 +68,14 @@ class Book(models.Model):
     def __str__(self):
         return self.details.title+"  "+str(self.id)
 
+    def delete(self, using=None, keep_parents=False):
+        isbn = self.details
+        isbn.quantity -= 1
+        if self.is_issued:
+            isbn.count_issued -= 1
+        isbn.save()
+        super(Book, self).delete(using=None, keep_parents=False)
+        
 
 class Issue(models.Model):
     book = models.ForeignKey(Book,models.CASCADE)

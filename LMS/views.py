@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , render_to_response
 from django.contrib import auth
 from django.contrib.auth.views import redirect_to_login
 from . import handler
@@ -53,7 +53,6 @@ def member_profile(request,membertype,memberpk):
     return render(request,'member/profile.html',context={'member':member})
 
 
-
 def member_checkout(request,membertype,memberpk):
     user = auth.get_user(request)
     if not user.is_staff:
@@ -62,13 +61,11 @@ def member_checkout(request,membertype,memberpk):
     context = {}
     if request.method == 'POST':
         context = handler.checkout(request)
-    if membertype == 'Student':
-        member = Student.objects.get(pk=memberpk)
-        context['member'] = member
-    elif membertype == 'Faculty':
-        member = Faculty.objects.get(pk=memberpk)
-        context['member'] = member
-    return render(request, 'member/checkout.html', context=context)
+    if context[0]:
+        return render_to_response('member/checkout.html', context=context[1])
+    else :
+        return render(request,'member/checkout.html',context=context[1])
+
 
 
 def member_circulation(request,membertype,memberpk):
