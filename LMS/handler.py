@@ -5,17 +5,25 @@ from django.contrib.contenttypes.models import ContentType
 
 def addBook(request):
     print(request)
-    isbnObject=None
-    try :
-        isbnObject=get_object_or_404(ISBN,isbn=request['isbn'])
-    except :
-        isbnObject = ISBN(isbn=request['isbn'],author=request['author'],title=request['title'],category=request['category'],publisher=request['publisher'],price=request['price'],quantity=request['quantity'])
-        isbnObject.save()
+    isbnObject=ISBN.objects.get_or_create(isbn=request['isbn'])
+
+    if isbnObject[1]:
+        isbnObject[0].author = request['author']
+        isbnObject[0].title = request['title']
+        isbnObject[0].category = request['category']
+        isbnObject[0].publisher = request['publisher']
+        isbnObject[0].price = request['price']
+        isbnObject[0].quantity = request['quantity']
+    else :
+        isbnObject[0].quantity += int(request['quantity'])
+
+    isbnObject[0].save()
+
     for _ in range(int(request['quantity'])):
-        book = Book(details=isbnObject,active=True,is_issued=False)
+        book = Book(details=isbnObject[0],active=True,is_issued=False)
         book.save()
-    isbnObject.save()
-    return render_to_response('checkin.html',context={'success':True})
+
+    return {'success':True}
 
 
 def checkout(request):
@@ -37,7 +45,7 @@ def checkout(request):
         member.count_books += 1
         contentype = ContentType.objects.get_or_create(app_label='LMS', model=membertype)
         if contentype[1]:
-            contentype.save()
+            contentype[0].save()
         contentype = contentype[0]
         issue = Issue(book=book, member_type=contentype, member_id=member.pk, checkoutfrom=checkoutfrom,
                       duedate=duedate, autorenew=autorenew, return_date=None )

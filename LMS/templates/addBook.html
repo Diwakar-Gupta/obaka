@@ -6,7 +6,10 @@
 {% block content %}
 
     {% if success %}
-        <h4 style="color: beige;" class="p-0 bg-success">book added successfully</h4>
+        <div class="alert alert-success alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong>Success!</strong> book added successfully
+</div>
     {% endif %}
 
             <div class="py-4 px-3 px-md-4">
@@ -27,32 +30,32 @@
 
                   <h6 class="font-weight-semi-bold mb-3">Author</h6>
                   <div class="mb-3 mb-md-4">
-                    <input name="author" required class="form-control" placeholder="Author" type="text">
+                    <input name="author"  class="form-control" placeholder="Author" type="text">
                   </div>
 
                     <h6 class="font-weight-semi-bold mb-3">Title</h6>
                   <div class="mb-3 mb-md-4">
-                    <input required name="title" class="form-control bg-lighter" placeholder="Title" type="text">
+                    <input  name="title" class="form-control bg-lighter" placeholder="Title" type="text">
                   </div>
 
                   <h6 class="font-weight-semi-bold mb-3">Category</h6>
                   <div class="mb-3 mb-md-4">
-                    <input required name="category" class="form-control" placeholder="Category" type="text">
+                    <input  name="category" class="form-control" placeholder="Category" type="text">
                   </div>
 
                     <h6 class="font-weight-semi-bold mb-3">Publisher</h6>
                   <div class="mb-3 mb-md-4">
-                    <input required name="publisher" class="form-control bg-lighter" placeholder="Publisher" type="text">
+                    <input  name="publisher" class="form-control bg-lighter" placeholder="Publisher" type="text">
                   </div>
 
                   <h6 class="font-weight-semi-bold mb-3">Price</h6>
                   <div class="mb-3 mb-md-4">
-                    <input required name="price" class="form-control" placeholder="Price" min="0" type="number">
+                    <input  name="price" class="form-control" placeholder="Price" min="0" type="number">
                   </div>
 
                   <h6 class="font-weight-semi-bold mb-3">Quantity</h6>
                   <div class="mb-3 mb-md-4">
-                    <input required name="quantity" class="form-control" placeholder="Quantity" min="0" type="number">
+                    <input  name="quantity" class="form-control" placeholder="Quantity" min="0" type="number">
                   </div>
 
 
