@@ -1,299 +1,261 @@
-{% extends 'base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=chrome">
+
+    <title>Sign up</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    <!-- Font Awesome css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div id="dismiss">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="sidebar-header">
+                <h3>Bootstrap Sidebar</h3>
+            </div>
+
+            <ul class=" components">
+                <li class="nav-item active">
+                    <a href="index.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#bookSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+                            class="	fas fa-book-open"></i>Book</a>
+                    <ul class="collapse list-unstyled" id="bookSubmenu">
+                        <li>
+                            <a href="#">
+                                Category</a>
+                        </li>
+                        <li>
+                            <a href="#">All book</a>
+                        </li>
+                        <li>
+                            <a href="bookform.html">add</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#memberSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+                            class="	fas fa-user-alt"></i>Member</a>
+                    <ul class="collapse list-unstyled" id="memberSubmenu">
+                        <li>
+                            <a href="#">Category</a>
+                        </li>
+                        <li>
+                            <a href="#">All Member</a>
+                        </li>
+                        <li>
+                            <a href="memberForm.html">add</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="index.html">
+                        <i class="fas fa-sync"></i>
+                        Circulation</a>
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Pages</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="table.html">table</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="#" class="download">Download source</a>
+                </li>
+                <li>
+                    <a href="#" class="article">Back to article</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="contentainer" class="bg-Secondary ">
+
+            <nav id="top-nav" class="navbar navbar-expand-lg navbar-light bg-light">
+                <div style="display:inline-flex;width: -webkit-fill-available;justify-content: space-between;">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info mr-2">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <form class="form-inline" id="search" action="#">
+
+                        <div class="input-group mb-0">
+                            <input id="search-top" type="text" class="form-control collapse" placeholder="Search"
+                                style="min-width: 3cm;">
+                            <div class="input-group-append">
+                                <span data-toggle="collapse" data-target="#search-top" class="fa fa-search fa-2x"
+                                    style="color:#999999" aria-expanded="true"></span>
+                            </div>
+                        </div>
+
+                    </form>
+                    <span class="dropdown dropleft">
+                        <div class="notification" data-toggle="dropdown"  aria-expanded="false">
+                            <i src="user.jpg" alt="User" class="fa fa-bell icon"></i>
+                            <span class="num" style="">3</span>
+                        </div>
+
+                        <div class="dropdown-menu notification-content">
+                            <a class="dropdown-item" href="#">
+                                <i class="fa fa-user-alt pr-2"></i>
+                                noti 23456hgccfgh
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa fa-user-alt pr-2"></i>
+                                noti 23456hgccfgh
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa fa-user-alt pr-2"></i>
+                                noti 23456hgccfgh
+                            </a>
+                        </div>
+                    </span>
+
+                    <span class="dropdown dropleft">
+                        <div class="" data-toggle="dropdown" aria-expanded="false">
+                            <img src="user.jpg" alt="User" class="rounded-circle" width="40px">
+                        </div>
+                        <div class="dropdown-menu notification-content">
+                            <div class="dropdown-header">User</div>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Link 1</a>
+                            <a class="dropdown-item" href="#">Link 2</a>
+                            <a class="dropdown-item" href="#">Sign Out</a>
+                        </div>
+                    </span>
+                </div>
+            </nav>
 
 
-
-{% block content %}
-        <div class="py-4 px-3 px-md-4" >
-
-          <div class="row">
-              <div class="col-md-6 col-xl-5 mb-3 mb-md-4 mb-xl-5">
-                  <section class="card">
-                    <header class="card-header p-2">
-                      <h2 class="panel__title">Current Issued </h2>
-                    </header>
-                    <div class="card-body p-2">
-                      <canvas id="chart-area" width="318" height="158" class="chartjs-render-monitor" style="display: block; width: 318px; height: 158px;"></canvas>
+            <div id="content" class="p-3">
+                
+                <div class="row">
+                    <div class="col-12 col-sm-5">
+                        <div class="col bg-light">
+                            <span class="fa-stack fa-lg">
+                                <i class="far fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-arrow-up fa-stack-1x"></i>
+                              </span>
+                            <span">CheckIn
+                        </span"></div>
+                        <div class="col bg-light">
+                            <span class="fa-stack fa-lg">
+                                <i class="far fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-arrow-up fa-stack-1x"></i>
+                              </span>
+                            <span">CheckIn
+                        </span"></div>
+                        <div class="col bg-light">
+                            <span class="fa-stack fa-lg">
+                                <i class="far fa-circle fa-stack-2x"></i>
+                                <i class="fas fa-arrow-up fa-stack-1x"></i>
+                              </span>
+                            <span">CheckIn
+                        </span"></div>
                     </div>
-                  </section>
+                    <div class="col-2 col-sm-2"></div>
+                    <div class="col-12 col-sm-5">
+                        <div class="row bg-light">
+                            <i class="fa fa-user pr-4">  </i>
+                            <span">thid is ckajsi
+                        </span"></div>
+                        <div class="row bg-light">
+                            <i class="fa fa-user pr-4">  </i>
+                            <span">thid is ckajsi
+                        </span"></div>
+                        <div class="row bg-light">
+                            <i class="fa fa-user pr-4">  </i>
+                            <span">thid is ckajsi
+                        </span"></div>
+                    </div>
                 </div>
-
-            <div class="col-md-6 col-xl-5 mb-3 mb-md-4 mb-xl-5">
-                <section class="card">
-                  <header class="card-header p-2">
-                    <h2 class="panel__title">Current Newspaper</h2>
-                  </header>
-                  <div class="card-body p-2">
-                    <canvas id="chart-area2" width="318" height="158" class="chartjs-render-monitor" style="display: block; width: 318px; height: 158px;"></canvas>
-                  </div>
-                </section>
-              </div>
-
-            <!--script>
-
-              var config = {
-                type: 'doughnut',//doughnut , pie
-                data: {
-                  datasets: [{
-                    data: [
-                      100,
-                      200,
-                      20,
-                    ],
-                    backgroundColor: [
-                      window.chartColors.red,
-                      window.chartColors.orange,
-                      window.chartColors.yellow,
-                    ],
-                    label: 'Dataset 1'
-                  }],
-                  labels: [
-                    'Red',
-                    'Orange',
-                    'Yellow',
-                  ]
-                },
-               // cutoutPercentage:40,
-                options: {
-                  responsive: true
-                }
-              };
-
-              window.onload = function() {
-                let ctx1 = document.getElementById('chart-area').getContext('2d');
-                window.myPie1 = new Chart(ctx1, config);
-                let ctx2 = document.getElementById('chart-area2').getContext('2d');
-                window.myPie2 = new Chart(ctx2, config);
-              };
-
-
-            </script-->
-
-
-          </div>
-
-
-
-          <div class="row align-items-center mb-3 mb-md-5">
-              <div class="col-md mb-2 mb-md-0">
-                <h1 class="h3 mb-0">This Session Report</h1>
-              </div>
-
+                
             </div>
-
-          <div class="row">
-              <div class="col-md-6 col-xl-4 mb-3 mb-xl-5">
-                <!-- Card -->
-                <div class="card flex-row align-items-center p-3 p-md-4">
-                  <img class="d-flex icon-img icon-img-xl mr-2 mr-md-3" src="{% static '/preview/nova-v1-0/assets/svg/crypto/bitcoin-cash.svg' %}" alt="Image description">
-                  <div>
-                    <h4 class="lh-1 mb-1">452</h4>
-                    <small>Total Book Issues</small>
-                  </div>
-                  <div class="ml-auto text-muted">
-                    ≈ 0.00 USD
-                  </div>
-                </div>
-                <!-- End Card -->
-              </div>
-              <div class="col-md-6 col-xl-4 mb-3 mb-xl-5">
-                <!-- Card -->
-                <div class="card flex-row align-items-center p-3 p-md-4">
-                  <img class="d-flex icon-img icon-img-xl mr-2 mr-md-3" src="{% static '/preview/nova-v1-0/assets/svg/crypto/eos.svg' %}" alt="Image description">
-                  <div>
-                    <h4 class="lh-1 mb-1">374</h4>
-                    <small>Total Returns</small>
-                  </div>
-                  <div class="ml-auto text-muted">
-                    ≈ 0.00 USD
-                  </div>
-                </div>
-                <!-- End Card -->
-              </div>
-              <div class="col-md-6 col-xl-4 mb-3 mb-xl-5">
-                <!-- Card -->
-                <div class="card flex-row align-items-center p-3 p-md-4">
-                  <img class="d-flex icon-img icon-img-xl mr-2 mr-md-3" src=" {% static 'preview/nova-v1-0/assets/svg/crypto/ripple.svg' %}" alt="Image description">
-                  <div>
-                    <h4 class="lh-1 mb-1">456/600</h4>
-                    <small>Revenue</small>
-                  </div>
-                  <div class="ml-auto text-muted">
-                    ≈ 0.00 USD
-                  </div>
-                </div>
-                <!-- End Card -->
-              </div>
-            </div>
-
-
-
-
-          <div class="row" ></div>
-          <div class="row">
-            <div class="col">
-      <div class="card mb-3 mb-md-4">
-              <div class="card-header">
-                <h5 class="h6 font-weight-semi-bold text-uppercase mb-0">Area Chart #1</h5>
-              </div>
-
-              <div class="card-body">
-              <canvas id="issueReturn" style="display: block; width: 640px; height: 319px;" width="640" height="319" class="chartjs-render-monitor"></canvas>
-              </div>
-            </div>
-  </div>
-
-
-  <script>
-
-
-  var configCurrentIssued = {
-                type: 'pie',//doughnut , pie
-
-
-                data: {
-                  datasets: [{
-                    data: [
-                      100,
-                      200,
-                    ],
-                    backgroundColor: [
-                      window.chartColors.red,
-                      window.chartColors.green,
-                    ],
-                    label: 'Dataset 1'
-                  }],
-
-                  labels: [
-                    'OverDue',
-                    'Total Issued',
-                  ]
-                },
-               // cutoutPercentage:40,
-                options: {
-                  responsive: true
-                }
-              };
-
-              var configRevenue = {
-                type: 'pie',//doughnut , pie
-                data: {
-                  datasets: [{
-                    data: [
-                      600,
-                      456,
-                    ],
-                    backgroundColor: [
-                      window.chartColors.red,
-                      window.chartColors.green,
-                    ],
-                    label: 'Dataset 1'
-                  }],
-
-                  labels: [
-                    'Pending',
-                    'Collected',
-                  ]
-                    ,
-
-
-                },
-               // cutoutPercentage:40,
-                options: {
-                  responsive: true
-                }
-              };
-
-
-
-      var lineChartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-          label: 'My First dataset',
-          borderColor: window.chartColors.red,
-          backgroundColor: window.chartColors.red,
-          fill: false,
-          data: [
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor()
-          ],
-          yAxisID: 'y-axis-1',
-        }, {
-          label: 'My Second dataset',
-          borderColor: window.chartColors.blue,
-          backgroundColor: window.chartColors.blue,
-          fill: false,
-          data: [
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor(),
-            randomScalingFactor()
-          ],
-          yAxisID: 'y-axis-2'
-        }]
-      };
-
-      window.onload = function() {
-
-
-
-        let ctx1 = document.getElementById('chart-area').getContext('2d');
-                window.myPie1 = new Chart(ctx1, configCurrentIssued);
-                let ctx2 = document.getElementById('chart-area2').getContext('2d');
-                window.myPie2 = new Chart(ctx2, configRevenue);
-
-
-
-
-        let ctx3 = document.getElementById('issueReturn').getContext('2d');
-        //window.myLine =
-   Chart.Line(ctx3, {
-          data: lineChartData,
-          options: {
-            responsive: true,
-            hoverMode: 'base.html',
-            stacked: false,
-            title: {
-              display: true,
-              text: 'Chart.js Line Chart - Multi Axis'
-            },
-            scales: {
-              yAxes: [{
-                type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                display: true,
-                position: 'left',
-                id: 'y-axis-1',
-              }, {
-                type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-                display: true,
-                position: 'right',
-                id: 'y-axis-2',
-
-                // grid line settings
-                gridLines: {
-                  drawOnChartArea: false, // only want the grid lines for one axis to show up
-                },
-              }],
-            }
-          }
-        });
-      };
-
-  </script>
-          </div>
-
-
-
-
 
         </div>
+    </div>
+    <div class="overlay"></div>
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
 
-{% endblock %}
+    <!-- jQuery Custom Scroller CDN -->
+
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+<script src="index.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#sidebar").mCustomScrollbar({
+            theme: "minimal"
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar, #contentainer').toggleClass('active');
+            $('.overlay').toggleClass('active');
+            $('.collapse.in').toggleClass('in');
+            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        });
+
+        $('#dismiss, .overlay').on('click', function () {
+            $('#sidebar, #contentainer').toggleClass('active');
+            $('.overlay').removeClass('active');
+        });
+    });
+</script>
+
+</html>

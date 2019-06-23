@@ -7,9 +7,10 @@ urlpatterns = [
     path('',views.index,name='index'),
 
     path('books/',views.books,name='books'),
-    path('books/add',views.booksAdd,name='addBook'),
+    path('books/add',views.booksAdd,name='book-add'),
 
     path('member/',views.member,name='member'),
+    path('member/add',views.memberAdd,name='member-add'),
     path('member/<str:membertype>/<int:memberpk>/',views.member_profile,name='member-profile'),
     path('member/<str:membertype>/<int:memberpk>/profile',views.member_profile,name='member-profile'),
     path('member/<str:membertype>/<int:memberpk>/checkout',views.member_checkout,name='member-checkout'),

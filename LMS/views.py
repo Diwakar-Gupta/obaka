@@ -14,10 +14,11 @@ def index(request):
     return render(request, 'index.html')
 
 
-def books(request):
+def books(request,filter='all'):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
+
     return render(request, 'book.html',context={'isbns':ISBN.objects.all()})
 
 
@@ -28,7 +29,7 @@ def booksAdd(request):
     context={}
     if request.method == 'POST':
         context = handler.addBook(request.POST)
-    return render(request, 'addBook.html',context=context)
+    return render(request, 'bookform.html',context=context)
 
 
 def member(request):
@@ -41,6 +42,13 @@ def member(request):
         members.append(f)
 
     return render(request, 'member.html', context={'members':members})
+
+
+def memberAdd(request):
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
+    return render(request,'memberForm.html')
 
 
 def member_profile(request,membertype,memberpk):
@@ -131,4 +139,4 @@ def report(request):
 
 
 def demo(request):
-    return render(request,'demo.html')
+    return render(request,'addMember.html')

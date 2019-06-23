@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=chrome">
+
+    <title>Collapsible sidebar using Bootstrap 4</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Our Custom CSS -->
+
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+    <!-- Scrollbar Custom CSS -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    <!-- Font Awesome css -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+        integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div id="dismiss">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="sidebar-header">
+                <h3>Bootstrap Sidebar</h3>
+            </div>
+
+            <ul class=" components">
+                <li class="nav-item active">
+                    <a href="memberForm.html">
+                        <i class="fas fa-tachometer-alt"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="#bookSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+                            class="	fas fa-book-open"></i>Book</a>
+                    <ul class="collapse list-unstyled" id="bookSubmenu">
+                        <li>
+                            <a href="#">
+                                Category</a>
+                        </li>
+                        <li>
+                            <a href="#">All book</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#memberSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+                            class="	fas fa-user-alt"></i>Member</a>
+                    <ul class="collapse list-unstyled" id="memberSubmenu">
+                        <li>
+                            <a href="#">Category</a>
+                        </li>
+                        <li>
+                            <a href="#">All Member</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Pages</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Portfolio</a>
+                </li>
+                <li>
+                    <a href="#">Contact</a>
+                </li>
+            </ul>
+
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="#" class="download">Download source</a>
+                </li>
+                <li>
+                    <a href="#" class="article">Back to article</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="contentainer" class="bg-light">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <div style="display:inline-flex;    width: -webkit-fill-available;">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info mr-2">
+                            <i class="fas fa-align-left"></i>
+                        </button>
+
+                        <div id="top-nav-content" style="width: -webkit-fill-available;">
+                            
+
+                            
+
+                            
+                            <span class="dropdown dropleft nav-content">
+                                    <div class="" data-toggle="dropdown">
+                                        <img src="user.jpg" alt="User" class="rounded-circle" width="40px">
+                                    </div>
+                                    <div class="dropdown-menu">
+                                        <div class="dropdown-header">User</div>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Link 1</a>
+                                        <a class="dropdown-item" href="#">Link 2</a>
+                                        <a class="dropdown-item" href="#">Sign Out</a>
+                                    </div>
+                                </span><span class="dropdown dropleft bg-white nav-content">
+                                    <div class="" data-toggle="dropdown">
+                                        <i src="user.jpg" alt="User" class="rounded-circle far fa-envelope fa-2x"><span class="badge badge-success rounded-circle fas fas-2x  upper-badge">3</span></i>
+                                    </div>
+    
+                                    <div class="dropdown-menu">
+                                        <div class="dropdown-header">User</div>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Link 1</a>
+                                        <a class="dropdown-item" href="#">Link 2</a>
+                                        <a class="dropdown-item" href="#">Sign Out</a>
+                                    </div>
+                                </span><form class="form-inline nav-content " id="search" action="#">
+    
+                                    <div class="input-group mb-0">
+                                        <input id="search-top" type="text" class="form-control collapse" placeholder="Search">
+                                        <div class="input-group-append">
+                                            <span data-toggle="collapse" data-target="#search-top" class="fas fa-search fa-2x"></span>
+                                        </div>
+                                    </div>
+    
+                                </form></div>
+                    </div>
+
+
+
+                </div>
+            </nav>
+
+            <div id="content" class="p-3 bg-white">
+                <h2>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Using Bootstrap collapsible Sidebar 4</font>
+                    </font>
+                </h2>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+
+                <div class="line"></div>
+
+                <h2>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum Pain</font>
+                    </font>
+                </h2>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+
+                <div class="line"></div>
+
+                <h2>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum Pain</font>
+                    </font>
+                </h2>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+
+                <div class="line"></div>
+                <h2>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Using Bootstrap collapsible Sidebar 4</font>
+                    </font>
+                </h2>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+
+                <div class="line"></div>
+
+                <h2>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum Pain</font>
+                    </font>
+                </h2>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+
+                <div class="line"></div>
+
+                <h2>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum Pain</font>
+                    </font>
+                </h2>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+
+                <div class="line"></div>
+                <h2>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Using Bootstrap collapsible Sidebar 4</font>
+                    </font>
+                </h2>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+
+                <div class="line"></div>
+
+                <h2>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum Pain</font>
+                    </font>
+                </h2>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+
+                <div class="line"></div>
+
+                <h2>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum Pain</font>
+                    </font>
+                </h2>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+
+                <div class="line"></div>
+
+                <h3>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum Pain</font>
+                    </font>
+                </h3>
+                <p>
+                    <font style="vertical-align: inherit;">
+                        <font style="vertical-align: inherit;">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                            sed tempor and vitality, so that the labor and sorrow, some important things to do eiusmod.
+                        </font>
+                        <font style="vertical-align: inherit;">Over the years, I will come, who will nostrud aliquip out
+                            of her the advantage of exercise, so that stimulus efforts if the school district and
+                            longevity. </font>
+                        <font style="vertical-align: inherit;">Want to be a pain in the cupidatat cillum has been
+                            criticized in the Duis et dolore magna flee produces no resultant pleasure. </font>
+                        <font style="vertical-align: inherit;">Excepteur cupidatat blacks are not excepteur, is soothing
+                            to the soul, that is, they deserted the general duties of those who are to blame for your
+                            troubles.</font>
+                    </font>
+                </p>
+            </div>
+
+        </div>
+    </div>
+    <div class="overlay"></div>
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+
+    <!-- jQuery Custom Scroller CDN -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#sidebar").mCustomScrollbar({
+                theme: "minimal"
+            });
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar, #contentainer').toggleClass('active');
+                $('.overlay').toggleClass('active');
+                $('.collapse.in').toggleClass('in');
+                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+            });
+
+            $('#dismiss, .overlay').on('click', function () {
+                $('#sidebar, #contentainer').toggleClass('active');
+                $('.overlay').removeClass('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

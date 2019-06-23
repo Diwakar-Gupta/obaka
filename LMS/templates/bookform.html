@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+                <div class="bg-white">
+                    <form method="GET" >
+
+                        <div class="row ml-0 mr-0">
+                            <div class="col-12 col-md-6" style="padding:0 16px;">
+                                <div class="form-group">
+                                    <label for="isbn">ISBN:</label>
+                                    <input type="number" min="10000000000" max="9999999999999"  class="form-control" placeholder="ISBN"
+                                        name="isbn" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="author">Author:</label>
+                                    <input type="text" class="form-control" placeholder="Author"
+                                        name="author" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="publisher">Publisher:</label>
+                                    <input type="text" class="form-control" placeholder="Publisher:"
+                                        name="publisher" required>
+                                </div>
+                                
+                            </div>
+                            <div class="col-12 col-md-6" style="padding:0 16px;">
+
+                                <div class="form-group">
+                                    <label for="price">Price:</label>
+                                    <input type="number" class="form-control" min="0" placeholder="Price:"
+                                        name="price" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="category">Category:</label>
+                                    <input type="text" class="form-control" placeholder="Category:"
+                                        name="category" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Quantity:</label>
+                                    <input value="0" type="number" class="form-control" placeholder="Quantity:"
+                                        name="quantity" required>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </form>
+                </div>
+{% endblock %}

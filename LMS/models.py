@@ -6,7 +6,7 @@ from datetime import datetime , timedelta
 
 
 class UserBasicSetting(models.Model):
-    type = models.CharField(max_length=20)
+    type = models.CharField(max_length=20,default="Custom")
     maxBook = models.PositiveSmallIntegerField()
     maxDay = models.IntegerField()
     finePerDay = models.IntegerField()
