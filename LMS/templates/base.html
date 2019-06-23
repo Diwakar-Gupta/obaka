@@ -37,18 +37,21 @@
 
             <ul class=" components">
                 <li class="nav-item active">
-                    <a href="index.html">
+                        <a href="{% url 'index' %}">
                         <i class="fas fa-tachometer-alt"></i>
-                        Dashboard
+                        <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
                     <a href="#bookSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
-                            class="	fas fa-book-open"></i>Book</a>
+                            class="	fas fa-book-open"></i>
+                        <span>Book</span>
+                    </a>
                     <ul class="collapse list-unstyled" id="bookSubmenu">
                         <li>
                             <a href="#">
-                                Category</a>
+                                Category
+                            </a>
                         </li>
                         <li>
                             <a href="#">All book</a>
@@ -60,13 +63,15 @@
                 </li>
                 <li>
                     <a href="#memberSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
-                            class="	fas fa-user-alt"></i>Member</a>
+                            class="	fas fa-user-alt"></i>
+                        <span>Member</span>
+                    </a>
                     <ul class="collapse list-unstyled" id="memberSubmenu">
                         <li>
                             <a href="#">Category</a>
                         </li>
                         <li>
-                            <a href="#">All Member</a>
+                            <a href="{% url 'member' %}">All Member</a>
                         </li>
                         <li>
                             <a href="{% url 'member-add' %}">add</a>
@@ -161,6 +166,8 @@
 
             <div id="content" class="p-3 ">
                 {% block content %}
+
+
 
                 {% endblock %}
              </div>
