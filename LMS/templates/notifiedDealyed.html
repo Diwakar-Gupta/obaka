@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <input onkeyup="searchTable()" data-target="#allMember" type="text" class="form-control searchTable" style="width:100%"
+                    placeholder="Search">
+              <table id="table" class="table table-striped bg-white">
+
+                    <thead>
+                        <tr>
+                            <td>
+                                        <input type="checkbox" class="form-control">
+                                    </td>
+                            <th>ID
+                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+                            <th>Name
+                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+                            <th>
+                                Type
+                                <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+                            <th>
+                                Active
+                                <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="allMember">
+
+                    {% for member in members %}
+
+                        <tr>
+                        <td>
+                                        <input type="checkbox" class="form-control">
+                                    </td>
+                            <td>{{ member.pk }}</td>
+                            <td>{{ member.name }}</td>
+                            <td><a target="_blank" href="/admin/LMS/userbasicsetting/{{ member.settings.pk }}/change">{{ member.settings.type }}</a></td>
+                            <td>{{ member.active }}</td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+{% endblock %}

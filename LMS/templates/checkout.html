@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="bg-white">
+                    <form method="GET" >
+
+                        <div class="row ml-0 mr-0">
+                            <div class="col-12 col-md-6" style="padding:0 16px;">
+
+                                <div class="form-group">
+                                <select name="type" class="custom-select"">
+                                        <option selected value="student">Student</option>
+                                        <option value="faculty" >Faculty</option>
+                                        <option value="custom" >custom</option>
+                                      </select>
+                                    </div>
+
+                                <div class="form-group">
+                                    <label for="id">ID</label>
+                                    <input type="number" class="form-control" placeholder="ID"
+                                        name="id" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="isbn">ISBN</label>
+                                    <input type="number" class="form-control" placeholder="ISBN"
+                                        name="isbn" required>
+                                </div>
+
+                            </div>
+                            <div class="col-12 col-md-6" style="padding:0 16px;">
+                                    <div id="student-form" class="collapse">
+                                        <div class="form-group">
+                                            <label for="id">ID</label>
+                                            <input name="id" type="text" class="form-control" placeholder="ID" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="branch">Branch</label>
+                                            <select name="branch" class="custom-select">
+                                                <option value="CSE">B.Tech CSE</option>
+                                                <option value="ETC" >B.Tech ETC</option>
+                                                <option value="BBA" >BBA</option>
+                                              </select>
+                                        </div>
+
+                                    </div>
+                                    <div id="faculty-form" class="collapse">
+                                        <div class="form-group form-check">
+                                            <label class="form-check-label">
+                                                <input class="form-check-input" type="checkbox" name="ishod" required> HOD
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                                <label for="branch">Branch</label>
+                                                <select name="branch" class="custom-select">
+                                                    <option value="CSE">B.Tech CSE</option>
+                                                    <option value="ETC" >B.Tech ETC</option>
+                                                    <option value="BBA" >BBA</option>
+                                                  </select>
+                                            </div>
+                                    </div>
+                                    <div id="custom-form" class="collapse">
+
+                                    </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </form>
+                </div>
+
+{% endblock %}

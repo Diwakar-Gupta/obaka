@@ -79,7 +79,10 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="{% url 'notifiedDelayed' %}">
+                        <i class="fas fa-sync"></i>
+                        <span>Notify Delayed</span>
+                    </a>
                 </li>
                 <li>
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
@@ -117,7 +120,7 @@
         <!-- Page Content  -->
         <div id="contentainer" class="bg-Secondary ">
 
-            <nav id="top-nav" class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav id="top-nav" class="navbar navbar-expand-lg navbar-light bg-light shadow">
                 <div style="display:inline-flex;width: -webkit-fill-available;justify-content: space-between;">
                     <button type="button" id="sidebarCollapse" class="btn btn-info mr-2">
                         <i class="fas fa-align-left"></i>
