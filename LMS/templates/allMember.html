@@ -29,7 +29,7 @@
                     {% for member in members %}
 
                         <tr>
-                            <td>{{ member.pk }}</td>
+                            <td><a href="{% url 'member-profile' membertype=member.settings.type memberpk=member.pk  %}">{{ member.pk }}</a></td>
                             <td>{{ member.name }}</td>
                             <td><a target="_blank" href="/admin/LMS/userbasicsetting/{{ member.settings.pk }}/change">{{ member.settings.type }}</a></td>
                             <td>{{ member.active }}</td>

@@ -95,6 +95,10 @@ a[aria-expanded="true"] {
     background: #6d7fcc;
 }
 
+#sidebar ul li ul li {
+    padding-left: 45px;
+}
+
 #dismiss {
     width: 35px;
     height: 35px;
@@ -142,7 +146,6 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
 }
 
 ul.CTAs {
