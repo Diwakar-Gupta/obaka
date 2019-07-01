@@ -182,6 +182,7 @@ a.article:hover {
     position: fixed;
     margin-left:  250px;
     width: -webkit-fill-available;
+    height: 100%;
 }
 
 #contentainer.active {
@@ -190,7 +191,7 @@ a.article:hover {
 }
 
 #contentainer #content{
-    height: -webkit-fill-available;
+    height: calc(100% - 60px);
     overflow: auto;
 }
 
