@@ -43,19 +43,19 @@
                         <span>Dashnoard</span>
                     </a>
                 </li><li class="nav-item active">
-                        <a href="">
+                        <a href="{% url 'member-checkout' membertype=member.settings.type memberpk=member.pk %}">
                         <i class="fas fa-info-circle"></i>
                         <span>Check Out</span>
                     </a>
                 </li>
                 <li class="nav-item active">
-                        <a href="">
+                        <a href="{% url 'member-profile' membertype=member.settings.type memberpk=member.pk %}">
                         <i class="fas fa-info-circle"></i>
                         <span>Details</span>
                     </a>
                 </li>
                 <li class="nav-item active">
-                        <a href="">
+                        <a href="{% url 'member-checkout' membertype=member.settings.type memberpk=member.pk %}">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Fines</span>
                     </a>

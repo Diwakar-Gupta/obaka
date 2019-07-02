@@ -1,0 +1,69 @@
+{% extends 'member/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12 col-sm-6 shadow">
+        <h6 style="color:royalblue">Check out for Diwakar gupta</h6>
+        <form action="#">
+            <input required type="number" class="form-control" name='isbn' placeholder="barcode">
+            <button class="btn btn-primary" type="submit"><i class="fas fa-check"></i></button>
+            <br>
+            <h7 style="cursor: context-menu;" data-toggle="collapse" data-target="#adittional-settings">
+                <i class="fas fa-caret-down"></i> Adittional settings</h7>
+
+            <div id="adittional-settings" class="collapse ">
+                <input class="form-control" type="datetime-local">
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" name="ishod" required>
+                        Autorenewal
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-12 col-sm-6">
+        <div class="yui-u">
+            <div>
+                <h5>Attention:</h5>
+                <ul style="color:red;">
+                    <li><span>Overdues: Patron has ITEMS</span>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h6>Messages:</h6>
+                <ul>
+                </ul>
+                <a href="#add_message_form" class="btn btn-link btn-sm" data-toggle="modal"><i class="fas fa-plus"></i>
+                    Add a new message</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-12 mt-4">
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#checkouts">Checkouts</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#holds">Holds</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#restrictions">Restrictions</a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane container active" id="checkouts">oiuytrdfgh</div>
+        <div class="tab-pane container fade" id="holds">oiuytresdfghjk</div>
+        <div class="tab-pane container fade" id="restrictions">oiuytrdsfghj</div>
+    </div>
+
+</div>
+
+{% endblock %}

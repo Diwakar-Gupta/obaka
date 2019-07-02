@@ -24,8 +24,6 @@ urlpatterns = [
     path('circulation/checkin',views.checkin,name='checkin'),
     path('circulation/renew',views.renew,name='renew'),
 
-    path('demo',views.demo,name='demo')
-
-
+    path('demo',views.demo,name='demo'),
 ]
 
