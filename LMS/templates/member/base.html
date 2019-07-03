@@ -38,20 +38,20 @@
 
 			<ul class="nav nav-pills flex-column pt-3">
 				<li class="nav-item ">
-				  <a class="nav-link active" href="#"><i class="fas fa-home"></i>
+				  <a class="nav-link active" href="/"><i class="fas fa-home"></i>
 					<span>Dashboard</span></a>
 				</li>
                 <li class="nav-item ">
-				  <a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i>
+				  <a class="nav-link" href="{% url 'member-checkout' memberpk=member.pk membertype=member.settings.type %}"><i class="fas fa-tachometer-alt"></i>
 					<span>Checkout</span></a>
 				</li>
                 <li class="nav-item ">
-				  <a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i>
+				  <a class="nav-link" href="{% url 'member-checkout' memberpk=member.pk membertype=member.settings.type %}"><i class="fas fa-tachometer-alt"></i>
 					<span>Details</span></a>
 				</li>
                 <li class="nav-item ">
-				  <a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i>
-					<span>Fines</span></a>
+				  <a class="nav-link" href="{% url 'member-circulation' memberpk=member.pk membertype=member.settings.type %}"><i class="fas fa-tachometer-alt"></i>
+					<span>Circulations</span></a>
 				</li>
 
 			  </ul>

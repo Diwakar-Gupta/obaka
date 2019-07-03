@@ -37,16 +37,16 @@
 
 			<ul class="nav nav-pills flex-column pt-3">
 				<li class="nav-item ">
-				  <a class="nav-link active" href="#"><i class="fas fa-tachometer-alt"></i>
+				  <a class="nav-link active" href="/"><i class="fas fa-tachometer-alt"></i>
 					<span>Dashboard</span></a>
 				</li>
 				<li class="nav-item ">
 					<a class="nav-link " data-toggle="collapse" data-target="#bookSubmenu"><i
-					  class="	fas fa-book-open"></i>
+					  class="fas fa-book-open"></i>
 				  <span>Book</span></a>
 					<div id="bookSubmenu" class="collapse">
 						<a class="dropdown-item" href="#">Category</a>
-						<a class="dropdown-item" href="#">All book</a>
+						<a class="dropdown-item" href="{% url 'books' %}">All book</a>
 						<a class="dropdown-item" href="{% url 'book-add' %}">add</a>
 					</div>
 				  </li>

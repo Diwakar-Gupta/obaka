@@ -5,7 +5,11 @@
 <div class="row">
     <div class="col-12 col-sm-6 shadow">
         <h6 style="color:royalblue">Check out for Diwakar gupta</h6>
-        <form action="#">
+        <form action="{% url 'checkout' %}">
+            {% csrf_token %}
+            <input type="hidden" required name="membertype" value="{{ member.settings.type }}">
+            <input type="hidden" required name="memberpk" value="{{ member.pk }}">
+
             <input required type="number" class="form-control" name='isbn' placeholder="barcode">
             <button class="btn btn-primary" type="submit"><i class="fas fa-check"></i></button>
             <br>
@@ -13,10 +17,13 @@
                 <i class="fas fa-caret-down"></i> Adittional settings</h7>
 
             <div id="adittional-settings" class="collapse ">
-                <input class="form-control" type="datetime-local">
+
+                <div class="py-2 mt-2" style="border-top: 2px solid black;"></div>
+
+                <input name="duedate" class="form-control" type="datetime-local">
                 <div class="form-group form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" type="checkbox" name="ishod" required>
+                        <input class="form-check-input" type="checkbox" name="autorenewal" required>
                         Autorenewal
                     </label>
                 </div>
