@@ -28,47 +28,36 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar">
-            <div id="dismiss">
-                <i class="fas fa-arrow-left"></i>
-            </div>
-            <div class="sidebar-header" style="text-align: center;">
-                <img src="{% static 'img/anon.svg' %}" width=200px height=200px>
+			<div id="dismiss">
+				<i class="fas fa-arrow-left"></i>
+			</div>
+			<div class="sidebar-header">
+				<img src="{% static 'img/anon.svg' %}" width=200px height=200px>
                 <h3>{{ member.name }}</h3>
-            </div>
+			</div>
 
-            <ul class="components">
-                <li class="nav-item active">
-                        <a href="/">
-                        <i class="fas fa-home"></i>
-                        <span>Dashnoard</span>
-                    </a>
-                </li><li class="nav-item active">
-                        <a href="{% url 'member-checkout' membertype=member.settings.type memberpk=member.pk %}">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Check Out</span>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                        <a href="{% url 'member-profile' membertype=member.settings.type memberpk=member.pk %}">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Details</span>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                        <a href="{% url 'member-checkout' membertype=member.settings.type memberpk=member.pk %}">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>Fines</span>
-                    </a>
-                </li>
-                <li class="nav-item active">
-                        <a href="{% url 'member-circulation' membertype=member.settings.type memberpk=member.pk %}">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>Circulation history</span>
-                    </a>
-                </li>
-            </ul>
+			<ul class="nav nav-pills flex-column pt-3">
+				<li class="nav-item ">
+				  <a class="nav-link active" href="#"><i class="fas fa-home"></i>
+					<span>Dashboard</span></a>
+				</li>
+                <li class="nav-item ">
+				  <a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i>
+					<span>Checkout</span></a>
+				</li>
+                <li class="nav-item ">
+				  <a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i>
+					<span>Details</span></a>
+				</li>
+                <li class="nav-item ">
+				  <a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i>
+					<span>Fines</span></a>
+				</li>
 
-        </nav>
+			  </ul>
+
+
+		</nav>
 
         <!-- Page Content  -->
         <div id="contentainer" class="bg-Secondary ">
