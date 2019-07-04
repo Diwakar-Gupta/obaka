@@ -112,9 +112,13 @@ def checkout(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
+
+    context = {}
     if request.method == 'POST':
-        return handler.checkout(request)
-    return render(request, 'checkout.html' )
+        context = handler.checkout(request)
+    if context['success']:
+        return render_to_response(request, 'member/checkout.html', context=context)
+    return render(request, 'checkout.html' ,context=context )
 
 
 def checkin(request):

@@ -181,10 +181,13 @@ a.article:hover {
     overflow: auto;
 }
 
-#contentainer>#content>*{
+#contentainer>#content>*:not(.alert){
     background-color: white;
-    margin: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
     border-radius: 5px;
+    padding-top: 8px;
+    padding-bottom: 8px;
 }
 
 /* ---------------------------------------------------

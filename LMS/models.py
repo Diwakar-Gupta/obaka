@@ -75,7 +75,7 @@ class Book(models.Model):
             isbn.count_issued -= 1
         isbn.save()
         super(Book, self).delete(using=None, keep_parents=False)
-        
+
 
 class Issue(models.Model):
     book = models.ForeignKey(Book,models.CASCADE)
