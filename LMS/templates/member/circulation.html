@@ -46,10 +46,10 @@
           <td>
             <span>{{issue.date}}</span>
           </td>
-          <td><a href="/cgi-bin/koha/catalogue/detail.pl?biblionumber=345">{{issue.book.details.title}}</a></td>
+          <td><a href="#">{{issue.book.details.title}}</a></td>
 
           <td>{{issue.book.details.author}}</td>
-          <td><a href="/cgi-bin/koha/catalogue/moredetail.pl?itemnumber=1349&amp;biblionumber=345&amp;bi=345#item1349">{{issue.book.details.isbn}}</a></td>
+          <td><a target="_blank" href="/admin/LMS/isbn/{{ issue.book.details.isbn }}/change">{{issue.book.details.isbn}}</a></td>
           <td>{{issue.countrenewal}}</td>
           <td>
             <span>{{ issue.checkedout }}</span>
