@@ -5,7 +5,7 @@
     {% if success %}
         <div class="alert alert-success alert-dismissible">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Success!</strong> Indicates a successful or positive action.
+  <strong>Success!</strong> Checked out for {{ member.name }}
 </div>
     {% endif %}
     {% if error %}
@@ -18,7 +18,7 @@
 <div class="row">
     <div class="col-12 col-sm-6 shadow">
         <h6 style="color:royalblue">Check out for Diwakar gupta</h6>
-        <form method="post" action="{% url 'member-checkout' memberpk=member.pk membertype=member.settings.type %}">
+        <form method="post" action="{% url 'member-issue' memberpk=member.pk membertype=member.settings.type %}">
             {% csrf_token %}
             <input type="hidden" required name="membertype" value="{{ member.settings.type }}">
             <input type="hidden" required name="memberid" value="{{ member.pk }}">
@@ -67,7 +67,7 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#checkouts">Checkouts</a>
+            <a class="nav-link active" data-toggle="tab" href="#issues">issues</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#holds">Holds</a>
@@ -79,7 +79,7 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="tab-pane container active" id="checkouts">oiuytrdfgh</div>
+        <div class="tab-pane container active" id="issues">oiuytrdfgh</div>
         <div class="tab-pane container fade" id="holds">oiuytresdfghjk</div>
         <div class="tab-pane container fade" id="restrictions">oiuytrdsfghj</div>
     </div>

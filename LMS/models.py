@@ -52,7 +52,7 @@ class ISBN(models.Model):
     title = models.CharField(max_length=100)
     category = models.CharField(max_length=30)
     publisher = models.CharField(max_length=30)
-    price = models.PositiveIntegerField()
+    price = models.PositiveIntegerField(default=0)
     quantity = models.PositiveIntegerField(default=0)
     count_issued = models.PositiveIntegerField(default=0)
 
@@ -84,10 +84,10 @@ class Issue(models.Model):
     member_id = models.PositiveIntegerField()
     member = GenericForeignKey('member_type', 'member_id')
 
-    checkoutfrom = models.CharField(max_length=20)
+    issuefrom = models.CharField(max_length=20)
     is_returned = models.BooleanField(default=False)
     countrenewal = models.PositiveIntegerField(default=0)
-    checkedout = models.DateTimeField(auto_now=True)
+    issued_time = models.DateTimeField(auto_now=True)
     date = models.DateTimeField(auto_now=True)
     return_date = models.DateTimeField(default=None,null=True)
     duedate = models.DateTimeField()

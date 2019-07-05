@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 def addBook(request):
     print(request)
     isbnObject=ISBN.objects.get_or_create(isbn=request['isbn'])
-
+    print(isbnObject[1])
     if isbnObject[1]:
         isbnObject[0].author = request['author']
         isbnObject[0].title = request['title']
@@ -24,10 +24,10 @@ def addBook(request):
         book = Book(details=isbnObject[0],active=True,is_issued=False)
         book.save()
 
-    return {'success':True}
+    return {'success':True,'quantity':request['quantity']}
 
 
-def checkout(request):
+def issue(request):
     print(request.POST)
     member = None
     try :
@@ -44,13 +44,13 @@ def checkout(request):
         duedate = request.POST['duedare'] if request.POST['duedate'] else datetime.now() + timedelta(days=member.settings.maxDay)
         autorenew = True if 'autorenew' in request.POST else False
         from django.contrib import auth
-        checkoutfrom = auth.get_user(request).get_username()
+        issuefrom = auth.get_user(request).get_username()
         member.count_books += 1
         contentype = ContentType.objects.get_or_create(app_label='LMS', model=membertype)
         if contentype[1]:
             contentype[0].save()
         contentype = contentype[0]
-        issue = Issue(book=book, member_type=contentype, member_id=member.pk, checkoutfrom=checkoutfrom,
+        issue = Issue(book=book, member_type=contentype, member_id=member.pk, issuefrom=issuefrom,
                       duedate=duedate, autorenew=autorenew, return_date=None )
         issue.member = member
         isbn.count_issued += 1

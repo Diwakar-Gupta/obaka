@@ -68,7 +68,7 @@ fa , fas {
 }
 
 
-#sidebar ul li.nav-item a .fas {
+#sidebar ul li.nav-item a .fas:not(ul li ul .fas) {
     padding-right: 20px;
 }
 
