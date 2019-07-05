@@ -11,16 +11,15 @@ urlpatterns = [
 
     path('member/',views.member,name='member'),
     path('member/add',views.memberAdd,name='member-add'),
-    path('member/<str:membertype>/<int:memberpk>/',views.member_profile,name='member-profile'),
-    path('member/<str:membertype>/<int:memberpk>/profile',views.member_profile,name='member-profile'),
-    path('member/<str:membertype>/<int:memberpk>/checkout',views.member_checkout,name='member-checkout'),
-    path('member/<str:membertype>/<int:memberpk>/circulation',views.member_circulation,name='member-circulation'),
+    path('<str:membertype>/<int:memberpk>/',views.member_profile,name='member-profile'),
+    path('<str:membertype>/<int:memberpk>/profile',views.member_profile,name='member-profile'),
+    path('<str:membertype>/<int:memberpk>/checkout',views.member_checkout,name='member-checkout'),
+    path('<str:membertype>/<int:memberpk>/circulation',views.member_circulation,name='member-circulation'),
 
     path('notifiedDelayed/',views.notifiedDelayed,name='notifiedDelayed'),
     path('report/',views.report,name='report'),
 
     path('circulation',views.circulation,name='circulation'),
-    path('circulation/checkout',views.checkout,name='checkout'),
     path('circulation/checkin',views.checkin,name='checkin'),
     path('circulation/renew',views.renew,name='renew'),
 

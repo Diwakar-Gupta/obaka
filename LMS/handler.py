@@ -38,6 +38,8 @@ def checkout(request):
             member = Faculty.objects.get(id=request.POST['memberid'])
         isbn = ISBN.objects.get(isbn=request.POST['isbn'])
         book = isbn.book_set.filter(is_issued=False).first()
+        if book == None:
+            raise Book.DoesNotExist
         book.is_issued = True
         duedate = request.POST['duedare'] if request.POST['duedate'] else datetime.now() + timedelta(days=member.settings.maxDay)
         autorenew = True if 'autorenew' in request.POST else False
@@ -58,7 +60,10 @@ def checkout(request):
         isbn.save()
     except ISBN.DoesNotExist:
         print('book not exist')
-        return {'error':'Book Does not exist','member':member}
+        return {'error': 'Book Does not exist', 'member': member}
+    except Book.DoesNotExist:
+        print('book not exist')
+        return {'error':'No Sufficient Book','member':member}
     except (Student.DoesNotExist , Faculty.DoesNotExist):
         print('member does not exist')
         return {'error': 'Member Does not exist','member':member}

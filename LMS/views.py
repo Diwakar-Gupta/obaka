@@ -66,16 +66,20 @@ def member_checkout(request,membertype,memberpk):
     if not user.is_staff:
         return redirect_to_login(next=request.path)
 
-    context = {}
+    context = {'member':Student.objects.get(pk=memberpk) if membertype == 'Student' else Faculty.objects.get(pk=memberpk)}
+
     if request.method == 'POST':
-        context = handler.checkout(request)
+        if membertype.lower() == request.POST['membertype'].lower() and str(memberpk) == request.POST['memberid'].lower():
+            context = handler.checkout(request)
+        else :
+            context['error'] = "user dosen't match to request"
     else:
         if membertype == 'Student':
             return render(request,'member/checkout.html',context={'member':Student.objects.get(pk=memberpk)})
         elif membertype == 'Faculty':
             return render(request, 'member/checkout.html', context={'member': Faculty.objects.get(pk=memberpk)})
 
-    if context['success']:
+    if 'success' in context.values():
         return render_to_response('member/checkout.html', context=context)
     else :
         return render(request,'member/checkout.html',context=context)
@@ -106,19 +110,6 @@ def circulation(request):
     if not user.is_staff:
         return redirect_to_login(next=request.path)
     return render(request, 'circulation.html')
-
-
-def checkout(request):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
-
-    context = {}
-    if request.method == 'POST':
-        context = handler.checkout(request)
-    if context['success']:
-        return render_to_response(request, 'member/checkout.html', context=context)
-    return render(request, 'checkout.html' ,context=context )
 
 
 def checkin(request):
