@@ -4,8 +4,9 @@ from django.contrib.auth.views import redirect_to_login
 from . import handler
 from .models import *
 from datetime import datetime
+from django.views.generic.edit import CreateView , UpdateView
 # Create your views here.
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def index(request):
     user = auth.get_user(request)
@@ -50,6 +51,16 @@ def memberAdd(request):
     if not user.is_staff:
         return redirect_to_login(next=request.path)
     return render(request,'memberForm.html')
+
+
+class StudentAdd(LoginRequiredMixin,CreateView):
+    model = Student
+    fields = ['name', 'id', 'settings']
+
+
+class FacultyAdd(LoginRequiredMixin,CreateView):
+    model = Faculty
+    fields = ['name', 'id', 'settings']
 
 
 def member_profile(request,membertype,memberpk):

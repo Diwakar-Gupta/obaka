@@ -7,4 +7,3 @@ admin.site.register(Student)
 admin.site.register(Faculty)
 admin.site.register(ISBN)
 admin.site.register(Issue)
-

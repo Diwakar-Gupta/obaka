@@ -11,7 +11,9 @@ urlpatterns = [
 
     path('member/',views.member,name='member'),
     path('member/add',views.memberAdd,name='member-add'),
-    path('<str:membertype>/<int:memberpk>/',views.member_profile,name='member-profile'),
+    path('Student/add',views.StudentAdd.as_view(),'student-add'),
+    path('Student/add',views.FacultyAdd.as_view(),'faculty-add'),
+    path('<str:membertype>/<int:memberpk>/',views.member_profile),
     path('<str:membertype>/<int:memberpk>/profile',views.member_profile,name='member-profile'),
     path('<str:membertype>/<int:memberpk>/issue',views.member_issue,name='member-issue'),
     path('<str:membertype>/<int:memberpk>/circulation',views.member_circulation,name='member-circulation'),

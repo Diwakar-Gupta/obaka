@@ -1,6 +1,8 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.urls import reverse
+
 from datetime import datetime , timedelta ,timezone ,tzinfo
 # Create your models here.
 
@@ -17,7 +19,7 @@ class UserBasicSetting(models.Model):
 
 class Student(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
-    name = models.CharField(max_length=20,blank=True)
+    name = models.CharField(max_length=20)
     count_books = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
@@ -27,12 +29,15 @@ class Student(models.Model):
 
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
 
+    def get_absolute_url(self):
+        return reverse('member-profile', kwargs={'membertype':'Student','memberpk':self.pk})
+
     def __str__(self):
         return self.name+"  "+str(self.id)
 
 
 class Faculty(models.Model):
-    name = models.CharField(max_length=20,blank=True)
+    name = models.CharField(max_length=20,)
     isHOD = models.BooleanField(default=False)
     branch = models.CharField(max_length=20)
     count_books = models.PositiveIntegerField(default=0)
@@ -44,6 +49,10 @@ class Faculty(models.Model):
 
     def __str__(self):
         return self.name+"  "+str(self.id)
+
+    def get_absolute_url(self):
+        return reverse('member-profile', kwargs={'membertype':'Faculty','memberpk':self.pk})
+
 
 
 class ISBN(models.Model):
@@ -59,6 +68,9 @@ class ISBN(models.Model):
 
     def __str__(self):
         return str(self.isbn)
+
+    def get_absolute_url(self):
+        return reverse('books')
 
 
 class Issue(models.Model):
