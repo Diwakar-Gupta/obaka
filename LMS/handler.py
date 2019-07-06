@@ -1,6 +1,6 @@
 from .models import *
 from django.shortcuts import get_object_or_404 ,render , render_to_response
-from datetime import datetime , timedelta
+from datetime import datetime , timedelta ,date
 from django.contrib.contenttypes.models import ContentType
 import pytz
 
@@ -38,7 +38,7 @@ def issue(request):
         if isbn.quantity - isbn.deactive -isbn.issued <= 0:
             return {'error': 'No Sufficient Book', 'member': member}
 
-        duedate = request.POST['duedare'] if 'duedate' in request.POST and request.POST['duedate'] else datetime.now() + timedelta(days=member.settings.maxDay)
+        duedate = request.POST['duedare'] if 'duedate' in request.POST and request.POST['duedate'] else date.today() + timedelta(days=member.settings.maxDay)
         autorenew = True if 'autorenew' in request.POST else False
         from django.contrib import auth
         issuefrom = auth.get_user(request).get_username()

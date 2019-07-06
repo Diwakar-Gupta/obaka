@@ -33,7 +33,9 @@
 
                 <div class="py-2 mt-2" style="border-top: 2px solid black;"></div>
 
-                <input name="duedate" class="form-control" type="datetime-local">
+                <label for="duedate">Specify due date (DD/MM/YYYY) :</label>
+                <input name="duedate" pattern="'%y/%m/%d %H:%M:%S'" class="form-control" type="date">
+
                 <div class="form-group form-check">
                     <label class="form-check-label">
                         <input class="form-check-input" type="checkbox" name="autorenewal">

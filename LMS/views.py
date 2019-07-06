@@ -3,6 +3,7 @@ from django.contrib import auth
 from django.contrib.auth.views import redirect_to_login
 from . import handler
 from .models import *
+from datetime import datetime
 # Create your views here.
 
 
@@ -156,4 +157,10 @@ def report(request):
 
 
 def demo(request):
-    return render(request,'addMember.html')
+    if 'date' in request.GET :
+        print(request.GET)
+        dat = datetime.strptime(request.GET['date'],"%y-%m-%d")
+        print(type(dat))
+        print(dat)
+
+    return render(request,'demo.html')
