@@ -80,11 +80,11 @@ class Issue(models.Model):
     forgetoverdue = models.BooleanField(default=False)
 
     def isLate(self):
-        returnday = self.return_date if self.return_date else datetime.now(tzinfo)
+        returnday = self.return_date if self.return_date else datetime.now()
         return returnday > self.duedate
 
     def lateby(self):
-        returnday = self.return_date if self.return_date else datetime.now(tzinfo)
+        returnday = self.return_date if self.return_date else datetime.now()
         days = (self.duedate - returnday).days
         if days < 0:
             days = 0

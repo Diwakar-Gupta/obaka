@@ -2,7 +2,7 @@ from .models import *
 from django.shortcuts import get_object_or_404 ,render , render_to_response
 from datetime import datetime , timedelta
 from django.contrib.contenttypes.models import ContentType
-
+import pytz
 
 def addBook(request):
     print(request)
@@ -67,14 +67,36 @@ def returnn(request):
     issue = None
     try :
         issue = Issue.objects.get(pk=request.POST['pk'])
+        if issue.is_returned:
+            return {'error':'already returned'}
         issue.book.issued -= 1
+        issue.member.count_books -= 1
         issue.is_returned = True
         issue.return_date = datetime.now()
 
+        issue.book.save()
+        issue.member.save()
         issue.save()
 
     except Issue.DoesNotExist:
         return {'error':'cant find issue'}
 
-    return {'success' : 'returned book' if issue.fine() else 'returned with fine :' + str(issue.fine())}
+    return {'success' : 'returned book'}
 
+
+def renew(request):
+    print(request.POST)
+    issue = None
+    try:
+        issue = Issue.objects.get(pk=request.POST['pk'])
+        if issue.is_returned:
+            return {'error': 'already returned'}
+        issue.date = datetime.now()
+        issue.duedate = datetime.now() + timedelta(days=issue.member.settings.maxDay)
+
+        issue.save()
+
+    except Issue.DoesNotExist:
+        return {'error': 'cant find issue'}
+
+    return {'success': 'renewed'}
