@@ -30,9 +30,9 @@
           <td><a target="_blank" href="/admin/LMS/isbn/{{ issue.book.details.isbn }}/change">{{issue.book.details.isbn}}</a></td>
           <td>{{issue.countrenewal}}</td>
           <td>
-            <span>{{ issue.checkedout }}</span>
+            <span>{{ issue.issued_time }}</span>
           </td>
-          <td>{{ issue.checkoutfrom }}</td>
+          <td>{{ issue.issuefrom }}</td>
           <td>
             <span>{{ issue.duedate }}</span>
           </td>

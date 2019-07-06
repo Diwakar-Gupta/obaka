@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+                
+<div class="row" style="background-color:#e9ecef;">
+    <div class="col-12 col-sm-6 col-md-4 m-2 shadow bg-white">
+            <h3>Circulations</h3>
+            <ul class="nav nav-tabs flex-column">
+                <li class="nav-item ">
+                    <a href="{% url 'issue' %}" class="nav-link"><i class="fas fa-arrow-up"></i>Issue</a>
+                </li>
+                <li class="nav-item ">
+                    <a href="{% url 'return' %}" class="nav-link"><i class="fas fa-arrow-down"></i>Return</a>
+                </li>
+                <li class="nav-item ">
+                    <a href="{% url 'renew' %}" class="nav-link"><i class="fas fa-sync"></i>renew</a>
+                </li>
+            </ul>
+        </div>
+    
+    <div class="col-12 col-sm-6 col-md-4 m-2 shadow bg-white">
+                <h3>Overdues</h3>
+                <ul class="nav nav-tabs flex-column">
+                    <li class="nav-item ">
+                        <a href="#" class="nav-link"><i class="far fa-clock"></i>Overdues</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a href="#" class="nav-link"><i class="far fa-clock"></i>Overdues with fines</a>
+                    </li>
+                </ul>
+        </div>
+</div>
+                
+{% endblock %}

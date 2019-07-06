@@ -11,7 +11,7 @@ def index(request):
     if user.is_anonymous or not user.is_staff:
         return redirect_to_login(next=request.path)
 
-    return render(request, 'index.html')
+    return render(request, 'circulation.html')
 
 
 def books(request):
@@ -112,11 +112,15 @@ def circulation(request):
     return render(request, 'circulation.html')
 
 
-def checkin(request):
+def issue(request):
+    return render(request,'issue.html')
+
+
+def returnn(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-    return render(request, 'checkin.html')
+    return render(request, 'return.html')
 
 
 def renew(request):

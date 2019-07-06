@@ -20,7 +20,8 @@ urlpatterns = [
     path('report/',views.report,name='report'),
 
     path('circulation',views.circulation,name='circulation'),
-    path('circulation/return',views.checkin,name='return'),
+    path('circulation/issue',views.issue,name='issue'),
+    path('circulation/return',views.returnn,name='return'),
     path('circulation/renew',views.renew,name='renew'),
 
     path('demo',views.demo,name='demo'),
