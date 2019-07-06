@@ -1,7 +1,7 @@
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from datetime import datetime , timedelta
+from datetime import datetime , timedelta ,timezone ,tzinfo
 # Create your models here.
 
 
@@ -54,31 +54,15 @@ class ISBN(models.Model):
     publisher = models.CharField(max_length=30)
     price = models.PositiveIntegerField(default=0)
     quantity = models.PositiveIntegerField(default=0)
-    count_issued = models.PositiveIntegerField(default=0)
+    issued = models.PositiveIntegerField(default=0)
+    deactive = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return str(self.isbn)
 
 
-class Book(models.Model):
-    details = models.ForeignKey(ISBN,on_delete=models.CASCADE)
-    active = models.BooleanField(default=True)
-    is_issued = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.details.title+"  "+str(self.id)
-
-    def delete(self, using=None, keep_parents=False):
-        isbn = self.details
-        isbn.quantity -= 1
-        if self.is_issued:
-            isbn.count_issued -= 1
-        isbn.save()
-        super(Book, self).delete(using=None, keep_parents=False)
-
-
 class Issue(models.Model):
-    book = models.ForeignKey(Book,models.CASCADE)
+    book = models.ForeignKey(ISBN,models.CASCADE)
 
     member_type = models.ForeignKey(ContentType,on_delete=models.CASCADE)
     member_id = models.PositiveIntegerField()
@@ -93,18 +77,22 @@ class Issue(models.Model):
     duedate = models.DateTimeField()
     mail_send = models.BooleanField(default=False)
     autorenew = models.BooleanField(default=False)
+    forgetoverdue = models.BooleanField(default=False)
 
     def isLate(self):
-        return self.lateby() > 0
+        returnday = self.return_date if self.return_date else datetime.now(tzinfo)
+        return returnday > self.duedate
 
     def lateby(self):
-        returnday = self.return_date if self.return_date else datetime.now()
+        returnday = self.return_date if self.return_date else datetime.now(tzinfo)
         days = (self.duedate - returnday).days
         if days < 0:
             days = 0
         return days
 
     def fine(self):
+        if self.forgetoverdue:
+            return 0
         return self.lateby()*self.member.settings.finePerDay
 
     def send_mail(self):

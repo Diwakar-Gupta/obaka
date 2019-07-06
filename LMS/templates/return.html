@@ -41,4 +41,73 @@
 
     </div>
 </form>
+
+    {% if Issues %}
+    <div class="row" style="background-color:#e9ecef;">
+
+
+
+         <input onkeyup="searchTable()" data-target="#allMember" type="text" class="form-control searchTable" style="width:100%"
+                    placeholder="Search">
+              <table id="table" class="table table-striped bg-white">
+
+                    <thead>
+                        <tr>
+
+                            <th>Due Date
+                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+                            <th>
+                                Title
+                                <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+                            <th>
+                                Author
+                                <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+                            <th>
+                                Barcode
+                                <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+                            <th>
+                                Member
+                                <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+                            <th>
+                                Member ID
+                                <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="allMember">
+
+                    {% for issue in Issues.all %}
+
+                        <tr>
+                            <td>{{ issue.duedate }}</td>
+                            <td>{{ issue.book.title }}</td>
+                            <td>{{ issue.book.author }}</td>
+                            <td>{{ issue.book.isbn }}</td>
+                            <td>{{ issue.member.name }}</td>
+                            <td>{{ issue.member.pk }}</td>
+                            <td>
+                                <form action="{% url 'return' %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="pk" value={{ issue.pk }}>
+                                    <input class="btn btn-primary" type="submit" value="Return">
+                                </form>
+
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+
+
+
+    </div>
+{% endif %}
 {% endblock %}

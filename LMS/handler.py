@@ -20,10 +20,6 @@ def addBook(request):
 
     isbnObject[0].save()
 
-    for _ in range(int(request['quantity'])):
-        book = Book(details=isbnObject[0],active=True,is_issued=False)
-        book.save()
-
     return {'success':True,'quantity':request['quantity']}
 
 
@@ -37,11 +33,11 @@ def issue(request):
         else:
             member = Faculty.objects.get(id=request.POST['memberid'])
         isbn = ISBN.objects.get(isbn=request.POST['isbn'])
-        book = isbn.book_set.filter(is_issued=False).first()
-        if book == None:
-            raise Book.DoesNotExist
-        book.is_issued = True
-        duedate = request.POST['duedare'] if request.POST['duedate'] else datetime.now() + timedelta(days=member.settings.maxDay)
+
+        if isbn.quantity - isbn.deactive -isbn.issued <= 0:
+            return {'error': 'No Sufficient Book', 'member': member}
+
+        duedate = request.POST['duedare'] if 'duedate' in request.POST and request.POST['duedate'] else datetime.now() + timedelta(days=member.settings.maxDay)
         autorenew = True if 'autorenew' in request.POST else False
         from django.contrib import auth
         issuefrom = auth.get_user(request).get_username()
@@ -50,29 +46,35 @@ def issue(request):
         if contentype[1]:
             contentype[0].save()
         contentype = contentype[0]
-        issue = Issue(book=book, member_type=contentype, member_id=member.pk, issuefrom=issuefrom,
+        issue = Issue(book=isbn, member_type=contentype, member_id=member.pk, issuefrom=issuefrom,
                       duedate=duedate, autorenew=autorenew, return_date=None )
         issue.member = member
-        isbn.count_issued += 1
+        isbn.issued += 1
         issue.save()
         member.save()
-        book.save()
         isbn.save()
     except ISBN.DoesNotExist:
         print('book not exist')
         return {'error': 'Book Does not exist', 'member': member}
-    except Book.DoesNotExist:
-        print('book not exist')
-        return {'error':'No Sufficient Book','member':member}
     except (Student.DoesNotExist , Faculty.DoesNotExist):
         print('member does not exist')
         return {'error': 'Member Does not exist','member':member}
     return {'success':True,'member':member}
 
 
-def checkin(request):
+def returnn(request):
     print(request.POST)
-    issue = Issue.objects.get(pk=request.POST['pk'])
+    issue = None
+    try :
+        issue = Issue.objects.get(pk=request.POST['pk'])
+        issue.book.issued -= 1
+        issue.is_returned = True
+        issue.return_date = datetime.now()
 
-    return
+        issue.save()
+
+    except Issue.DoesNotExist:
+        return {'error':'cant find issue'}
+
+    return {'success' : 'returned book' if issue.fine() else 'returned with fine :' + str(issue.fine())}
 

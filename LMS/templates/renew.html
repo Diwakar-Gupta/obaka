@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-                
+
+    <form method="post" action="{% url 'renew' %}" style="background-color:#e9ecef;">
+            {% csrf_token %}
+
     <div class="row" style="background-color:#e9ecef;">
 					<div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
 				<fieldset>
@@ -22,22 +25,22 @@
 					<fieldset id="checkin_options">
 						<legend>Options</legend>
 
-						<p>
 
-						<input type="checkbox" id="exemptcheck" name="exemptfine" value="exemptfine">
 
-						<label for="exemptcheck">Forgive overdue charges</label>
-						</p>
+						<input type="checkbox" id="forgiveoverdue" name="forgiveoverdue" >
+
+						<label for="forgiveoverdue">Forgive overdue charges</label>
+
 						 <!-- overduecharges -->
-						<p>
+						<br>
 
 						<input type="checkbox" id="dropboxcheck" name="dropboxmode" value="dropboxmode">
 
 						<label for="dropboxcheck">Book drop mode</label>
-						</p>
+
 						 <!-- overduecharges -->
 						</fieldset>
 					</div>
 					</div>
-                
+    </form>
 {% endblock %}
