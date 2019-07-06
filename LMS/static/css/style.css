@@ -278,6 +278,27 @@ thead tr td {
 /*
 other
 */
+.box li {
+    border: 2px solid #c6ced6;
+    margin-bottom: 4px;
+    border-radius: 6px;
+    color: black;
+    background-color: aliceblue;
+}
+
+.box li:hover *{
+    border: 2px solid green;
+    color:green !important;
+}
+
+.box i{
+    padding-right: 5px;
+}
+
+.box a{
+    color:black;
+}
+
 
 
 

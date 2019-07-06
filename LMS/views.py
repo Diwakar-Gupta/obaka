@@ -11,7 +11,7 @@ def index(request):
     if user.is_anonymous or not user.is_staff:
         return redirect_to_login(next=request.path)
 
-    return render(request, 'circulation.html')
+    return render(request, 'index.html')
 
 
 def books(request):
@@ -120,6 +120,9 @@ def returnn(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
+
+    if request.method=='POST':
+        print(request.POST)
     return render(request, 'return.html')
 
 

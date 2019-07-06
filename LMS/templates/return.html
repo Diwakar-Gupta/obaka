@@ -1,43 +1,44 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<form method="post" action="{% url 'return' %}" style="background-color:#e9ecef;">
+            {% csrf_token %}
     <div class="row" style="background-color:#e9ecef;">
-					<div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
-				<fieldset>
+
+            <div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
+            <fieldset>
 					<legend>Return</legend>
 					<label for="barcode">Enter item barcode: </label>
 
-					<input name="barcode" id="barcode" size="14" class="focus" type="text">
+					<input name="barcode" id="barcode" size="14" class="form-control" type="text" placeholder="Barcode">
 
-					<input type="submit" class="submit" value="Submit">
-
-
-
-
+					<input type="submit" class="submit btn btn-primary" value="Submit">
 
 					</fieldset>
-				</div>
-				<div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
+        </div>
+
+            <div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
 					<fieldset id="checkin_options">
 						<legend>Options</legend>
 
-						<p>
 
-						<input type="checkbox" id="exemptcheck" name="exemptfine" value="exemptfine">
 
-						<label for="exemptcheck">Forgive overdue charges</label>
-						</p>
+						<input type="checkbox" id="forgiveoverdue" name="forgiveoverdue" >
+
+						<label for="forgiveoverdue">Forgive overdue charges</label>
+<br>
 						 <!-- overduecharges -->
-						<p>
+
 
 						<input type="checkbox" id="dropboxcheck" name="dropboxmode" value="dropboxmode">
 
 						<label for="dropboxcheck">Book drop mode</label>
-						</p>
+
 						 <!-- overduecharges -->
 						</fieldset>
 					</div>
-					</div>
 
+
+    </div>
+</form>
 {% endblock %}
