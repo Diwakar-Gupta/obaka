@@ -2,114 +2,119 @@
 
 {% block content %}
 
-    <form method="post" action="{% url 'renew' %}" style="background-color:#e9ecef;">
+<div class="row" style="background-color:#e9ecef;">
+
+
+    <div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
+        <form method="post" action="{% url 'renew' %}" style="background-color:#e9ecef;">
             {% csrf_token %}
+            <fieldset>
+                <legend>Return</legend>
+                <label for="barcode">Enter item barcode: </label>
 
-    <div class="row" style="background-color:#e9ecef;">
-					<div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
-				<fieldset>
-					<legend>Return</legend>
-					<label for="barcode">Enter item barcode: </label>
+                <input name="barcode" id="barcode" size="14" class="form-control" type="text" placeholder="Barcode">
 
-					<input name="barcode" id="barcode" size="14" class="focus" type="text">
+                <input type="submit" class="submit btn btn-primary" value="Submit">
 
-					<input type="submit" class="submit" value="Submit">
-
-
-
-
-
-					</fieldset>
-				</div>
-				<div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
-					<fieldset id="checkin_options">
-						<legend>Options</legend>
-
-
-
-						<input type="checkbox" id="forgiveoverdue" name="forgiveoverdue" >
-
-						<label for="forgiveoverdue">Forgive overdue charges</label>
-
-						 <!-- overduecharges -->
-						<br>
-
-						<input type="checkbox" id="dropboxcheck" name="dropboxmode" value="dropboxmode">
-
-						<label for="dropboxcheck">Book drop mode</label>
-
-						 <!-- overduecharges -->
-						</fieldset>
-					</div>
-					</div>
-    </form>
+            </fieldset>
+        </form>
+    </div>
 
     {% if Issues %}
-    <div class="row" style="background-color:#e9ecef;">
+    <form action="{% url 'renew' %}" method="post">
+        {% csrf_token %}
+        <div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
+            <fieldset id="checkin_options">
+                <legend>Options</legend>
 
 
 
-         <input onkeyup="searchTable()" data-target="#allMember" type="text" class="form-control searchTable" style="width:100%"
-                    placeholder="Search">
-              <table id="table" class="table table-striped bg-white">
+                <input type="checkbox" id="forgiveoverdue" name="forgiveoverdue">
 
-                    <thead>
-                        <tr>
+                <label for="forgiveoverdue">Forgive overdue charges</label>
+                <br>
+                <!-- overduecharges -->
 
-                            <th>Due Date
-                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>
-                                Title
-                                <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>
-                                Author
-                                <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>
-                                Barcode
-                                <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>
-                                Member
-                                <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>
-                                Member ID
-                                <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
 
-                        </tr>
-                    </thead>
-                    <tbody id="allMember">
+                <input type="checkbox" id="dropboxcheck" name="dropboxmode">
+
+                <label for="dropboxcheck">Book drop mode</label>
+
+                <!-- overduecharges -->
+            </fieldset>
+        </div>
+
+
+        <div class="col-12 bg-white m-2 p-3 shadow" style="background-color:#e9ecef;">
+
+
+
+            <input onkeyup="searchTable()" data-target="#allMember" type="text" class="form-control searchTable"
+                style="width:100%" placeholder="Search">
+            <table id="table" class="table table-striped bg-white">
+
+                <thead>
+                    <tr>
+
+                        <th>Due Date
+                            <i class="fas fa-long-arrow-alt-down sorted"></i>
+                        </th>
+                        <th>
+                            Title
+                            <i class="fas fa-long-arrow-alt-down sorted"></i>
+                        </th>
+                        <th>
+                            Author
+                            <i class="fas fa-long-arrow-alt-down sorted"></i>
+                        </th>
+                        <th>
+                            Barcode
+                            <i class="fas fa-long-arrow-alt-down sorted"></i>
+                        </th>
+                        <th>
+                            Member
+                            <i class="fas fa-long-arrow-alt-down sorted"></i>
+                        </th>
+                        <th>
+                            Member ID
+                            <i class="fas fa-long-arrow-alt-down sorted"></i>
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody id="allMember">
 
                     {% for issue in Issues.all %}
 
-                        <tr>
-                            <td>{{ issue.duedate }}</td>
-                            <td>{{ issue.book.title }}</td>
-                            <td>{{ issue.book.author }}</td>
-                            <td>{{ issue.book.isbn }}</td>
-                            <td>{{ issue.member.name }}</td>
-                            <td>{{ issue.member.pk }}</td>
-                            <td>
-                                <form action="{% url 'renew' %}" method="post">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="pk" value={{ issue.pk }}>
-                                    <input class="btn btn-primary" type="submit" value="Return">
-                                </form>
+                    <tr>
+                        <td>{{ issue.duedate }}</td>
+                        <td>{{ issue.book.title }}</td>
+                        <td>{{ issue.book.author }}</td>
+                        <td>{{ issue.book.isbn }}</td>
+                        <td>{{ issue.member.name }}</td>
+                        <td>{{ issue.member.pk }}</td>
+                        <td>
 
-                            </td>
-                        </tr>
+                            <button type="submit" name="pk" value="{{ issue.pk }}"
+                                class="btn btn-primary">Renew</button>
+
+
+                        </td>
+                    </tr>
 
                     {% endfor %}
 
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
 
 
 
-    </div>
-{% endif %}
+        </div>
+    </form>
+    {% endif %}
+
+</div>
+
+
+
 {% endblock %}

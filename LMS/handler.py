@@ -4,6 +4,7 @@ from datetime import datetime , timedelta
 from django.contrib.contenttypes.models import ContentType
 import pytz
 
+
 def addBook(request):
     print(request)
     isbnObject=ISBN.objects.get_or_create(isbn=request['isbn'])
@@ -20,7 +21,7 @@ def addBook(request):
 
     isbnObject[0].save()
 
-    return {'success':True,'quantity':request['quantity']}
+    return {'success':True,'message':"added "+ request['quantity']+" book's with isbn :"+request['isbn']}
 
 
 def issue(request):

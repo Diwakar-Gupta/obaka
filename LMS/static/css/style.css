@@ -258,6 +258,10 @@ border-radius: 50%;
 Table
 */
 
+table{
+    text-align: center;
+}
+
 th .sorted{
     float: right;
     display: none;
