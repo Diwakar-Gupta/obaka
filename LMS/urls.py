@@ -30,6 +30,7 @@ urlpatterns = [
     path('circulation/return',views.returnn,name='return'),
     path('circulation/renew',views.renew,name='renew'),
 
+    path('library',views.library,name='library'),
     path('demo',views.demo,name='demo'),
 ]
 

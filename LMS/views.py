@@ -183,7 +183,14 @@ def report(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
+    
+
+
     return render(request, 'report.html')
+
+
+def library(request):
+    return render(request,'library.html')
 
 
 def demo(request):
