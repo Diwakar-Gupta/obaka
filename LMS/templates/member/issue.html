@@ -46,12 +46,15 @@
         </form>
     </div>
     <div class="col-12 col-sm-6">
-        <div class="yui-u">
+        {% if messages %}
+        <div>
             <div>
                 <h5>Attention:</h5>
                 <ul style="color:red;">
-                    <li><span>Overdues: Patron has ITEMS</span>
+                    {% for message in messages %}
+                        <li><span>{{ message }}</span>
                     </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div>
@@ -62,6 +65,7 @@
                     Add a new message</a>
             </div>
         </div>
+        {% endif %}
     </div>
 </div>
 <div class="row-12 mt-4">
@@ -69,10 +73,10 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#issues">issues</a>
+            <a class="nav-link " data-toggle="tab" href="#issues">issues</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#holds">Holds</a>
+            <a class="nav-link active" data-toggle="tab" href="#holds">Holds</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#restrictions">Restrictions</a>
@@ -81,8 +85,59 @@
 
     <!-- Tab panes -->
     <div class="tab-content">
-        <div class="tab-pane container active" id="issues">oiuytrdfgh</div>
-        <div class="tab-pane container fade" id="holds">oiuytresdfghjk</div>
+        <div class="tab-pane container fade" id="issues">oiuytrdfgh</div>
+        <div class="tab-pane container active" id="holds">
+            {% if holds %}
+                <table class="table" style="text-align: center;">
+
+<thead>
+<tr>
+<th>Date</th>
+<th>Title</th>
+<th>Author</th>
+<th>Barcode</th>
+<th>Number of renewals</th>
+<th>Checked out on</th>
+<th>Checked out from</th>
+<th>Date due</th>
+<th>Return date</th></tr>
+</thead>
+
+<tbody>
+        {% for issue in holds %}
+
+        <tr>
+          <td>
+            <span>{{issue.date}}</span>
+          </td>
+          <td><a href="#">{{issue.book.title}}</a></td>
+
+          <td>{{issue.book.author}}</td>
+          <td><a target="_blank" href="/admin/LMS/isbn/{{ issue.book.isbn }}/change">{{issue.book.isbn}}</a></td>
+          <td>{{issue.countrenewal}}</td>
+          <td>
+            <span>{{ issue.issued_time }}</span>
+          </td>
+          <td>{{ issue.issuefrom }}</td>
+          <td>
+            <span>{{ issue.duedate }}</span>
+          </td>
+          <td>
+            {% if issue.is_returned %}
+              <span>Checked out</span>
+              {% else %}
+              <span>{{ issue.return_date }}</span>
+              {% endif %}
+          </td>
+        </tr>
+
+        {% endfor %}
+
+</tbody>
+
+</table>
+            {% endif %}
+        </div>
         <div class="tab-pane container fade" id="restrictions">oiuytrdsfghj</div>
     </div>
 

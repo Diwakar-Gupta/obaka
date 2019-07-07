@@ -282,6 +282,11 @@ thead tr td {
 /*
 other
 */
+
+.box{
+    max-width: 10cm;
+}
+
 .box li {
     border: 2px solid #c6ced6;
     margin-bottom: 4px;

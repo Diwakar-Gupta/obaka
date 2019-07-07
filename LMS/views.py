@@ -90,9 +90,9 @@ def member_issue(request,membertype,memberpk):
             context['error'] = "user dosen't match to request"
     else:
         if membertype == 'STUDENT':
-            return render(request,'member/issue.html',context={'member':Student.objects.get(pk=memberpk)})
+            return render(request,'member/issue.html',context={'member': Student.objects.get(pk=memberpk), 'holds':Issue.objects.filter(member_type = ContentType.objects.get_for_model(Student), member_id= memberpk )})
         elif membertype == 'FACULTY':
-            return render(request, 'member/issue.html', context={'member': Faculty.objects.get(pk=memberpk)})
+            return render(request,'member/issue.html',context={'member': Faculty.objects.get(pk=memberpk), 'holds':Issue.objects.filter(member_type = ContentType.objects.get_for_model(Faculty), member_id= memberpk )})
 
     if 'success' in context.values():
         return render_to_response('member/issue.html', context=context)

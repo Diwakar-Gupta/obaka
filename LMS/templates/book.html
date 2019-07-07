@@ -11,11 +11,17 @@
                             <th>ISBN
                                     <i class="fas fa-long-arrow-alt-down sorted"></i>
                             </th>
+                            <th>Title
+                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
+                            <th>Auther
+                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
+                            </th>
                             <th>Quantity
                                     <i class="fas fa-long-arrow-alt-down sorted"></i>
                             </th>
                             <th>
-                                Available
+                                Issued
                                 <i class="fas fa-long-arrow-alt-down sorted"></i>
                             </th>
                         </tr>
@@ -26,8 +32,10 @@
 
                         <tr>
                             <td>{{ isbn.isbn }}</td>
+                            <td>{{ isbn.title }}</td>
+                            <td>{{ isbn.author }}</td>
                             <td>{{ isbn.quantity }}</td>
-                            <td>{{ isbn.count_issued }}</td>
+                            <td>{{ isbn.issued }}</td>
                         </tr>
 
                     {% endfor %}
