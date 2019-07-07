@@ -13,6 +13,10 @@ class UserBasicSetting(models.Model):
     maxDay = models.IntegerField()
     finePerDay = models.IntegerField()
 
+    def save(self):
+        self.type = self.type.upper()
+        super().save()
+
     def __str__(self):
         return self.type
 
@@ -23,7 +27,6 @@ class Student(models.Model):
     count_books = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
-    branch = models.CharField(max_length=20)
     email = models.EmailField(null=True)
 
     from django.contrib.auth.models import User
@@ -31,12 +34,12 @@ class Student(models.Model):
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
 
     def save(self):
+        print('here')
         try :
             self.settings
-        except ObjectDoesNotExist :
-            self.settings = UserBasicSetting.objects.get(type='Student')
+        except ObjectDoesNotExist:
+            self.settings = UserBasicSetting.objects.get(type='STUDENT')
         super().save()
-
 
     def get_absolute_url(self):
         return reverse('member-profile', kwargs={'membertype': 'Student', 'memberpk': self.pk})
@@ -48,7 +51,6 @@ class Student(models.Model):
 class Faculty(models.Model):
     name = models.CharField(max_length=20,)
     isHOD = models.BooleanField(default=False)
-    branch = models.CharField(max_length=20)
     count_books = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
@@ -58,10 +60,7 @@ class Faculty(models.Model):
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
 
     def save(self):
-        try :
-            self.settings
-        except ObjectDoesNotExist :
-            self.settings = UserBasicSetting.objects.get(type='Faculty')
+        self.settings = UserBasicSetting.objects.get(type='FACULTY')
         super().save()
 
     def __str__(self):

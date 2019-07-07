@@ -51,18 +51,18 @@ def memberAdd(request):
     if not user.is_staff:
         return redirect_to_login(next=request.path)
 
-    return render(request,'memberForm.html',context={'student':UserBasicSetting.objects.filter(type='Student'), 'faculty' : UserBasicSetting.objects.filter(type='Faculty')})
+    return render(request,'memberForm.html',context={'student':UserBasicSetting.objects.filter(type='STUDENT'), 'faculty' : UserBasicSetting.objects.filter(type='FACULTY')})
 
 
 class StudentAdd(LoginRequiredMixin,CreateView):
     model = Student
-    fields = ['name', 'id', 'branch', 'email']
+    fields = ['name', 'id', 'email']
     template_name = 'formLoop.html'
 
 
 class FacultyAdd(LoginRequiredMixin,CreateView):
     model = Faculty
-    fields = ['name', 'branch', 'isHOD', 'email']
+    fields = ['name', 'isHOD', 'email']
     template_name = 'formLoop.html'
 
 
