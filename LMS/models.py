@@ -24,7 +24,7 @@ class UserBasicSetting(models.Model):
 class Student(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=20)
-    count-issues = models.PositiveIntegerField(default=0)
+    count_issues = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
     email = models.EmailField(null=True)
@@ -52,7 +52,7 @@ class Student(models.Model):
 class Faculty(models.Model):
     name = models.CharField(max_length=20,)
     isHOD = models.BooleanField(default=False)
-    count-issues = models.PositiveIntegerField(default=0)
+    count_issues = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
     email = models.EmailField(null=True)
@@ -106,7 +106,7 @@ class ISBN(models.Model):
     quantity = models.PositiveIntegerField(default=0)
     issued = models.PositiveIntegerField(default=0)
     deactive = models.PositiveIntegerField(default=0)
-    count-issues = models.PositiveIntegerField(default=0)
+    count_issues = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return str(self.isbn)
@@ -127,7 +127,7 @@ class Issue(models.Model):
     countrenewal = models.PositiveIntegerField(default=0)
     issued_time = models.DateTimeField(auto_now=True)
     date = models.DateField(auto_now=True)
-    return_date = models.DateField(default=None,null=True)
+    return_date = models.DateTimeField(default=None,null=True)
     duedate = models.DateField()
     mail_send = models.BooleanField(default=False)
     autorenew = models.BooleanField(default=False)

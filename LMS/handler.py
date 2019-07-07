@@ -2,7 +2,6 @@ from .models import *
 from django.shortcuts import get_object_or_404 ,render , render_to_response
 from datetime import datetime , timedelta ,date
 from django.contrib.contenttypes.models import ContentType
-import pytz
 
 
 def addBook(request):
@@ -51,7 +50,10 @@ def issue(request):
                       duedate=duedate, autorenew=autorenew, return_date=None )
         issue.member = member
         isbn.issued += 1
+        isbn.count_issues += 1
         issue.save()
+        member.issued += 1
+        member.count_issues += 1
         member.save()
         isbn.save()
     except ISBN.DoesNotExist:
@@ -71,7 +73,7 @@ def returnn(request):
         if issue.is_returned:
             return {'error':'already returned'}
         issue.book.issued -= 1
-        issue.member.count_books -= 1
+        issue.member.issued -= 1
         issue.is_returned = True
         issue.return_date = datetime.now()
 
