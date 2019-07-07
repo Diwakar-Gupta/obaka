@@ -24,10 +24,11 @@ class UserBasicSetting(models.Model):
 class Student(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=20)
-    count_books = models.PositiveIntegerField(default=0)
+    count-issues = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
     email = models.EmailField(null=True)
+    issued = models.PositiveIntegerField(default=0)
 
     from django.contrib.auth.models import User
 
@@ -51,10 +52,11 @@ class Student(models.Model):
 class Faculty(models.Model):
     name = models.CharField(max_length=20,)
     isHOD = models.BooleanField(default=False)
-    count_books = models.PositiveIntegerField(default=0)
+    count-issues = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
     email = models.EmailField(null=True)
+    issued = models.PositiveIntegerField(default=0)
     from django.contrib.auth.models import User
 
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
@@ -104,6 +106,7 @@ class ISBN(models.Model):
     quantity = models.PositiveIntegerField(default=0)
     issued = models.PositiveIntegerField(default=0)
     deactive = models.PositiveIntegerField(default=0)
+    count-issues = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return str(self.isbn)
