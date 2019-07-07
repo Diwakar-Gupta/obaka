@@ -159,7 +159,10 @@ def returnn(request):
         elif 'barcode' in request.POST:
             isbn = ISBN.objects.get(isbn=int(request.POST['barcode']))
             set = isbn.issue_set.filter(is_returned=False)
-            context = {'Issues': set}
+            if set:
+                context = {'Issues': set}
+            else:
+                context = {'error': 'This item has no Issues'}
     return render(request, 'return.html', context=context)
 
 
@@ -175,7 +178,10 @@ def renew(request):
         elif 'barcode' in request.POST:
             isbn = ISBN.objects.get(isbn=int(request.POST['barcode']))
             set = isbn.issue_set.filter(is_returned=False)
-            context = {'Issues': set}
+            if set:
+                context = {'Issues': set}
+            else:
+                context = {'error': 'This item has no Issues'}
     return render(request, 'renew.html', context=context)
 
 
@@ -184,8 +190,6 @@ def report(request):
     if not user.is_staff:
         return redirect_to_login(next=request.path)
     
-
-
     return render(request, 'report.html')
 
 

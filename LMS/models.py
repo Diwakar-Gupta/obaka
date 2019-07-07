@@ -43,7 +43,7 @@ class Student(models.Model):
         super().save()
 
     def get_absolute_url(self):
-        return reverse('member-profile', kwargs={'membertype': 'Student', 'memberpk': self.pk})
+        return reverse('member-profile', kwargs={'membertype': 'STUDENT', 'memberpk': self.pk})
 
     def __str__(self):
         return self.name+"  "+str(self.id)
@@ -69,7 +69,7 @@ class Faculty(models.Model):
         return self.name+"  "+str(self.id)
 
     def get_absolute_url(self):
-        return reverse('member-profile', kwargs={'membertype': 'Faculty', 'memberpk': self.pk})
+        return reverse('member-profile', kwargs={'membertype': 'FACULTY', 'memberpk': self.pk})
 
 
 class Date(models.Model):
@@ -129,9 +129,7 @@ class Issue(models.Model):
     date = models.DateField(auto_now=True)
     return_date = models.DateTimeField(default=None,null=True)
     duedate = models.DateField()
-    mail_send = models.BooleanField(default=False)
     autorenew = models.BooleanField(default=False)
-    forgetoverdue = models.BooleanField(default=False)
 
     def isLate(self):
         returnday = self.return_date if self.return_date else datetime.now()
