@@ -20,6 +20,8 @@ urlpatterns = [
     path('<str:membertype>/<int:memberpk>/issue',views.member_issue, name='member-issue'),
     path('<str:membertype>/<int:memberpk>/circulation',views.member_circulation,name='member-circulation'),
 
+    path('newspaper/<int: pk>',views.newspaper,name = 'newspaper'),
+
     path('notifiedDelayed/',views.notifiedDelayed,name='notifiedDelayed'),
     path('report/',views.report,name='report'),
 

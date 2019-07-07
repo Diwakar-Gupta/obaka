@@ -101,6 +101,10 @@ def member_issue(request,membertype,memberpk):
 
 
 def member_circulation(request,membertype,memberpk):
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
+
     context={}
     if membertype == 'STUDENT':
         member = Student.objects.get(pk=memberpk)
@@ -111,6 +115,18 @@ def member_circulation(request,membertype,memberpk):
         context['member'] = member
         context['issues'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Faculty),member_id=member.pk)
     return render(request,'member/circulation.html',context=context)
+
+
+def newspaper(request,pk):
+    user = auth.get_user(request)
+    if not user.is_staff:
+        return redirect_to_login(next=request.path)
+
+    if request.method == 'POST':
+        if 'presentToday' in request.POST:
+            newspaper = Newspaper.objects.get(pk = pk)
+            newspaper.present.add(Date().today())
+
 
 
 def notifiedDelayed(request):

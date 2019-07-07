@@ -2,7 +2,7 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
-from datetime import datetime , timedelta ,timezone ,tzinfo
+from datetime import datetime , timedelta ,timezone ,tzinfo , date
 from django.core.exceptions import ObjectDoesNotExist
 # Create your models here.
 
@@ -68,6 +68,30 @@ class Faculty(models.Model):
 
     def get_absolute_url(self):
         return reverse('member-profile', kwargs={'membertype': 'Faculty', 'memberpk': self.pk})
+
+
+class Date(models.Model):
+    date = models.DateField(primary_key=True)
+
+    def __str__(self):
+        return str(self.date)
+
+    @staticmethod
+    def today():
+        dat = Date.objects.get_or_create(date=date.today())
+        if dat[1]:
+            dat[0].save()
+        return dat[0]
+
+
+class Newspaper(models.Model):
+    name = models.CharField(max_length=20)
+    costPerDay = models.DecimalField(decimal_places=2,max_digits=5)
+    language = models.CharField(max_length=10)
+    present = models.ManyToManyField(Date)
+
+    def __str__(self):
+        return self.name + '('+self.language+')'
 
 
 class ISBN(models.Model):
