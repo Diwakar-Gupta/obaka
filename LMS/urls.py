@@ -17,7 +17,7 @@ urlpatterns = [
 
     path('<str:membertype>/<int:memberpk>/',views.member_profile),
     path('<str:membertype>/<int:memberpk>/profile',views.member_profile,name='member-profile'),
-    path('<str:membertype>/<int:memberpk>/issue',views.member_issue,name='member-issue'),
+    path('<str:membertype>/<int:memberpk>/issue',views.member_issue, name='member-issue'),
     path('<str:membertype>/<int:memberpk>/circulation',views.member_circulation,name='member-circulation'),
 
     path('notifiedDelayed/',views.notifiedDelayed,name='notifiedDelayed'),

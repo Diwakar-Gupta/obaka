@@ -68,9 +68,9 @@ class FacultyAdd(LoginRequiredMixin,CreateView):
 
 def member_profile(request,membertype,memberpk):
     member = None
-    if membertype == 'Student':
+    if membertype == 'STUDENT':
         member = Student.objects.get(pk=memberpk)
-    elif membertype == 'Faculty':
+    elif membertype == 'FACULTY':
         member = Faculty.objects.get(pk=memberpk)
 
     return render(request,'member/profile.html',context={'member':member})
@@ -81,17 +81,17 @@ def member_issue(request,membertype,memberpk):
     if not user.is_staff:
         return redirect_to_login(next=request.path)
 
-    context = {'member':Student.objects.get(pk=memberpk) if membertype == 'Student' else Faculty.objects.get(pk=memberpk)}
+    context = {'member':Student.objects.get(pk=memberpk) if membertype == 'STUDENT' else Faculty.objects.get(pk=memberpk)}
 
     if request.method == 'POST':
-        if membertype.lower() == request.POST['membertype'].lower() and str(memberpk) == request.POST['memberid'].lower():
+        if membertype.lower() == request.POST['membertype'].lower() and str(memberpk) == request.POST['memberid']:
             context = handler.issue(request)
         else :
             context['error'] = "user dosen't match to request"
     else:
-        if membertype == 'Student':
+        if membertype == 'STUDENT':
             return render(request,'member/issue.html',context={'member':Student.objects.get(pk=memberpk)})
-        elif membertype == 'Faculty':
+        elif membertype == 'FACULTY':
             return render(request, 'member/issue.html', context={'member': Faculty.objects.get(pk=memberpk)})
 
     if 'success' in context.values():
@@ -102,11 +102,11 @@ def member_issue(request,membertype,memberpk):
 
 def member_circulation(request,membertype,memberpk):
     context={}
-    if membertype == 'Student':
+    if membertype == 'STUDENT':
         member = Student.objects.get(pk=memberpk)
         context['member'] = member
         context['issues'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Student),member_id=member.pk)
-    elif membertype == 'Faculty':
+    elif membertype == 'FACULTY':
         member = Faculty.objects.get(pk=memberpk)
         context['member'] = member
         context['issues'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Faculty),member_id=member.pk)

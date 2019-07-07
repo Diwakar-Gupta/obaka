@@ -29,7 +29,7 @@ def issue(request):
     member = None
     try :
         membertype = request.POST['membertype']
-        if membertype == 'Student':
+        if membertype == 'STUDENT':
             member = Student.objects.get(id=request.POST['memberid'])
         else:
             member = Faculty.objects.get(id=request.POST['memberid'])
