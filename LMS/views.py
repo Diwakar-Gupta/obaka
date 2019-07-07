@@ -50,17 +50,20 @@ def memberAdd(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-    return render(request,'memberForm.html')
+
+    return render(request,'memberForm.html',context={'student':UserBasicSetting.objects.filter(type='Student'), 'faculty' : UserBasicSetting.objects.filter(type='Faculty')})
 
 
 class StudentAdd(LoginRequiredMixin,CreateView):
     model = Student
-    fields = ['name', 'id', 'settings']
+    fields = ['name', 'id', 'branch', 'email']
+    template_name = 'formLoop.html'
 
 
 class FacultyAdd(LoginRequiredMixin,CreateView):
     model = Faculty
-    fields = ['name', 'id', 'settings']
+    fields = ['name', 'branch', 'isHOD', 'email']
+    template_name = 'formLoop.html'
 
 
 def member_profile(request,membertype,memberpk):

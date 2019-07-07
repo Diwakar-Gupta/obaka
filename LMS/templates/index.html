@@ -2,38 +2,25 @@
 
 {% block content %}
 
-    <div class="row" style="background-color:#e9ecef;">
-        <div class="col-12 col-sm-5  m-2 p-3 ">
-
+<div class="row" style="background-color:#e9ecef;">
+    <div class="col-12 col-sm-5 col-md-6 m-2  ">
             <ul class="nav nav-tabs flex-column box">
-                <li class=" ">
-                    <a href="{% url 'issue' %}" class="nav-link"><i class="fas fa-arrow-up"></i>Issue</a>
+                <li  ">
+                    <a href="{% url 'circulation' %}" class="nav-link"><i class="fas fa-sync"></i>Circulation</a>
                 </li>
-                <li class=" ">
-                    <a href="{% url 'return' %}" class="nav-link"><i class="fas fa-arrow-down"></i>Return</a>
-                </li>
-                <li class=" ">
-                    <a href="{% url 'renew' %}" class="nav-link"><i class="fas fa-sync"></i>renew</a>
+                <li  ">
+                    <a href="{% url 'member' %}" class="nav-link"><i class="fas fa-arrow-down"></i>Member</a>
                 </li>
             </ul>
-
         </div>
 
-        <div class="col-12 col-sm-5 m-2 p-3 ">
-
-            <ul class="nav nav-tabs flex-column box">
-                <li class=" ">
-                    <a href="{% url 'issue' %}" class="nav-link"><i class="fas fa-arrow-up"></i>Issue</a>
-                </li>
-                <li class=" ">
-                    <a href="{% url 'return' %}" class="nav-link"><i class="fas fa-arrow-down"></i>Return</a>
-                </li>
-                <li class=" ">
-                    <a href="{% url 'renew' %}" class="nav-link"><i class="fas fa-sync"></i>renew</a>
-                </li>
-            </ul>
-
+    <div class="col-12 col-sm-5 col-md-6 m-2 ">
+                <ul class="nav nav-tabs box flex-column">
+                    <li  ">
+                        <a href="{% url 'report' %}" class="nav-link"><i class="far fa-clock"></i>Report</a>
+                    </li>
+                </ul>
         </div>
-    </div>
+</div>
 
 {% endblock %}

@@ -2,18 +2,18 @@
 
 {% block content %}
 
-    <div class="row" style="background-color:#e9ecef;">
-    <div class="col m-2  ">
+<div class="row" style="background-color:#e9ecef;">
+    <div class="col-12 col-sm-5 col-md-6 m-2  ">
             <ul class="nav nav-tabs flex-column box">
-                <li">
-                    <a href="{% url 'student-add' %}" class="nav-link"><i class="fas fa-arrow-up"></i>Student</a>
+                <li>
+                    <a href="{% url 'student-add' %}" {% if not student %}onclick="window.open('/admin/LMS/userbasicsetting/add/')"{% endif %} class="nav-link"><i class="fas fa-plus"></i>Student</a>
                 </li>
-                <li">
-                    <a href="{% url 'faculty-add' %}" class="nav-link"><i class="fas fa-arrow-down"></i>Faculty</a>
+                <li>
+                    <a href="{% url 'faculty-add' %}" {% if not faculty %}onclick="window.open('/admin/LMS/userbasicsetting/add/')"{% endif %} class="nav-link"><i class="fas fa-plus"></i>Faculty</a>
                 </li>
+
             </ul>
         </div>
-
 
 </div>
 

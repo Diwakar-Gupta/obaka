@@ -2,13 +2,13 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.urls import reverse
-
 from datetime import datetime , timedelta ,timezone ,tzinfo
+from django.core.exceptions import ObjectDoesNotExist
 # Create your models here.
 
 
 class UserBasicSetting(models.Model):
-    type = models.CharField(max_length=20,default="Custom")
+    type = models.CharField(max_length=20,primary_key=True)
     maxBook = models.PositiveSmallIntegerField()
     maxDay = models.IntegerField()
     finePerDay = models.IntegerField()
@@ -24,13 +24,22 @@ class Student(models.Model):
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
     branch = models.CharField(max_length=20)
+    email = models.EmailField(null=True)
 
     from django.contrib.auth.models import User
 
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
 
+    def save(self):
+        try :
+            self.settings
+        except ObjectDoesNotExist :
+            self.settings = UserBasicSetting.objects.get(type='Student')
+        super().save()
+
+
     def get_absolute_url(self):
-        return reverse('member-profile', kwargs={'membertype':'Student','memberpk':self.pk})
+        return reverse('member-profile', kwargs={'membertype': 'Student', 'memberpk': self.pk})
 
     def __str__(self):
         return self.name+"  "+str(self.id)
@@ -43,16 +52,23 @@ class Faculty(models.Model):
     count_books = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
+    email = models.EmailField(null=True)
     from django.contrib.auth.models import User
 
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
+
+    def save(self):
+        try :
+            self.settings
+        except ObjectDoesNotExist :
+            self.settings = UserBasicSetting.objects.get(type='Faculty')
+        super().save()
 
     def __str__(self):
         return self.name+"  "+str(self.id)
 
     def get_absolute_url(self):
-        return reverse('member-profile', kwargs={'membertype':'Faculty','memberpk':self.pk})
-
+        return reverse('member-profile', kwargs={'membertype': 'Faculty', 'memberpk': self.pk})
 
 
 class ISBN(models.Model):

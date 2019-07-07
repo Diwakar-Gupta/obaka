@@ -1,11 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="m-2 p-3 shadow">
+
+<form method="post">
+    {% csrf_token %}
+
 
 
 {% for field in form %}
 
+
+
     <div class="form-group">
         {{ field.label_tag }}
         {{ field }}
+        <small style="color:red">{{ field.errors }}</small>
     </div>
 
 
 {% endfor %}
+
+    <input name="settings" type="hidden">
+
+    <input type="submit" class="btn btn-primary">
+
+</form>
+
+</div>
+
+
+{% endblock %}
