@@ -74,6 +74,11 @@ def member(request):
                 filtered = filter(lambda x: x.active, filtered)
             if request.GET['active']=='no':
                 filtered = filter(lambda x: not x.active, filtered)
+        if 'issued' in request.GET:
+            if request.GET['issued'] == 'yes':
+                filtered = filter(lambda x: x.issued, filtered)
+            if request.GET['issued']=='no':
+                filtered = filter(lambda x: not x.issued, filtered)
 
     return render(request, 'allMember.html', context={'members': filtered, 'filters': request.GET})
 
