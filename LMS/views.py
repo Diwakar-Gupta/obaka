@@ -46,11 +46,33 @@ def member(request):
     if not user.is_staff:
         return redirect_to_login(next=request.path)
 
-    members = list(Student.objects.all())
-    for f in Faculty.objects.all():
-        members.append(f)
+    filtered = []
 
-    return render(request, 'allMember.html', context={'members':members})
+    print(request.GET)
+    if request.method == 'GET':
+        if 'membertype' in request.GET and len(request.GET['membertype']) > 0:
+            if request.GET['membertype'] == 'Student':
+                filtered.extend([x for x in Student.objects.all()])
+            elif request.GET['membertype'] == 'Faculty':
+                filtered.extend([x for x in Faculty.objects.all()])
+            elif request.GET['membertype'] == 'All':
+                filtered.extend([x for x in Student.objects.all()])
+                filtered.extend([x for x in Faculty.objects.all()])
+        else:
+            filtered.extend([x for x in Student.objects.all()])
+            filtered.extend([x for x in Faculty.objects.all()])
+        if 'idrangemin' in request.GET and len(request.GET['idrangemin']) > 0:
+            min = int(request.GET['idrangemin'])
+            print('min',min)
+            filtered=filter(lambda x: x.id>=min,filtered)
+        if 'idrangemax' in request.GET and len(request.GET['idrangemax']) > 0:
+            max = int(request.GET['idrangemax'])
+            print('max', max)
+            filtered=filter(lambda x: x.id<=max,filtered)
+        if 'deactive' in request.GET:
+            filtered=filter(lambda x:not x.active,filtered)
+
+    return render(request, 'allMember.html', context={'members': filtered, 'filters': request.GET})
 
 
 def memberAdd(request):

@@ -1,4 +1,54 @@
-{% extends 'base.html' %}
+{% extends 'frame.html' %}
+
+
+{% block sidebar %}
+
+<form method="get" action="{% url 'member' %}">
+<style>
+    .changelist-filter ul li{
+        padding-top: 1rem;
+    }
+    .changelist-filter ul{
+        list-style: none;
+    }
+</style>
+    <div class="changelist-filter">
+        <h1 class="m-3">Filters</h1>
+
+        <ul style="padding-inline-start: 5px;">
+        <li>
+            <h4> By Member type </h4>
+        <select name="membertype" onchange="this.form.submit()" class="form-control">
+            <option {% if filters.membertype == 'All' %}selected{% endif %}>All</option>
+            <option {% if filters.membertype == 'Student' %}selected{% endif %}>Student</option>
+            <option {% if filters.membertype == 'Faculty' %}selected{% endif %}>Faculty</option>
+            <option {% if filters.membertype == 'Others' %}selected{% endif %}>Others</option>
+        </select>
+        </li>
+        <li>
+            <h4> By ID range </h4>
+        <div class="input-group mb-3">
+    <input type="number" min="0" onchange="document.getElementsByName('idrangemax')[0].min=this.value;" class="form-control" name="idrangemin" placeholder="From 0" {% if filters.idrangemin %}value="{{ filters.idrangemin }}"{% endif %}>
+            <i class="form-control" style="max-width: 40px">to</i>
+    <input type="number" class="form-control" id="idrangemax" name="idrangemax" placeholder="till &#8734" {% if filters.idrangemax %}value="{{ filters.idrangemax }}"{% endif %}>
+  </div>
+        </li>
+
+        <li>
+            <div class="form-check">
+                <label class="form-check-label">
+                  <input type="checkbox" class="form-check-input" onChange="this.form.submit()" {% if filters.deactivated %}checked{% endif %} name="deactivated">Deactivated
+                </label>
+            </div>
+        </li>
+        <li>
+            <input type="submit" class="btn btn-primary">
+        </li>
+    </ul>
+    </div>
+</form>
+
+{% endblock %}
 
 {% block content %}
 
@@ -29,7 +79,7 @@
                     {% for member in members %}
 
                         <tr>
-                            <td><a href="{% url 'member-profile' membertype=member.settings.type memberpk=member.pk  %}">{{ member.pk }}</a></td>
+                            <td><a href="{% url 'member-profile' membertype=member.settings.type memberpk=member.pk  %}">{{ member.id }}</a></td>
                             <td>{{ member.name }}</td>
                             <td><a target="_blank" href="/admin/LMS/userbasicsetting/{{ member.settings.pk }}/change">{{ member.settings.type }}</a></td>
                             <td>{{ member.active }}</td>
