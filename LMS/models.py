@@ -132,12 +132,20 @@ class Issue(models.Model):
     autorenew = models.BooleanField(default=False)
 
     def isLate(self):
-        returnday = self.return_date if self.return_date else datetime.now()
-        return returnday > self.duedate
+        if self.is_returned:
+            rd = self.return_date.date()
+            return rd > self.duedate
+        rd =  date.today()
+        return rd > self.duedate
 
     def lateby(self):
-        returnday = self.return_date if self.return_date else datetime.now()
-        days = (self.duedate - returnday).days
+        days=0
+        if self.is_returned:
+            rd = self.return_date.date()
+            days = (rd - self.duedate).days
+        else :
+            rd = date.today()
+            days = (rd - self.duedate).days
         if days < 0:
             days = 0
         return days

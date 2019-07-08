@@ -57,13 +57,23 @@
             </div>
         </li>
 
-                <li>
+        <li>
             <h4>have Issued item</h4>
             <div class="yesnoall">
                 <span class="{% if filters.issued == 'All' or not filters.active %}active{% endif %}">All</span>
                 <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
                 <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
                 <input type="hidden" name="issued" value ="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
+            </div>
+        </li>
+
+        <li>
+            <h4>have Fine</h4>
+            <div class="yesnoall">
+                <span class="{% if filters.fine == 'All' or not filters.fine %}active{% endif %}">All</span>
+                <span class="{% if filters.fine == 'yes' %}active{% endif %}">yes</span>
+                <span class="{% if filters.fine == 'no' %}active{% endif %}">no</span>
+                <input type="hidden" name="issued" value ="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
             </div>
         </li>
 
