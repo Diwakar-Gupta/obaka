@@ -49,6 +49,23 @@
     <label class="custom-control-label" for="activeno">no</label>
   </div>
         </li>
+
+                <li>
+        <h4>have Issued items</h4>
+            <div class="custom-control custom-radio custom-control-inline">
+    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="issuedall" name="issued" value="all" {% if filters.issued == 'all' %}checked{% endif %}>
+    <label class="custom-control-label" for="issuedall">All</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="issuedyes" name="issued" value="yes" {% if filters.issued == 'yes' %}checked{% endif %}>
+    <label class="custom-control-label" for="issuedyes">yes</label>
+  </div>
+            <div class="custom-control custom-radio custom-control-inline">
+    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="issuesno" name="issued" value="no" {% if filters.issued == 'no' %}checked{% endif %}>
+    <label class="custom-control-label" for="issuesno">no</label>
+  </div>
+        </li>
+
         <li>
             <input type="submit" class="btn btn-primary">
         </li>
