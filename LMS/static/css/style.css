@@ -44,7 +44,8 @@ fa , fas {
     z-index: 999;
     color: #fff;
     transition: all 0.4s;
-    background: #6d7fcc;    
+    background: #6d7fcc;
+    overflow: overlay;
 }
 
 #sidebar.active {

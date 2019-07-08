@@ -20,8 +20,15 @@ def books(request):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
+    filtered = [x for x in ISBN.objects.all()]
+    print(request.GET)
+    if request.method == 'GET':
+        if 'author' in request.GET and len(request.GET['author'])>0 :
+            filtered = [x for x in filtered if x.author.lower().startswith(request.GET['author'].lower())]
+        if 'deactive' in request.GET:
+            filtered.sort(key=lambda x:x.deactive)
 
-    return render(request, 'book.html',context={'isbns':ISBN.objects.all()})
+    return render(request, 'book.html',context={'isbns':filtered,'filters':request.GET})
 
 
 def booksAdd(request):
