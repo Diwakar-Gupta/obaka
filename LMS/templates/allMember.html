@@ -5,12 +5,25 @@
 
 <form method="get" action="{% url 'member' %}">
 <style>
-    .changelist-filter ul li{
-        padding-top: 1rem;
-    }
-    .changelist-filter ul{
-        list-style: none;
-    }
+    .changelist-filter ul li {
+                        padding-top: 1rem;
+                    }
+
+                    .changelist-filter ul {
+                        list-style: none;
+                    }
+
+                    .changelist-filter .yesnoall {
+                        justify-content: space-evenly;
+                        display: flex;
+                    }
+                    .changelist-filter .yesnoall>span {
+                        cursor: pointer;
+                    }
+                    .changelist-filter .yesnoall>span.active {
+                        color: #89f193;
+                        cursor: default;
+                    }
 </style>
     <div class="changelist-filter">
         <h1 class="m-3">Filters</h1>
@@ -35,35 +48,23 @@
         </li>
 
         <li>
-        <h4>By active</h4>
-            <div class="custom-control custom-radio custom-control-inline">
-    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="activeall" name="active" value="all" {% if filters.active == 'all' %}checked{% endif %}>
-    <label class="custom-control-label" for="activeall">All</label>
-  </div>
-  <div class="custom-control custom-radio custom-control-inline">
-    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="activeyes" name="active" value="yes" {% if filters.active == 'yes' %}checked{% endif %}>
-    <label class="custom-control-label" for="activeyes">yes</label>
-  </div>
-            <div class="custom-control custom-radio custom-control-inline">
-    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="activeno" name="active" value="no" {% if filters.active == 'no' %}checked{% endif %}>
-    <label class="custom-control-label" for="activeno">no</label>
-  </div>
+            <h4>By active</h4>
+            <div class="yesnoall">
+                <span class="{% if filters.active == 'All' or not filters.active %}active{% endif %}">All</span>
+                <span class="{% if filters.active == 'yes' %}active{% endif %}">yes</span>
+                <span class="{% if filters.active == 'no' %}active{% endif %}">no</span>
+                <input type="hidden" name="active" value ="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
+            </div>
         </li>
 
                 <li>
-        <h4>have Issued items</h4>
-            <div class="custom-control custom-radio custom-control-inline">
-    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="issuedall" name="issued" value="all" {% if filters.issued == 'all' %}checked{% endif %}>
-    <label class="custom-control-label" for="issuedall">All</label>
-  </div>
-  <div class="custom-control custom-radio custom-control-inline">
-    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="issuedyes" name="issued" value="yes" {% if filters.issued == 'yes' %}checked{% endif %}>
-    <label class="custom-control-label" for="issuedyes">yes</label>
-  </div>
-            <div class="custom-control custom-radio custom-control-inline">
-    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="issuesno" name="issued" value="no" {% if filters.issued == 'no' %}checked{% endif %}>
-    <label class="custom-control-label" for="issuesno">no</label>
-  </div>
+            <h4>have Issued item</h4>
+            <div class="yesnoall">
+                <span class="{% if filters.issued == 'All' or not filters.active %}active{% endif %}">All</span>
+                <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
+                <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
+                <input type="hidden" name="issued" value ="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
+            </div>
         </li>
 
         <li>
@@ -83,20 +84,11 @@
 
                     <thead>
                         <tr>
-                            <th>ID
-                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>Name
-                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>
-                                Type
-                                <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>
-                                Active
-                                <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Active</th>
+                            <th>Issues</th>
                         </tr>
                     </thead>
                     <tbody id="allMember">
@@ -108,6 +100,7 @@
                             <td>{{ member.name }}</td>
                             <td><a target="_blank" href="/admin/LMS/userbasicsetting/{{ member.settings.pk }}/change">{{ member.settings.type }}</a></td>
                             <td>{{ member.active }}</td>
+                        <td>{{ member.issued }}</td>
                         </tr>
 
                     {% endfor %}

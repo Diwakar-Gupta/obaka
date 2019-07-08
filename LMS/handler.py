@@ -96,7 +96,6 @@ def renew(request):
             return {'error': 'already returned'}
         issue.date = datetime.now()
         issue.duedate = datetime.now() + timedelta(days=issue.member.settings.maxDay)
-
         issue.save()
 
     except Issue.DoesNotExist:

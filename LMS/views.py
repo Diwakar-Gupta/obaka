@@ -1,6 +1,6 @@
 from django.shortcuts import render , render_to_response
 from django.contrib import auth
-from django.contrib.auth.views import redirect_to_login
+from django.contrib.auth.views import redirect_to_login , HttpResponseRedirect
 from . import handler
 from .models import *
 from datetime import datetime
@@ -25,8 +25,11 @@ def books(request):
     if request.method == 'GET':
         if 'author' in request.GET and len(request.GET['author'])>0 :
             filtered = [x for x in filtered if x.author.lower().startswith(request.GET['author'].lower())]
-        if 'deactive' in request.GET:
-            filtered.sort(key=lambda x:x.deactive)
+        if 'active' in request.GET:
+            if request.GET['active'] == 'yes':
+                filtered = filter(lambda x: not x.deactive, filtered)
+            if request.GET['active'] == 'no':
+                filtered = filter(lambda x: x.deactive, filtered)
 
     return render(request, 'book.html',context={'isbns':filtered,'filters':request.GET})
 
@@ -63,11 +66,9 @@ def member(request):
             filtered.extend([x for x in Faculty.objects.all()])
         if 'idrangemin' in request.GET and len(request.GET['idrangemin']) > 0:
             min = int(request.GET['idrangemin'])
-            print('min',min)
             filtered=filter(lambda x: x.id>=min,filtered)
         if 'idrangemax' in request.GET and len(request.GET['idrangemax']) > 0:
             max = int(request.GET['idrangemax'])
-            print('max', max)
             filtered=filter(lambda x: x.id<=max,filtered)
         if 'active' in request.GET:
             if request.GET['active'] == 'yes':
@@ -127,12 +128,16 @@ def member_issue(request,membertype,memberpk):
             context['error'] = "user dosen't match to request"
     else:
         if membertype == 'STUDENT':
-            return render(request,'member/issue.html',context={'member': Student.objects.get(pk=memberpk), 'holds':Issue.objects.filter(member_type = ContentType.objects.get_for_model(Student), member_id= memberpk )})
+            return render(request,'member/issue.html',context={'member': Student.objects.get(pk=memberpk), 'holds':Issue.objects.filter(member_type = ContentType.objects.get_for_model(Student), member_id= memberpk, is_returned=False )})
         elif membertype == 'FACULTY':
-            return render(request,'member/issue.html',context={'member': Faculty.objects.get(pk=memberpk), 'holds':Issue.objects.filter(member_type = ContentType.objects.get_for_model(Faculty), member_id= memberpk )})
+            return render(request,'member/issue.html',context={'member': Faculty.objects.get(pk=memberpk), 'holds':Issue.objects.filter(member_type = ContentType.objects.get_for_model(Faculty), member_id= memberpk, is_returned=False )})
+    if membertype == 'STUDENT':
+        context['holds'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Student), member_id=memberpk, is_returned=False)
+    elif membertype == 'FACULTY':
+        context['holds'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Faculty),member_id=memberpk, is_returned=False)
 
     if 'success' in context.values():
-        return render_to_response('member/issue.html', context=context)
+        return HttpResponseRedirect(reverse('member/issue.html', context=context))
     else :
         return render(request,'member/issue.html',context=context)
 
@@ -165,7 +170,6 @@ def newspaper(request,pk):
             newspaper.present.add(Date().today())
 
 
-
 def notifiedDelayed(request):
     user = auth.get_user(request)
     if not user.is_staff:
@@ -194,12 +198,15 @@ def returnn(request):
         if 'pk' in request.POST:
             context = handler.returnn(request)
         elif 'barcode' in request.POST:
-            isbn = ISBN.objects.get(isbn=int(request.POST['barcode']))
-            set = isbn.issue_set.filter(is_returned=False)
-            if set:
-                context = {'Issues': set}
-            else:
-                context = {'error': 'This item has no Issues'}
+            try:
+                isbn = ISBN.objects.get(isbn=int(request.POST['barcode']))
+                set = isbn.issue_set.filter(is_returned=False)
+                if set:
+                    context = {'Issues': set}
+                else:
+                    context = {'error': 'This item has no Issues'}
+            except ISBN.DoesNotExist:
+                context = {'error': "Can't find this item"}
     return render(request, 'return.html', context=context)
 
 

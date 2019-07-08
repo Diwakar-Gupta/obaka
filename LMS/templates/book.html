@@ -5,12 +5,25 @@
 
 <form method="get" action="{% url 'books' %}">
 <style>
-    .changelist-filter ul li{
-        padding-top: 1rem;
-    }
-    .changelist-filter ul{
-        list-style: none;
-    }
+    .changelist-filter ul li {
+                        padding-top: 1rem;
+                    }
+
+                    .changelist-filter ul {
+                        list-style: none;
+                    }
+
+                    .changelist-filter .yesnoall {
+                        justify-content: space-evenly;
+                        display: flex;
+                    }
+                    .changelist-filter .yesnoall>span {
+                        cursor: pointer;
+                    }
+                    .changelist-filter .yesnoall>span.active {
+                        color: #89f193;
+                        cursor: default;
+                    }
 </style>
     <div class="changelist-filter">
         <h1 class="m-3">Filters</h1>
@@ -33,10 +46,12 @@
         </li>
 
         <li>
-            <div class="form-check">
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" onChange="this.form.submit()" {% if filters.deactive %}checked{% endif %} name="deactive">Max Deactive
-                </label>
+            <h4>Active</h4>
+            <div class="yesnoall">
+                <span class="{% if filters.active == 'All' or not filters.active %}active{% endif %}">All</span>
+                <span class="{% if filters.active == 'yes' %}active{% endif %}">yes</span>
+                <span class="{% if filters.active == 'no' %}active{% endif %}">no</span>
+                <input type="hidden" name="active" value ="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
             </div>
         </li>
     </ul>
@@ -54,28 +69,12 @@
 
                     <thead>
                         <tr>
-                            <th>ISBN
-                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>Title
-                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>Auther
-                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>Quantity
-                                    <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            <th>
-                                Issued
-                                <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            {% if filters.deactive %}
-                            <th>
-                                Deactivated
-                                <i class="fas fa-long-arrow-alt-down sorted"></i>
-                            </th>
-                            {% endif %}
+                            <th>ISBN</th>
+                            <th>Title</th>
+                            <th>Auther</th>
+                            <th>Quantity</th>
+                            <th>Issued</th>
+                            <th>Deactive</th>
                         </tr>
                     </thead>
                     <tbody id="allBook">
@@ -88,9 +87,7 @@
                             <td>{{ isbn.author }}</td>
                             <td>{{ isbn.quantity }}</td>
                             <td>{{ isbn.issued }}</td>
-                            {% if filters.deactive %}
-                                <td>{{ isbn.deactive }}</td>
-                            {% endif %}
+                            <td>{{ isbn.deactive }}</td>
                         </tr>
 
                     {% endfor %}

@@ -42,4 +42,12 @@ $('thead td input[type=checkbox] ').on('change',function(){
 });
 
 $('th').click(sortThis);
+$('th').append('<i class="fas fa-long-arrow-alt-down sorted"></i>');
 $('.searchTable').on('keyup',searchTable);
+
+$('.changelist-filter .yesnoall>span').not("span.active").on('click',function(){
+    parent=this.parentNode
+    input=parent.querySelector('input[type=hidden]')
+    input.value=this.innerText
+    input.form.submit();
+});
