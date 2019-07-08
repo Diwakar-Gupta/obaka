@@ -29,7 +29,7 @@ class Student(models.Model):
     active = models.BooleanField(default=True)
     email = models.EmailField(null=True)
     issued = models.PositiveIntegerField(default=0)
-
+    fine = models.PositiveIntegerField(default=0)
     from django.contrib.auth.models import User
 
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
@@ -57,6 +57,7 @@ class Faculty(models.Model):
     active = models.BooleanField(default=True)
     email = models.EmailField(null=True)
     issued = models.PositiveIntegerField(default=0)
+    fine = models.PositiveIntegerField(default=0)
     from django.contrib.auth.models import User
 
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)
@@ -151,8 +152,6 @@ class Issue(models.Model):
         return days
 
     def fine(self):
-        if self.forgetoverdue:
-            return 0
         return self.lateby()*self.member.settings.finePerDay
 
     def send_mail(self):

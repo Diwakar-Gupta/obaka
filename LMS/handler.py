@@ -77,6 +77,9 @@ def returnn(request):
         issue.is_returned = True
         issue.return_date = datetime.now()
 
+        if issue.isLate() and not ('forgiveoverdue' in request.POST and len(request.POST['forgiveoverdue'])>0):
+            issue.member.fine += issue.fine()
+
         issue.book.save()
         issue.member.save()
         issue.save()

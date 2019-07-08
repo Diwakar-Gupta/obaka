@@ -2,8 +2,8 @@
 
 
 {% block sidebar %}
-
-<form method="get" action="{% url 'member' %}">
+{% csrf_token %}
+<form method="get" id="table-form" action="{% url 'member' %}">
 <style>
     .changelist-filter ul li {
                         padding-top: 1rem;
@@ -60,7 +60,7 @@
         <li>
             <h4>have Issued item</h4>
             <div class="yesnoall">
-                <span class="{% if filters.issued == 'All' or not filters.active %}active{% endif %}">All</span>
+                <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
                 <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
                 <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
                 <input type="hidden" name="issued" value ="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
@@ -73,7 +73,17 @@
                 <span class="{% if filters.fine == 'All' or not filters.fine %}active{% endif %}">All</span>
                 <span class="{% if filters.fine == 'yes' %}active{% endif %}">yes</span>
                 <span class="{% if filters.fine == 'no' %}active{% endif %}">no</span>
-                <input type="hidden" name="issued" value ="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
+                <input type="hidden" name="fine" value ="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
+            </div>
+        </li>
+
+        <li>
+            <h4>OverDue's</h4>
+            <div class="yesnoall">
+                <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
+                <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
+                <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
+                <input type="hidden" name="overdue" value ="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
             </div>
         </li>
 
@@ -115,7 +125,58 @@
 
                     {% endfor %}
 
+
+
                     </tbody>
                 </table>
+<script>
+    let infiniteLoopWorking = false;
+    $('#content').on('scroll', function(){
+        c=document.getElementById('content')
+        if(c.scrollHeight -c.offsetHeight -c.scrollTop ==0 && infiniteLoopWorking==false ){
+            infiniteLoopWorking = true;
+            let form=$('#table-form')[0]
+            $.ajax({
+                type: 'GET',
+                url: '{% url 'member' %}',
+                data: {'csrfmiddlewaretoken':document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    'membertype':document.getElementsByName('membertype')[0].value,
+                    'idrangemin':document.getElementsByName('idrangemin')[0].value,
+                    'idrangemax':document.getElementsByName('idrangemax')[0].value,
+                    'active':document.getElementsByName('active')[0].value,
+                    'issued':document.getElementsByName('issued')[0].value,
+                    'fine':document.getElementsByName('fine')[0].value,
+                    'overdue':document.getElementsByName('overdue')[0].value,
+                    'have':document.getElementById('allMember').children.length
+                },
+                success: function (data) {
+                    list = JSON.parse(data);
 
+                    if(list == false)
+                        return
+                    else{
+                        table = document.getElementById('allMember');
+
+                        list.forEach(function(e){
+                            table.innerHTML += '<tr>' +
+                                '<td><a href="/'+e.type+'/'+e.id+'">'+e.id+'</a></td>\n' +
+                                '<td>'+e.name+'</td>\n' +
+                                '<td><a target="_blank" href="/admin/LMS/userbasicsetting/'+e.type+'/change">'+e.type+'</a></td>\n' +
+                                '<td>'+e.active+'</td>\n' +
+                                '<td>'+e.issued+'</td>\n' +
+                                '</tr>'
+                        })
+                    }
+
+                    setTimeout(function(){
+                        infiniteLoopWorking = false
+                    },500);
+                },
+                error: function (data) {
+                    alert('error');
+                }
+    });
+        }
+    })
+</script>
 {% endblock %}

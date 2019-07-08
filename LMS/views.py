@@ -1,12 +1,13 @@
-from django.shortcuts import render , render_to_response
+from django.shortcuts import render , HttpResponseRedirect , HttpResponse
 from django.contrib import auth
-from django.contrib.auth.views import redirect_to_login , HttpResponseRedirect
+from django.contrib.auth.views import redirect_to_login
 from . import handler
 from .models import *
 from datetime import datetime
 from django.views.generic.edit import CreateView , UpdateView
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
+import json
 
 def index(request):
     user = auth.get_user(request)
@@ -51,7 +52,7 @@ def member(request):
 
     filtered = []
 
-    print(request.GET)
+    filters = request.GET.copy()
     if request.method == 'GET':
         if 'membertype' in request.GET and len(request.GET['membertype']) > 0:
             if request.GET['membertype'] == 'Student':
@@ -75,13 +76,48 @@ def member(request):
                 filtered = filter(lambda x: x.active, filtered)
             if request.GET['active']=='no':
                 filtered = filter(lambda x: not x.active, filtered)
-        if 'issued' in request.GET:
-            if request.GET['issued'] == 'yes':
+        if 'overdue' in request.GET and request.GET['overdue'] == 'yes':
+            filters['issued'] = 'yes'
+        if 'issued' in filters:
+            if filters['issued'] == 'yes':
                 filtered = filter(lambda x: x.issued, filtered)
-            if request.GET['issued']=='no':
+            if filters['issued']=='no':
                 filtered = filter(lambda x: not x.issued, filtered)
+        if 'overdue' in request.GET:
+            def checklate(j):
+                for i in j:
+                    if i.isLate():
+                        return True
+                return False
+            if request.GET['overdue'] == 'yes':
+                filtered = filter(lambda x: checklate(Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,is_returned=False)), filtered)
+            if request.GET['overdue']=='no':
+                filtered = filter(lambda x: not checklate(Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,is_returned=False)), filtered)
+        if 'fine' in request.GET:
+            if request.GET['fine'] == 'no':
+                filtered = filter(lambda x: x.fine <= 0, filtered)
+            if request.GET['fine'] == 'yes':
+                filtered = filter(lambda x: x.fine > 0, filtered)
+        if 'have' in filters:
+            if len(filtered) <= int(filters['have']):
+                return HttpResponse('false')
+            def serlise(l):
+                da={}
+                li=[]
+                for i in l:
+                    da['id']=i.id
+                    da['name']=i.name
+                    da['type']=i.settings.type
+                    da['active']=i.active
+                    da['issued']=i.issued
+                    li.append(da)
+                    da={}
+                return li
+            data = json.dumps(serlise(filtered[int(filters['have']):int(filters['have'])+20]))
+            print(data)
+            return HttpResponse(data)
 
-    return render(request, 'allMember.html', context={'members': filtered, 'filters': request.GET})
+    return render(request, 'allMember.html', context={'members': filtered[0:12], 'filters': filters})
 
 
 def memberAdd(request):
