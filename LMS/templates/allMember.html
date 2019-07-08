@@ -35,11 +35,19 @@
         </li>
 
         <li>
-            <div class="form-check">
-                <label class="form-check-label">
-                  <input type="checkbox" class="form-check-input" onChange="this.form.submit()" {% if filters.deactivated %}checked{% endif %} name="deactivated">Deactivated
-                </label>
-            </div>
+        <h4>By active</h4>
+            <div class="custom-control custom-radio custom-control-inline">
+    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="activeall" name="active" value="all" {% if filters.active == 'all' %}checked{% endif %}>
+    <label class="custom-control-label" for="activeall">All</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="activeyes" name="active" value="yes" {% if filters.active == 'yes' %}checked{% endif %}>
+    <label class="custom-control-label" for="activeyes">yes</label>
+  </div>
+            <div class="custom-control custom-radio custom-control-inline">
+    <input onchange="this.form.submit()" type="radio" class="custom-control-input" id="activeno" name="active" value="no" {% if filters.active == 'no' %}checked{% endif %}>
+    <label class="custom-control-label" for="activeno">no</label>
+  </div>
         </li>
         <li>
             <input type="submit" class="btn btn-primary">

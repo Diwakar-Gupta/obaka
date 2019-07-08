@@ -69,8 +69,11 @@ def member(request):
             max = int(request.GET['idrangemax'])
             print('max', max)
             filtered=filter(lambda x: x.id<=max,filtered)
-        if 'deactive' in request.GET:
-            filtered=filter(lambda x:not x.active,filtered)
+        if 'active' in request.GET:
+            if request.GET['active'] == 'yes':
+                filtered = filter(lambda x: x.active, filtered)
+            if request.GET['active']=='no':
+                filtered = filter(lambda x: not x.active, filtered)
 
     return render(request, 'allMember.html', context={'members': filtered, 'filters': request.GET})
 
