@@ -41,7 +41,6 @@ def issue(request):
         autorenew = True if 'autorenew' in request.POST else False
         from django.contrib import auth
         issuefrom = auth.get_user(request).get_username()
-        member.issued += 1
         contentype = ContentType.objects.get_or_create(app_label='LMS', model=membertype)
         if contentype[1]:
             contentype[0].save()
