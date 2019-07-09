@@ -2,7 +2,7 @@
 
 
 {% block sidebar %}
-
+{% csrf_token %}
 <form method="get" action="{% url 'books' %}">
 <style>
     .changelist-filter ul li {
@@ -36,14 +36,17 @@
         <datalist id="authors"> <option>Red</option> <option>Yellow</option> <option>Blue</option> <option>Green</option> <option>Orange</option> <option>Purple</option> <option>Black</option> <option>White</option> <option>Gray</option> </datalist>
 
         </li>
+
         <li>
-            <h4> By Category </h4>
-        <select name="category" class="form-control" onChange="this.form.submit()">
-            {% for category in categoriess %}
-                <option>(( category }}</option>
-            {% endfor %}
-        </select>
+            <h4>Issued</h4>
+            <div class="yesnoall">
+                <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
+                <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
+                <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
+                <input type="hidden" name="issued" value ="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
+            </div>
         </li>
+
 
         <li>
             <h4>Active</h4>
@@ -69,12 +72,12 @@
 
                     <thead>
                         <tr>
-                            <th>ISBN</th>
-                            <th>Title</th>
-                            <th>Auther</th>
-                            <th>Quantity</th>
-                            <th>Issued</th>
-                            <th>Deactive</th>
+                            <th dtype="int">ISBN</th>
+                            <th dtype="str">Title</th>
+                            <th dtype="str">Auther</th>
+                            <th dtype="int">Quantity</th>
+                            <th dtype="int">Issued</th>
+                            <th dtype="int">Deactive</th>
                         </tr>
                     </thead>
                     <tbody id="allBook">
@@ -94,5 +97,52 @@
 
                     </tbody>
                 </table>
+
+                <script>
+                    let infiniteLoopWorking = false;
+                    document.getElementById('content').onscroll= function(){
+                        c=document.getElementById('content')
+                        if(c.scrollHeight -c.offsetHeight -c.scrollTop ==0 && infiniteLoopWorking==false ){
+                            infiniteLoopWorking = true;
+                            setTimeout(function(){
+                                        infiniteLoopWorking = false
+                                    },3000);
+                            let form=$('#table-form')[0]
+                            $.ajax({
+                                type: 'GET',
+                                url: '{% url 'books' %}',
+                                data: {'csrfmiddlewaretoken':document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                                    'issued':document.getElementsByName('issued')[0].value,
+                                    'active':document.getElementsByName('active')[0].value,
+                                    'have':document.getElementById('allBook').children.length
+                                },
+                                success: function (data) {
+                                    list = JSON.parse(data);
+                                    table = document.getElementById('allBook');
+                                    if(list == false){
+                                        
+                                    }        
+                                    else{
+                                        
+                
+                                        list.forEach(function(e){
+                                            table.innerHTML += '<tr><td>'+e.isbn+'</td><td>'+e.title+'</td><td>'+e.author +'</td><td>'+e.quantity+'</td><td>'+e.issued+'</td><td>'+e.deactive +'</td></tr>'
+                                        })
+                                    }
+                
+                                    setTimeout(function(){
+                                        infiniteLoopWorking = false
+                                    },500);
+                                },
+                                error: function (data) {
+                                    alert('error');
+                                    setTimeout(function(){
+                                        infiniteLoopWorking = false
+                                    },500);
+                                }
+                    });
+                        }
+                    }
+                </script>
 
 {% endblock %}

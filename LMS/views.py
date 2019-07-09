@@ -22,17 +22,40 @@ def books(request):
     if not user.is_staff:
         return redirect_to_login(next=request.path)
     filtered = [x for x in ISBN.objects.all()]
-    print(request.GET)
+    filters = request.GET.copy()
+    
     if request.method == 'GET':
         if 'author' in request.GET and len(request.GET['author'])>0 :
             filtered = [x for x in filtered if x.author.lower().startswith(request.GET['author'].lower())]
         if 'active' in request.GET:
             if request.GET['active'] == 'yes':
-                filtered = filter(lambda x: not x.deactive, filtered)
+                filtered = [x for x in filtered if not x.deactive]
             if request.GET['active'] == 'no':
-                filtered = filter(lambda x: x.deactive, filtered)
-
-    return render(request, 'book.html',context={'isbns':filtered,'filters':request.GET})
+                filtered = [x for x in filtered if x.deactive]
+        if 'issued' in request.GET:
+            if request.GET['issued'] == 'yes':
+                filtered = [x for x in filtered if  x.issued]
+            if request.GET['active'] == 'no':
+                filtered = [x for x in filtered if not x.issued]
+        if 'have' in filters:
+            if len(filtered) <= int(filters['have']):
+                return HttpResponse('false')
+            def serlise(l):
+                da={}
+                li=[]
+                for i in l:
+                    da['isbn']=i.isbn
+                    da['title']=i.title
+                    da['author']=i.author
+                    da['quantity']=i.quantity
+                    da['issued']=i.issued
+                    da['deactive']=i.deactive
+                    li.append(da)
+                    da={}
+                return li
+            data = json.dumps(serlise(filtered[int(filters['have']):int(filters['have'])+20]))
+            return HttpResponse(data)
+    return render(request, 'book.html',context={'isbns':filtered[0:20],'filters':request.GET})
 
 
 def booksAdd(request):
