@@ -115,9 +115,9 @@ def member(request):
             if request.GET['overdue'] == 'yes':
                 filtered = [x for x in filtered if checklate(
                     Issue.objects.filter(member_type=ContentType.objects.get_for_model(x), member_id=x.pk,
-                                         is_returned=False)) <= 0]
+                                         is_returned=False))]
             if request.GET['overdue']=='no':
-                filtered = [x for x in filtered if not checklate(Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,is_returned=False)) <= 0]
+                filtered = [x for x in filtered if not checklate(Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,is_returned=False))]
         if 'fine' in request.GET:
             if request.GET['fine'] == 'no':
                 filtered = [x for x in filtered if x.fine<=0]
