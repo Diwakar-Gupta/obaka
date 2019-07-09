@@ -12,10 +12,19 @@ function searchTable(){
 function sortThis(){
 
     let parent = $($(this).parent());
+    dtype = $(this).attr('dtype')
     index = parent.children().index(this);
     target = $(parent.parent()).next();
     //target.fadeOut('slow');
     children = $(target).children();
+    if(dtype=='int')
+    children.sort(function (a, b) {
+        first = parseInt($(a).children()[index].textContent)
+        second = parseInt($(b).children()[index].textContent)
+        result = first < second
+        return result * -1
+    });
+    else
     children.sort(function (a, b) {
         return $(a).children()[index].textContent.toLowerCase().localeCompare($(b).children()[index].textContent.toLowerCase())
     });
@@ -25,6 +34,7 @@ function sortThis(){
         $(children[i]).insertAfter($(children[i-1]));
     };
     //target.fadeIn()
+
     $(parent.find('th .sorted')).css('display','none')
     $($(this).find('.sorted')).css('display','inline')
 }

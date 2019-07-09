@@ -67,22 +67,22 @@ def member(request):
             filtered.extend([x for x in Faculty.objects.all()])
         if 'idrangemin' in request.GET and len(request.GET['idrangemin']) > 0:
             min = int(request.GET['idrangemin'])
-            filtered=filter(lambda x: x.id>=min,filtered)
+            filtered = [x for x in filtered if x.id >= min]
         if 'idrangemax' in request.GET and len(request.GET['idrangemax']) > 0:
             max = int(request.GET['idrangemax'])
-            filtered=filter(lambda x: x.id<=max,filtered)
+            filtered = [x for x in filtered if x.id<=max]
         if 'active' in request.GET:
             if request.GET['active'] == 'yes':
-                filtered = filter(lambda x: x.active, filtered)
+                filtered = [x for x in filtered if x.active]
             if request.GET['active']=='no':
-                filtered = filter(lambda x: not x.active, filtered)
+                filtered = [x for x in filtered if not x.active]
         if 'overdue' in request.GET and request.GET['overdue'] == 'yes':
             filters['issued'] = 'yes'
         if 'issued' in filters:
             if filters['issued'] == 'yes':
-                filtered = filter(lambda x: x.issued, filtered)
+                filtered = [x for x in filtered if x.issued]
             if filters['issued']=='no':
-                filtered = filter(lambda x: not x.issued, filtered)
+                filtered = [x for x in filtered if not x.issued]
         if 'overdue' in request.GET:
             def checklate(j):
                 for i in j:
@@ -90,14 +90,16 @@ def member(request):
                         return True
                 return False
             if request.GET['overdue'] == 'yes':
-                filtered = filter(lambda x: checklate(Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,is_returned=False)), filtered)
+                filtered = [x for x in filtered if checklate(
+                    Issue.objects.filter(member_type=ContentType.objects.get_for_model(x), member_id=x.pk,
+                                         is_returned=False)) <= 0]
             if request.GET['overdue']=='no':
-                filtered = filter(lambda x: not checklate(Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,is_returned=False)), filtered)
+                filtered = [x for x in filtered if not checklate(Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,is_returned=False)) <= 0]
         if 'fine' in request.GET:
             if request.GET['fine'] == 'no':
-                filtered = filter(lambda x: x.fine <= 0, filtered)
+                filtered = [x for x in filtered if x.fine<=0]
             if request.GET['fine'] == 'yes':
-                filtered = filter(lambda x: x.fine > 0, filtered)
+                filtered = [x for x in filtered if x.fine > 0]
         if 'have' in filters:
             if len(filtered) <= int(filters['have']):
                 return HttpResponse('false')
@@ -117,7 +119,7 @@ def member(request):
             print(data)
             return HttpResponse(data)
 
-    return render(request, 'allMember.html', context={'members': filtered[0:12], 'filters': filters})
+    return render(request, 'allMember.html', context={'members': filtered[0:13], 'filters': filters})
 
 
 def memberAdd(request):

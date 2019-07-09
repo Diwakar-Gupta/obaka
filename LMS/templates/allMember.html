@@ -104,11 +104,11 @@
 
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Active</th>
-                            <th>Issues</th>
+                            <th dtype="int">ID</th>
+                            <th dtype="str">Name</th>
+                            <th dtype="str">Type</th>
+                            <th dtype="str">Active</th>
+                            <th dtype="int">Issues</th>
                         </tr>
                     </thead>
                     <tbody id="allMember">
@@ -131,7 +131,7 @@
                 </table>
 <script>
     let infiniteLoopWorking = false;
-    $('#content').on('scroll', function(){
+    document.getElementById('content').onscroll= function(){
         c=document.getElementById('content')
         if(c.scrollHeight -c.offsetHeight -c.scrollTop ==0 && infiniteLoopWorking==false ){
             infiniteLoopWorking = true;
@@ -177,6 +177,6 @@
                 }
     });
         }
-    })
+    }
 </script>
 {% endblock %}
