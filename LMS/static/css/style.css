@@ -310,6 +310,35 @@ other
 }
 
 
+/*
+
+changelist-filter
+
+*/
+
+.changelist-filter ul li {
+    padding-top: 1rem;
+}
+
+.changelist-filter ul {
+    list-style: none;
+}
+
+.changelist-filter .yesnoall {
+    justify-content: space-evenly;
+    display: flex;
+}
+.changelist-filter .yesnoall>span {
+    cursor: pointer;
+}
+.changelist-filter .yesnoall>span.active {
+    color: cyan;
+    cursor: default;
+}
+.extra-space{
+    height: 100px;
+}
+
 
 
 

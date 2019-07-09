@@ -4,27 +4,6 @@
 {% block sidebar %}
 {% csrf_token %}
 <form method="get" id="table-form" action="{% url 'member' %}">
-<style>
-    .changelist-filter ul li {
-                        padding-top: 1rem;
-                    }
-
-                    .changelist-filter ul {
-                        list-style: none;
-                    }
-
-                    .changelist-filter .yesnoall {
-                        justify-content: space-evenly;
-                        display: flex;
-                    }
-                    .changelist-filter .yesnoall>span {
-                        cursor: pointer;
-                    }
-                    .changelist-filter .yesnoall>span.active {
-                        color: cyan;
-                        cursor: default;
-                    }
-</style>
     <div class="changelist-filter">
         <h1 class="m-3">Filters</h1>
 
@@ -89,6 +68,9 @@
 
         <li>
             <input type="submit" class="btn btn-primary">
+        </li>
+        <li class="extra-space">
+
         </li>
     </ul>
     </div>
