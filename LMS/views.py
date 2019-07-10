@@ -109,8 +109,6 @@ def member(request):
                 filtered = [x for x in filtered if x.active]
             if request.GET['active']=='no':
                 filtered = [x for x in filtered if not x.active]
-        if 'overdue' in request.GET and request.GET['overdue'] == 'yes':
-            filters['issued'] = 'yes'
         if 'issued' in filters:
             if filters['issued'] == 'yes':
                 filtered = [x for x in filtered if x.issued]
