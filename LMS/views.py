@@ -153,6 +153,16 @@ def member(request):
     return render(request, 'allMember.html', context={'members': filtered[0:13], 'filters': filters})
 
 
+def memberName(request):
+    requested = request.POST['name']
+    list = [x.name for x in Student.objects.all() if x.name.lower().startswith(requested)]
+    list.append([x.name for x in Faculty.objects.all() if x.name.lower().startswith(requested)])
+    list = {'names':list,'requested':request.POST['name']}
+    list = json.dumps(list)
+    print(list)
+    return HttpResponse(list)
+
+
 def memberAdd(request):
     user = auth.get_user(request)
     if not user.is_staff:

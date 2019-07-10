@@ -11,6 +11,7 @@ urlpatterns = [
     path('books/add', views.booksAdd, name='book-add'),
 
     path('member/',views.member,name='member'),
+    path('member/name',views.memberName,name='member-name'),
     path('member/add',views.memberAdd,name='member-add'),
 
     path('Student/add', views.StudentAdd.as_view(),name= 'student-add'),

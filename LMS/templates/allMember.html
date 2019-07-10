@@ -8,71 +8,112 @@
         <h1 class="m-3">Filters</h1>
 
         <ul style="padding-inline-start: 5px;">
-        <li>
-            <h4> By Member type </h4>
-        <select name="membertype" onchange="this.form.submit()" class="form-control">
-            <option {% if filters.membertype == 'All' %}selected{% endif %}>All</option>
-            <option {% if filters.membertype == 'Student' %}selected{% endif %}>Student</option>
-            <option {% if filters.membertype == 'Faculty' %}selected{% endif %}>Faculty</option>
-            <option {% if filters.membertype == 'Others' %}selected{% endif %}>Others</option>
-        </select>
-        </li>
-        <li>
-            <h4> By ID range </h4>
-        <div class="input-group mb-3">
-    <input type="number" min="0" onchange="document.getElementsByName('idrangemax')[0].min=this.value;" class="form-control" name="idrangemin" placeholder="From 0" {% if filters.idrangemin %}value="{{ filters.idrangemin }}"{% endif %}>
-            <i class="form-control" style="max-width: 40px">to</i>
-    <input type="number" class="form-control" id="idrangemax" name="idrangemax" placeholder="till &#8734" {% if filters.idrangemax %}value="{{ filters.idrangemax }}"{% endif %}>
-  </div>
-        </li>
+            <li>
+                <h4> By Member type </h4>
+                <select name="membertype" onchange="this.form.submit()" class="form-control">
+                    <option {% if filters.membertype == 'All' %}selected{% endif %}>All</option>
+                    <option {% if filters.membertype == 'Student' %}selected{% endif %}>Student</option>
+                    <option {% if filters.membertype == 'Faculty' %}selected{% endif %}>Faculty</option>
+                    <option {% if filters.membertype == 'Others' %}selected{% endif %}>Others</option>
+                </select>
+            </li>
+            <li>
+                <input type="text" name="name" class="form-control"  placeholder="name"
+                    list="name" {% if filters.name %}value="{{ filters.name }}" {% endif %}>
 
-        <li>
-            <h4>By active</h4>
-            <div class="yesnoall">
-                <span class="{% if filters.active == 'All' or not filters.active %}active{% endif %}">All</span>
-                <span class="{% if filters.active == 'yes' %}active{% endif %}">yes</span>
-                <span class="{% if filters.active == 'no' %}active{% endif %}">no</span>
-                <input type="hidden" name="active" value ="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
-            </div>
-        </li>
+                <datalist id="name">
+                </datalist>
 
-        <li>
-            <h4>have Issued item</h4>
-            <div class="yesnoall">
-                <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
-                <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
-                <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
-                <input type="hidden" name="issued" value ="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
-            </div>
-        </li>
+<script>
+document.querySelector('#table-form > div > ul > li:nth-child(2) > input').onkeyup=function(){
+    let key = this.value.toLowerCase
 
-        <li>
-            <h4>have Fine</h4>
-            <div class="yesnoall">
-                <span class="{% if filters.fine == 'All' or not filters.fine %}active{% endif %}">All</span>
-                <span class="{% if filters.fine == 'yes' %}active{% endif %}">yes</span>
-                <span class="{% if filters.fine == 'no' %}active{% endif %}">no</span>
-                <input type="hidden" name="fine" value ="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
-            </div>
-        </li>
+    $.ajax({
+                type: 'POST',
+                url: '{% url 'member-name' %}',
+                data: {
+                    'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    'name':key
+                    },
+                success: function (data) {
+                    datas = JSON.parse(data)
+                    if(datas['requested']==key){
+                        let datalist=$(document.querySelector('#name'));
+                        datalist.empty();
+                        let list = datas['names']
+                        list.forEach(e=>datalist.append('<option>'+e+'</option>'))
+                        
+                    }
+                },
+            });
+};
+</script>
 
-        <li>
-            <h4>OverDue's</h4>
-            <div class="yesnoall">
-                <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
-                <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
-                <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
-                <input type="hidden" name="overdue" value ="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
-            </div>
-        </li>
+            </li>
+            <li>
+                <h4> By ID range </h4>
+                <div class="input-group mb-3">
+                    <input type="number" min="0" onchange="document.getElementsByName('idrangemax')[0].min=this.value;"
+                        class="form-control" name="idrangemin" placeholder="From 0"
+                        {% if filters.idrangemin %}value="{{ filters.idrangemin }}" {% endif %}>
+                    <i class="form-control" style="max-width: 40px">to</i>
+                    <input type="number" class="form-control" id="idrangemax" name="idrangemax"
+                        placeholder="till &#8734" {% if filters.idrangemax %}value="{{ filters.idrangemax }}"
+                        {% endif %}>
+                </div>
+            </li>
 
-        <li>
-            <input type="submit" class="btn btn-primary">
-        </li>
-        <li class="extra-space">
+            <li>
+                <h4>By active</h4>
+                <div class="yesnoall">
+                    <span class="{% if filters.active == 'All' or not filters.active %}active{% endif %}">All</span>
+                    <span class="{% if filters.active == 'yes' %}active{% endif %}">yes</span>
+                    <span class="{% if filters.active == 'no' %}active{% endif %}">no</span>
+                    <input type="hidden" name="active"
+                        value="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
+                </div>
+            </li>
 
-        </li>
-    </ul>
+            <li>
+                <h4>have Issued item</h4>
+                <div class="yesnoall">
+                    <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
+                    <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
+                    <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
+                    <input type="hidden" name="issued"
+                        value="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
+                </div>
+            </li>
+
+            <li>
+                <h4>have Fine</h4>
+                <div class="yesnoall">
+                    <span class="{% if filters.fine == 'All' or not filters.fine %}active{% endif %}">All</span>
+                    <span class="{% if filters.fine == 'yes' %}active{% endif %}">yes</span>
+                    <span class="{% if filters.fine == 'no' %}active{% endif %}">no</span>
+                    <input type="hidden" name="fine"
+                        value="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
+                </div>
+            </li>
+
+            <li>
+                <h4>OverDue's</h4>
+                <div class="yesnoall">
+                    <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
+                    <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
+                    <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
+                    <input type="hidden" name="overdue"
+                        value="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
+                </div>
+            </li>
+
+            <li>
+                <input type="submit" class="btn btn-primary">
+            </li>
+            <li class="extra-space">
+
+            </li>
+        </ul>
     </div>
 </form>
 
@@ -80,84 +121,89 @@
 
 {% block content %}
 
-    <input onkeyup="searchTable()" data-target="#allMember" type="text" class="form-control searchTable" style="width:100%"
-                    placeholder="Search">
-              <table id="table" class="table table-striped bg-white">
+<input onkeyup="searchTable()" data-target="#allMember" type="text" class="form-control searchTable" style="width:100%"
+    placeholder="Search">
+<table id="table" class="table table-striped bg-white">
 
-                    <thead>
-                        <tr>
-                            <th dtype="int">ID</th>
-                            <th dtype="str">Name</th>
-                            <th dtype="str">Type</th>
-                            <th dtype="str">Active</th>
-                            <th dtype="int">Issues</th>
-                        </tr>
-                    </thead>
-                    <tbody id="allMember">
+    <thead>
+        <tr>
+            <th dtype="int">ID</th>
+            <th dtype="str">Name</th>
+            <th dtype="str">Type</th>
+            <th dtype="str">Active</th>
+            <th dtype="int">Issues</th>
+        </tr>
+    </thead>
+    <tbody id="allMember">
 
-                    {% for member in members %}
+        {% for member in members %}
 
-                        <tr>
-                            <td><a href="{% url 'member-profile' membertype=member.settings.type memberpk=member.pk  %}">{{ member.id }}</a></td>
-                            <td>{{ member.name }}</td>
-                            <td><a target="_blank" href="/admin/LMS/userbasicsetting/{{ member.settings.pk }}/change">{{ member.settings.type }}</a></td>
-                            <td>{{ member.active }}</td>
-                        <td>{{ member.issued }}</td>
-                        </tr>
+        <tr>
+            <td><a
+                    href="{% url 'member-profile' membertype=member.settings.type memberpk=member.pk  %}">{{ member.id }}</a>
+            </td>
+            <td>{{ member.name }}</td>
+            <td><a target="_blank"
+                    href="/admin/LMS/userbasicsetting/{{ member.settings.pk }}/change">{{ member.settings.type }}</a>
+            </td>
+            <td>{{ member.active }}</td>
+            <td>{{ member.issued }}</td>
+        </tr>
 
-                    {% endfor %}
+        {% endfor %}
 
 
 
-                    </tbody>
-                </table>
+    </tbody>
+</table>
 <script>
     let infiniteLoopWorking = false;
-    document.getElementById('content').onscroll= function(){
-        c=document.getElementById('content')
-        if(c.scrollHeight -c.offsetHeight -c.scrollTop ==0 && infiniteLoopWorking==false ){
+    document.getElementById('content').onscroll = function () {
+        c = document.getElementById('content')
+        if (c.scrollHeight - c.offsetHeight - c.scrollTop == 0 && infiniteLoopWorking == false) {
             infiniteLoopWorking = true;
-            let form=$('#table-form')[0]
+            let form = $('#table-form')[0]
             $.ajax({
                 type: 'GET',
                 url: '{% url 'member' %}',
-                data: {'csrfmiddlewaretoken':document.getElementsByName('csrfmiddlewaretoken')[0].value,
-                    'membertype':document.getElementsByName('membertype')[0].value,
-                    'idrangemin':document.getElementsByName('idrangemin')[0].value,
-                    'idrangemax':document.getElementsByName('idrangemax')[0].value,
-                    'active':document.getElementsByName('active')[0].value,
-                    'issued':document.getElementsByName('issued')[0].value,
-                    'fine':document.getElementsByName('fine')[0].value,
-                    'overdue':document.getElementsByName('overdue')[0].value,
-                    'have':document.getElementById('allMember').children.length
+                data: {
+                    'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                    'membertype': document.getElementsByName('membertype')[0].value,
+                    'idrangemin': document.getElementsByName('idrangemin')[0].value,
+                    'idrangemax': document.getElementsByName('idrangemax')[0].value,
+                    'active': document.getElementsByName('active')[0].value,
+                    'issued': document.getElementsByName('issued')[0].value,
+                    'fine': document.getElementsByName('fine')[0].value,
+                    'overdue': document.getElementsByName('overdue')[0].value,
+                    'have': document.getElementById('allMember').children.length
                 },
                 success: function (data) {
                     list = JSON.parse(data);
 
-                    if(list == false)
+                    if (list == false)
                         return
-                    else{
+                    else {
                         table = document.getElementById('allMember');
 
-                        list.forEach(function(e){
+                        list.forEach(function (e) {
                             table.innerHTML += '<tr>' +
-                                '<td><a href="/'+e.type+'/'+e.id+'">'+e.id+'</a></td>\n' +
-                                '<td>'+e.name+'</td>\n' +
-                                '<td><a target="_blank" href="/admin/LMS/userbasicsetting/'+e.type+'/change">'+e.type+'</a></td>\n' +
-                                '<td>'+e.active+'</td>\n' +
-                                '<td>'+e.issued+'</td>\n' +
+                                '<td><a href="/' + e.type + '/' + e.id + '">' + e.id + '</a></td>\n' +
+                                '<td>' + e.name + '</td>\n' +
+                                '<td><a target="_blank" href="/admin/LMS/userbasicsetting/' + e.type + '/change">' + e.type + '</a></td>\n' +
+                                '<td>' + e.active + '</td>\n' +
+                                '<td>' + e.issued + '</td>\n' +
                                 '</tr>'
                         })
                     }
 
-                    setTimeout(function(){
+                    setTimeout(function () {
                         infiniteLoopWorking = false
-                    },500);
+                    }, 500);
                 },
                 error: function (data) {
                     alert('error');
                 }
-    });
+            });
         }
     }
 </script>
