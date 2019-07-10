@@ -55,7 +55,17 @@ def books(request):
                 return li
             data = json.dumps(serlise(filtered[int(filters['have']):int(filters['have'])+20]))
             return HttpResponse(data)
-    return render(request, 'book.html',context={'isbns':filtered[0:20],'filters':request.GET})
+    return render(request, 'allBook.html', context={'isbns': filtered[0:20], 'filters':request.GET})
+
+
+def book(request,pk):
+    user = auth.get_user(request)
+    if user.is_anonymous or not user.is_staff:
+        return redirect_to_login(next=request.path)
+
+    isbn = ISBN.objects.get(pk=pk)
+    return render(request,'bookDetail.html',context={'isbn':isbn})
+    
 
 
 def booksAdd(request):
@@ -268,7 +278,8 @@ def returnn(request):
                     context = {'error': 'This item has no Issues'}
             except ISBN.DoesNotExist:
                 context = {'error': "Can't find this item"}
-    return render(request, 'return.html', context=context)
+    context['mode'] = 'return'
+    return render(request, 'renewreturn.html', context=context)
 
 
 def renew(request):
@@ -287,7 +298,8 @@ def renew(request):
                 context = {'Issues': set}
             else:
                 context = {'error': 'This item has no Issues'}
-    return render(request, 'renew.html', context=context)
+    context['mode'] = 'renew'
+    return render(request, 'renewreturn.html', context=context)
 
 
 def report(request):

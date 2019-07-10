@@ -1,20 +1,30 @@
 {% extends 'sidebar.html' %}
 
 {% block content %}
-{% if error %}
-<div class="alert alert-danger alert-dismissible">
-<button type="button" class="close" data-dismiss="alert">&times;</button>
-<strong>Alert!</strong> {{error}}
+
+{% if success %}
+<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Success!</strong>  {{success}}
 </div>
 {% endif %}
-<div class="row" style="background-color:#e9ecef;">
+
+{% if error %}
+<div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Alert!</strong> {{error}}
+</div>
+{% endif %}
 
 
-    <div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
-        <form method="post" action="{% url 'renew' %}" style="background-color:#e9ecef;">
-            {% csrf_token %}
+
+    <form method="post" action="{% url mode %}" style="background-color:#e9ecef;">
+        {% csrf_token %}
+        <div class="row" style="background-color:#e9ecef;">
+        <div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
+
             <fieldset>
-                <legend>Return</legend>
+                <legend>{{mode}}</legend>
                 <label for="barcode">Enter item barcode: </label>
 
                 <input name="barcode" id="barcode" size="14" class="form-control" type="text" placeholder="Barcode">
@@ -22,12 +32,9 @@
                 <input type="submit" class="submit btn btn-primary" value="Submit">
 
             </fieldset>
-        </form>
-    </div>
+        </div>
 
-    {% if Issues %}
-    <form action="{% url 'renew' %}" method="post">
-        {% csrf_token %}
+        {% if Issues %}
         <div class="col-12 col-sm-5 bg-white m-2 p-3 shadow">
             <fieldset id="checkin_options">
                 <legend>Options</legend>
@@ -65,6 +72,14 @@
                             <i class="fas fa-long-arrow-alt-down sorted"></i>
                         </th>
                         <th>
+                            Member
+                            <i class="fas fa-long-arrow-alt-down sorted"></i>
+                        </th>
+                        <th>
+                            Member ID
+                            <i class="fas fa-long-arrow-alt-down sorted"></i>
+                        </th>
+                        <th>
                             Title
                             <i class="fas fa-long-arrow-alt-down sorted"></i>
                         </th>
@@ -76,14 +91,7 @@
                             Barcode
                             <i class="fas fa-long-arrow-alt-down sorted"></i>
                         </th>
-                        <th>
-                            Member
-                            <i class="fas fa-long-arrow-alt-down sorted"></i>
-                        </th>
-                        <th>
-                            Member ID
-                            <i class="fas fa-long-arrow-alt-down sorted"></i>
-                        </th>
+
 
                     </tr>
                 </thead>
@@ -93,15 +101,16 @@
 
                     <tr>
                         <td>{{ issue.duedate }}</td>
+                        <td>{{ issue.member.name }}</td>
+                        <td>{{ issue.member.pk }}</td>
                         <td>{{ issue.book.title }}</td>
                         <td>{{ issue.book.author }}</td>
                         <td>{{ issue.book.isbn }}</td>
-                        <td>{{ issue.member.name }}</td>
-                        <td>{{ issue.member.pk }}</td>
+
                         <td>
 
                             <button type="submit" name="pk" value="{{ issue.pk }}"
-                                class="btn btn-primary">Renew</button>
+                                class="btn btn-primary">{{mode}}</button>
 
 
                         </td>
@@ -115,10 +124,11 @@
 
 
         </div>
-    </form>
-    {% endif %}
 
-</div>
+        {% endif %}
+    </div>
+    </form>
+
 
 
 

@@ -84,9 +84,9 @@ def returnn(request):
         issue.save()
 
     except Issue.DoesNotExist:
-        return {'error':'cant find issue'}
+        return {'error':'this item has no issue history'}
 
-    return {'success' : 'returned book'}
+    return {'success' : 'item returned'}
 
 
 def renew(request):
@@ -96,11 +96,12 @@ def renew(request):
         issue = Issue.objects.get(pk=request.POST['pk'])
         if issue.is_returned:
             return {'error': 'already returned'}
+        issue.countrenewal += 1
         issue.date = datetime.now()
         issue.duedate = datetime.now() + timedelta(days=issue.member.settings.maxDay)
         issue.save()
 
     except Issue.DoesNotExist:
-        return {'error': 'cant find issue'}
+        return {'error': 'this item has no issue history'}
 
-    return {'success': 'renewed'}
+    return {'success': 'item renewed'}
