@@ -26,8 +26,8 @@
 
 <script>
 document.querySelector('#table-form > div > ul > li:nth-child(2) > input').onkeyup=function(){
-    let key = this.value.toLowerCase
-
+    let key = this.value.toLowerCase()
+    if(key.length>0)
     $.ajax({
                 type: 'POST',
                 url: '{% url 'member-name' %}',

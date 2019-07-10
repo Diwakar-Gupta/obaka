@@ -155,9 +155,20 @@ def member(request):
 
 def memberName(request):
     requested = request.POST['name']
-    list = [x.name for x in Student.objects.all() if x.name.lower().startswith(requested)]
-    list.append([x.name for x in Faculty.objects.all() if x.name.lower().startswith(requested)])
-    list = {'names':list,'requested':request.POST['name']}
+    listS = [x.name for x in Student.objects.all() if x.name.lower().startswith(requested)]
+    fl=[]
+    for i in listS:
+        if i not in fl:
+            fl.append(i)
+    listS = fl
+    listF = [x.name for x in Faculty.objects.all() if x.name.lower().startswith(requested)]
+    fl=[]
+    for i in listF:
+        if i not in fl:
+            fl.append(i)
+    listF = fl
+    listS.extend(listF)
+    list = {'names':listS,'requested':request.POST['name']}
     list = json.dumps(list)
     print(list)
     return HttpResponse(list)
