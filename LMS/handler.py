@@ -105,3 +105,77 @@ def renew(request):
         return {'error': 'this item has no issue history'}
 
     return {'success': 'item renewed'}
+
+def allMember(request):
+    filtered = []
+
+    filters = request.GET.copy()
+    if request.method == 'GET':
+        if 'membertype' in request.GET and len(request.GET['membertype']) > 0:
+            if request.GET['membertype'] == 'Student':
+                filtered.extend([x for x in Student.objects.all()])
+            elif request.GET['membertype'] == 'Faculty':
+                filtered.extend([x for x in Faculty.objects.all()])
+            elif request.GET['membertype'] == 'All':
+                filtered.extend([x for x in Student.objects.all()])
+                filtered.extend([x for x in Faculty.objects.all()])
+        else:
+            filtered.extend([x for x in Student.objects.all()])
+            filtered.extend([x for x in Faculty.objects.all()])
+        if 'idrangemin' in request.GET and len(request.GET['idrangemin']) > 0:
+            min = int(request.GET['idrangemin'])
+            filtered = [x for x in filtered if x.id >= min]
+        if 'idrangemax' in request.GET and len(request.GET['idrangemax']) > 0:
+            max = int(request.GET['idrangemax'])
+            filtered = [x for x in filtered if x.id<=max]
+        if 'active' in request.GET:
+            if request.GET['active'] == 'yes':
+                filtered = [x for x in filtered if x.active]
+            if request.GET['active']=='no':
+                filtered = [x for x in filtered if not x.active]
+        if 'issued' in filters:
+            if filters['issued'] == 'yes':
+                filtered = [x for x in filtered if x.issued]
+            if filters['issued']=='no':
+                filtered = [x for x in filtered if not x.issued]
+        if 'name' in filters:
+            if len(filters['name']) > 0:
+                nam = filters['name']
+                filtered = [x for x in filtered if x.name.lower().startswith(nam)]
+        if 'overdue' in request.GET:
+            def checklate(j):
+                for i in j:
+                    if i.isLate():
+                        return True
+                return False
+            if request.GET['overdue'] == 'yes':
+                filtered = [x for x in filtered if checklate(
+                    Issue.objects.filter(member_type=ContentType.objects.get_for_model(x), member_id=x.pk,
+                                         is_returned=False))]
+            if request.GET['overdue']=='no':
+                filtered = [x for x in filtered if not checklate(Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,is_returned=False))]
+        if 'fine' in request.GET:
+            if request.GET['fine'] == 'no':
+                filtered = [x for x in filtered if x.fine<=0]
+            if request.GET['fine'] == 'yes':
+                filtered = [x for x in filtered if x.fine > 0]
+        if 'have' in filters:
+            if len(filtered) <= int(filters['have']):
+                return HttpResponse('false')
+            def serlise(l):
+                da={}
+                li=[]
+                for i in l:
+                    da['id']=i.id
+                    da['name']=i.name
+                    da['type']=i.settings.type
+                    da['active']=i.active
+                    da['issued']=i.issued
+                    li.append(da)
+                    da={}
+                return li
+            data = json.dumps(serlise(filtered[int(filters['have']):int(filters['have'])+20]))
+            print(data)
+            return HttpResponse(data)
+
+    return render(request, 'allMember.html', context={'members': filtered[0:13], 'filters': filters})
