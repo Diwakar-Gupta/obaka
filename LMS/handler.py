@@ -140,7 +140,7 @@ def allMember(request):
                 filtered = [x for x in filtered if not x.issued]
         if 'name' in filters:
             if len(filters['name']) > 0:
-                nam = filters['name']
+                nam = filters['name'].lower()
                 filtered = [x for x in filtered if x.name.lower().startswith(nam)]
         if 'overdue' in request.GET:
             def checklate(j):
