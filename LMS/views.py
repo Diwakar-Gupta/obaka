@@ -93,10 +93,32 @@ def search(request):
         except:
             from django.http import HttpResponseRedirect
             return HttpResponseRedirect('/member/?name=' + request.GET['stext'])
-
+    if what == 'return' or what == 'renew':
+        try :
+            barcode = int(request.GET['stext'])
+            isbn = ISBN.objects.get(isbn=barcode)
+            set = isbn.issue_set.filter(is_returned=False)
+            if set:
+                if what == 'renew':
+                    return renew(request, {'Issues': set})
+                return returnn(request,{'Issues':set})
+            else:
+                if what == 'renew':
+                    return renew(request,{'error': 'This item has no Issues'})
+                return returnn(request,{'error': 'This item has no Issues'})
+        except ISBN.DoesNotExist:
+            if what == 'renew':
+                return renew(request, {'error': "Can't find this item"})
+            return returnn(request,{'error': "Can't find this item"})
+    if what == 'item' :
+        try:
+            barcode = int(request.GET['stext'])
+            isbn = ISBN.objects.get(isbn=barcode)
+            return redirect('book',pk=isbn.pk)
+        except:
+            pass
     return HttpResponse('hjk')
 
- 
 
 def member(request):
     user = auth.get_user(request)
@@ -246,12 +268,11 @@ def issue(request):
     return render(request,'issue.html')
 
 
-def returnn(request):
+def returnn(request,context={}):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
 
-    context = {}
     if request.method=='POST':
         if 'pk' in request.POST:
             context = handler.returnn(request)
@@ -269,12 +290,11 @@ def returnn(request):
     return render(request, 'renewreturn.html', context=context)
 
 
-def renew(request):
+def renew(request,context={}):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
 
-    context = {}
     if request.method=='POST':
         if 'pk' in request.POST:
             context = handler.renew(request)
