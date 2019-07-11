@@ -102,7 +102,7 @@
                                     list = JSON.parse(data);
                                     table = document.getElementById('allBook');
                                     if(list == false){
-                                        
+                                        makeToast('No more queries');
                                     }        
                                     else{
                                         
@@ -117,10 +117,7 @@
                                     },500);
                                 },
                                 error: function (data) {
-                                    alert('error');
-                                    setTimeout(function(){
-                                        infiniteLoopWorking = false
-                                    },500);
+                                    makeToast('Cant connect to server');
                                 }
                     });
                         }

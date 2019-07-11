@@ -46,7 +46,7 @@ document.querySelector('#table-form > div > ul > li:nth-child(2) > input').onkey
                     list = JSON.parse(data);
 
                     if (list == false)
-                        return
+                        makeToast('No more queries');
                     else {
                         table = document.getElementById('allMember');
 
@@ -66,6 +66,7 @@ document.querySelector('#table-form > div > ul > li:nth-child(2) > input').onkey
                     }, 500);
                 },
                 error: function (data) {
+                    makeToast('Cant connect to server');
                 }
             });
         }
