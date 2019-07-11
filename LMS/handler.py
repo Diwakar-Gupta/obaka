@@ -1,7 +1,8 @@
 from .models import *
-from django.shortcuts import get_object_or_404 ,render , render_to_response
+from django.shortcuts import get_object_or_404 ,render , render_to_response , render , HttpResponseRedirect , HttpResponse
 from datetime import datetime , timedelta ,date
 from django.contrib.contenttypes.models import ContentType
+import json
 
 
 def addBook(request):
@@ -140,7 +141,7 @@ def allMember(request):
                 filtered = [x for x in filtered if not x.issued]
         if 'name' in filters:
             if len(filters['name']) > 0:
-                nam = filters['name']
+                nam = filters['name'].lower()
                 filtered = [x for x in filtered if x.name.lower().startswith(nam)]
         if 'overdue' in request.GET:
             def checklate(j):

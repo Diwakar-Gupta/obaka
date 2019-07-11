@@ -18,7 +18,7 @@
                 </select>
             </li>
             <li>
-                <input type="text" name="name" class="form-control"  placeholder="name"
+                <input type="text" name="name" onchange="this.form.submit()" class="form-control"  placeholder="name"
                     list="name" {% if filters.name %}value="{{ filters.name }}" {% endif %}>
 
                 <datalist id="name">

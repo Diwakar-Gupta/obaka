@@ -45,7 +45,7 @@ fa , fas {
     color: #fff;
     transition: all 0.4s;
     background: #6d7fcc;
-    overflow: overlay;
+    overflow: scroll;
 }
 
 #sidebar.active {
@@ -158,7 +158,7 @@ a.article:hover {
     contentainer STYLE
 ----------------------------------------------------- */
 #top-nav{
-    width: -webkit-fill-available; 
+    width: 100%;
     display: inline-flex;
     border-radius: 25px;
 }
@@ -167,7 +167,7 @@ a.article:hover {
     transition: all 0.3s;
     position: fixed;
     margin-left:  250px;
-    width: -webkit-fill-available;
+    width: calc(100% - 250px);
     background-color: #e9ecef;
     height: 100%;
 }

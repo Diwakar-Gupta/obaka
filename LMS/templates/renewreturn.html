@@ -110,7 +110,7 @@
                         <td>
 
                             <button type="submit" name="pk" value="{{ issue.pk }}"
-                                class="btn btn-primary">{{mode}}</button>
+                                class="btn {% if issue.isLate %}btn-danger{% else %}btn-primary{% endif %}">{{mode}}</button>
 
 
                         </td>

@@ -61,3 +61,11 @@ $('.changelist-filter .yesnoall>span').not("span.active").on('click',function(){
     input.value=this.innerText
     input.form.submit();
 });
+
+function makeToast(message="",header=""){
+    let toast = document.getElementById('message')
+    toast.getElementsByClassName("header")[0].innerText = header
+    toast.getElementsByClassName("toast-body")[0].innerText = message
+    $(toast).toast('show');
+    //setInterval(function(){$(toast).toast('hide');},3500)
+  }
