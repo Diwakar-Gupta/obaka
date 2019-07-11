@@ -67,5 +67,5 @@ function makeToast(message="",header=""){
     toast.getElementsByClassName("header")[0].innerText = header
     toast.getElementsByClassName("toast-body")[0].innerText = message
     $(toast).toast('show');
-    //setInterval(function(){$(toast).toast('hide');},3500)
+    setInterval(function(){$(toast).toast('hide');},3500)
   }

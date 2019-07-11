@@ -1,4 +1,4 @@
-from django.shortcuts import render , HttpResponseRedirect , HttpResponse
+from django.shortcuts import render , HttpResponseRedirect , HttpResponse , get_object_or_404 , redirect
 from django.contrib import auth
 from django.contrib.auth.views import redirect_to_login
 from . import handler
@@ -8,6 +8,7 @@ from django.views.generic.edit import CreateView , UpdateView
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 import json
+
 
 def index(request):
     user = auth.get_user(request)
@@ -67,7 +68,6 @@ def book(request,pk):
     return render(request,'bookDetail.html',context={'isbn':isbn})
     
 
-
 def booksAdd(request):
     user = auth.get_user(request)
     if not user.is_staff:
@@ -77,6 +77,26 @@ def booksAdd(request):
         context = handler.addBook(request.POST)
     return render(request, 'bookform.html',context=context)
 
+
+def search(request):
+    stext=request.GET['stext']
+    what = request.GET['what'].lower()
+    if what == 'issue':
+        try:
+            stext = int(request.GET['stext'])
+            members = Student.objects.filter(pk=stext)
+            if members.count() == 1:
+                return redirect('member-issue',membertype='Student',memberpk=stext)
+            members = Faculty.objects.filter(pk=stext)
+            if members.count() == 1:
+                return redirect('member-issue', membertype='Faculty', memberpk=stext)
+        except:
+            from django.http import HttpResponseRedirect
+            return HttpResponseRedirect('/member/?name=' + request.GET['stext'])
+
+    return HttpResponse('hjk')
+
+ 
 
 def member(request):
     user = auth.get_user(request)
@@ -141,8 +161,8 @@ def member_issue(request,membertype,memberpk):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-
-    context = {'member':Student.objects.get(pk=memberpk) if membertype == 'STUDENT' else Faculty.objects.get(pk=memberpk)}
+    membertype = membertype.lower()
+    context = {'member':Student.objects.get(pk=memberpk) if membertype == 'student' else Faculty.objects.get(pk=memberpk)}
 
     if request.method == 'POST':
         if membertype.lower() == request.POST['membertype'].lower() and str(memberpk) == request.POST['memberid']:
@@ -150,13 +170,13 @@ def member_issue(request,membertype,memberpk):
         else :
             context['error'] = "user dosen't match to request"
     else:
-        if membertype == 'STUDENT':
+        if membertype == 'student':
             return render(request,'member/issue.html',context={'member': Student.objects.get(pk=memberpk), 'holds':Issue.objects.filter(member_type = ContentType.objects.get_for_model(Student), member_id= memberpk, is_returned=False )})
         elif membertype == 'FACULTY':
             return render(request,'member/issue.html',context={'member': Faculty.objects.get(pk=memberpk), 'holds':Issue.objects.filter(member_type = ContentType.objects.get_for_model(Faculty), member_id= memberpk, is_returned=False )})
-    if membertype == 'STUDENT':
+    if membertype == 'student':
         context['holds'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Student), member_id=memberpk, is_returned=False)
-    elif membertype == 'FACULTY':
+    elif membertype == 'faculty':
         context['holds'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Faculty),member_id=memberpk, is_returned=False)
 
     if 'success' in context.values():
@@ -208,6 +228,21 @@ def circulation(request):
 
 
 def issue(request):
+    from django.utils.datastructures import MultiValueDictKeyError
+    try:
+        type = request.GET['type'].lower()
+        id = int(request.GET['id'])
+        if type == 'student':
+            Student.objects.get(pk=id)
+            return redirect('member-issue',membertype=type,memberpk=id)
+        if type == 'faculty':
+            Faculty.objects.get(pk=id)
+            return redirect('member-issue',membertype=type,memberpk=id)
+    except MultiValueDictKeyError:
+        return render(request, 'issue.html')
+    except:
+        return render(request, 'issue.html', context={'error': 'cantFind this member'})
+
     return render(request,'issue.html')
 
 

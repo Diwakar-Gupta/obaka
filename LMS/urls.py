@@ -10,12 +10,14 @@ urlpatterns = [
     path('book/<int:pk>', views.book, name='book'),
     path('books/add', views.booksAdd, name='book-add'),
 
+    path('search/',views.search,name='search'),
+
     path('member/',views.member,name='member'),
     path('member/name',views.memberName,name='member-name'),
     path('member/add',views.memberAdd,name='member-add'),
 
     path('Student/add', views.StudentAdd.as_view(),name= 'student-add'),
-    path('Faculty/add', views.FacultyAdd.as_view(), name='faculty-add'),
+    path('Faculty/add', views.FacultyAdd.as_view(),name='faculty-add'),
 
     path('<str:membertype>/<int:memberpk>/',views.member_profile),
     path('<str:membertype>/<int:memberpk>/profile',views.member_profile,name='member-profile'),
