@@ -142,7 +142,10 @@ def allMember(request):
         if 'name' in filters:
             if len(filters['name']) > 0:
                 nam = filters['name'].lower()
-                filtered = [x for x in filtered if x.name.lower().startswith(nam)]
+                if len(nam)<5:
+                    filtered = [x for x in filtered if x.name.lower().startswith(nam)]
+                else :
+                    filtered = [x for x in filtered if nam in x.name.lower() ]
         if 'overdue' in request.GET:
             def checklate(j):
                 for i in j:
