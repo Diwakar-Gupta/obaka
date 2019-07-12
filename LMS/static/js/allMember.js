@@ -32,16 +32,8 @@ document.querySelector('#table-form > div > ul > li:nth-child(2) > input').onkey
             let form = $('#table-form')[0]
             $.ajax({
                 type: 'GET',
-                url: '/member',
+                url: '',
                 data: {
-                    'csrfmiddlewaretoken': document.getElementsByName('csrfmiddlewaretoken')[0].value,
-                    'membertype': document.getElementsByName('membertype')[0].value,
-                    'idrangemin': document.getElementsByName('idrangemin')[0].value,
-                    'idrangemax': document.getElementsByName('idrangemax')[0].value,
-                    'active': document.getElementsByName('active')[0].value,
-                    'issued': document.getElementsByName('issued')[0].value,
-                    'fine': document.getElementsByName('fine')[0].value,
-                    'overdue': document.getElementsByName('overdue')[0].value,
                     'have': document.getElementById('allMember').children.length
                 },
                 success: function (data) {

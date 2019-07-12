@@ -36,6 +36,18 @@
                 <input type="hidden" name="active" value ="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
             </div>
         </li>
+
+        <li>
+            <h4>OverDue's</h4>
+            <div class="yesnoall">
+                <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
+                <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
+                <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
+                <input type="hidden" name="overdue"
+                    value="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
+            </div>
+        </li>
+
         <li class="extra-space">
 
         </li>
@@ -92,10 +104,8 @@
                             let form=$('#table-form')[0]
                             $.ajax({
                                 type: 'GET',
-                                url: '{% url 'books' %}',
-                                data: {'csrfmiddlewaretoken':document.getElementsByName('csrfmiddlewaretoken')[0].value,
-                                    'issued':document.getElementsByName('issued')[0].value,
-                                    'active':document.getElementsByName('active')[0].value,
+                                url: '',
+                                data: {
                                     'have':document.getElementById('allBook').children.length
                                 },
                                 success: function (data) {

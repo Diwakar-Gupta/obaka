@@ -38,6 +38,17 @@ def books(request):
                 filtered = [x for x in filtered if  x.issued]
             if request.GET['active'] == 'no':
                 filtered = [x for x in filtered if not x.issued]
+        if 'overdue' in request.GET:
+            def islate(l):
+                issues = Issue.objects.filter(book=l,is_returned=False,autorenew=False)
+                for i in issues:
+                    if i.isLate():
+                        return True
+                return False
+            if request.GET['overdue'] == 'yes':
+                filtered = [x for x in filtered if islate(x) ]
+            if request.GET['overdue'] == 'no':
+                filtered = [x for x in filtered if not islate(x)]
         if 'have' in filters:
             if len(filtered) <= int(filters['have']):
                 return HttpResponse('false')
