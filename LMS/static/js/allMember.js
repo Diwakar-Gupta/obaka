@@ -23,9 +23,11 @@ document.querySelector('#table-form > div > ul > li:nth-child(2) > input').onkey
 };
 
     let infiniteLoopWorking = false;
+    let lastScrollTop = 0;
     document.getElementById('content').onscroll = function () {
         c = document.getElementById('content')
-        if (c.scrollHeight - c.offsetHeight - c.scrollTop <= 0 && infiniteLoopWorking == false) {
+        if (c.scrollHeight - c.offsetHeight - c.scrollTop <= 0 && infiniteLoopWorking == false && lastScrollTop != c.scrollTop) {
+            lastScrollTop = c.scrollTop;
             infiniteLoopWorking = true;
             let form = $('#table-form')[0]
             $.ajax({
