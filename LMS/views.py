@@ -223,6 +223,8 @@ def member_circulation(request,membertype,memberpk):
         context['issues'] = [x for x in Issue.objects.filter(member_type=ContentType.objects.get_for_model(Faculty),member_id=member.pk)]
     if 'have' in request.GET and len(request.GET['have'])>0:
         have = int(request.GET['have'])
+        if have >= len(context['issues']):
+            return HttpResponse('false')
         def serlise(l):
             d={}
             li=[]

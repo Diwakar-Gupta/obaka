@@ -84,7 +84,7 @@
                     let infiniteLoopWorking = false;
                     document.getElementById('content').onscroll= function(){
                         c=document.getElementById('content')
-                        if(c.scrollHeight -c.offsetHeight -c.scrollTop ==0 && infiniteLoopWorking==false ){
+                        if(c.scrollHeight -c.offsetHeight -c.scrollTop <=0 && infiniteLoopWorking==false ){
                             infiniteLoopWorking = true;
                             setTimeout(function(){
                                         infiniteLoopWorking = false
