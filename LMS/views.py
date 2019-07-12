@@ -27,7 +27,17 @@ def books(request):
     
     if request.method == 'GET':
         if 'author' in request.GET and len(request.GET['author'])>0 :
-            filtered = [x for x in filtered if x.author.lower().startswith(request.GET['author'].lower())]
+            author = request.GET['author'].lower()
+            if len(author)<5:
+                filtered = [x for x in filtered if x.author.lower().startswith(author)]
+            else :
+                filtered = [x for x in filtered if author in x.author.lower()]
+        if 'title' in request.GET and len(request.GET['title'])>0 :
+            title = request.GET['title'].lower()
+            if len(title)<5:
+                filtered = [x for x in filtered if x.title.lower().startswith(title)]
+            else :
+                filtered = [x for x in filtered if title in x.title.lower()]
         if 'active' in request.GET:
             if request.GET['active'] == 'yes':
                 filtered = [x for x in filtered if not x.deactive]
