@@ -33,9 +33,12 @@
 
                 <div class="py-2 mt-2" style="border-top: 2px solid black;"></div>
 
-                <label for="duedate">Specify due date (DD/MM/YYYY) :</label>
-                <input name="duedate" pattern="'%y/%m/%d %H:%M:%S'" class="form-control" type="date">
-
+                <label for="duedate">Specify due date (YYYY/MM/DD) :</label>
+                <input name="duedate" pattern="'%y-%m-%d'" min="" class="form-control" type="date">
+<script>
+    let today=new Date();
+document.getElementsByName('duedate')[0].min=today.getFullYear()+'-'+today.getMonth()+'/'+today.getDate()
+</script>
                 <div class="form-group form-check">
                     <label class="form-check-label">
                         <input class="form-check-input" type="checkbox" name="autorenewal">

@@ -38,8 +38,8 @@ def issue(request):
         if isbn.quantity - isbn.deactive -isbn.issued <= 0:
             return {'error': 'No Sufficient Book', 'member': member}
 
-        duedate = request.POST['duedare'] if 'duedate' in request.POST and request.POST['duedate'] else date.today() + timedelta(days=member.settings.maxDay)
-        autorenew = True if 'autorenew' in request.POST else False
+        duedate =  datetime.strptime(request.POST['duedate'],"%Y-%m-%d") if 'duedate' in request.POST and request.POST['duedate'] else date.today() + timedelta(days=member.settings.maxDay)
+        autorenew = True if 'autorenewal' in request.POST else False
         from django.contrib import auth
         issuefrom = auth.get_user(request).get_username()
         contentype = ContentType.objects.get_or_create(app_label='LMS', model=membertype)
