@@ -1,7 +1,9 @@
 let infiniteLoopWorking = false;
+let lastScrollTop = 0;
     document.getElementById('content').onscroll = function () {
         c = document.getElementById('content')
-        if (c.scrollHeight - c.offsetHeight - c.scrollTop <= 0 && infiniteLoopWorking == false) {
+        if (c.scrollHeight - c.offsetHeight - c.scrollTop <= 0 && infiniteLoopWorking == false && lastScrollTop != c.scrollTop) {
+            lastScrollTop = c.scrollTop;
             infiniteLoopWorking = true;
             $.ajax({
                 type: 'GET',
