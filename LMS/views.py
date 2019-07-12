@@ -91,8 +91,9 @@ def search(request):
             if members.count() == 1:
                 return redirect('member-issue', membertype='Faculty', memberpk=stext)
         except:
-            from django.http import HttpResponseRedirect
-            return HttpResponseRedirect('/member/?name=' + request.GET['stext'])
+            pass
+        from django.http import HttpResponseRedirect
+        return HttpResponseRedirect('/member/?name=' + request.GET['stext'])
     if what == 'return' or what == 'renew':
         try :
             barcode = int(request.GET['stext'])
@@ -211,16 +212,36 @@ def member_circulation(request,membertype,memberpk):
     user = auth.get_user(request)
     if not user.is_staff:
         return redirect_to_login(next=request.path)
-
     context={}
     if membertype == 'STUDENT':
         member = Student.objects.get(pk=memberpk)
         context['member'] = member
-        context['issues'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Student),member_id=member.pk)
+        context['issues'] = [x for x in Issue.objects.filter(member_type=ContentType.objects.get_for_model(Student),member_id=member.pk)]
     elif membertype == 'FACULTY':
         member = Faculty.objects.get(pk=memberpk)
         context['member'] = member
-        context['issues'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Faculty),member_id=member.pk)
+        context['issues'] = [x for x in Issue.objects.filter(member_type=ContentType.objects.get_for_model(Faculty),member_id=member.pk)]
+    if 'have' in request.GET and len(request.GET['have'])>0:
+        have = int(request.GET['have'])
+        def serlise(l):
+            d={}
+            li=[]
+            for i in l:
+                d['date']=str(i.date)
+                d['title']=i.book.title
+                d['author']=i.book.author
+                d['barcode']=i.book.isbn
+                d['countrenewal']=i.countrenewal
+                d['issued_time']=str(i.issued_time)
+                d['issuefrom']=i.issuefrom
+                d['duedate']=str(i.duedate)
+                d['return_date']=str(i.return_date)
+                li.append(d)
+                d={}
+            return li
+        data = json.dumps(serlise([x for x in context['issues']][have:have+2]))
+        return HttpResponse(data)
+    context['issues']=context['issues'][0:7]
     return render(request,'member/circulation.html',context=context)
 
 
@@ -249,7 +270,7 @@ def circulation(request):
     return render(request, 'circulation.html')
 
 
-def issue(request):
+def issue(request,context={}):
     from django.utils.datastructures import MultiValueDictKeyError
     try:
         type = request.GET['type'].lower()
@@ -265,7 +286,7 @@ def issue(request):
     except:
         return render(request, 'issue.html', context={'error': 'cantFind this member'})
 
-    return render(request,'issue.html')
+    return render(request,'issue.html',context={})
 
 
 def returnn(request,context={}):
