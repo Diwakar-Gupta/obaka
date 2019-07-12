@@ -16,9 +16,9 @@
 
     <!-- Font Awesome css -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
 
@@ -30,16 +30,16 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar" class="p-2">
-			<div id="dismiss">
-				<i class="fas fa-arrow-left"></i>
-			</div>
+            <div id="dismiss">
+                <i class="fas fa-arrow-left"></i>
+            </div>
 
             {% block sidebar %}
 
             {% endblock %}
 
 
-		</nav>
+        </nav>
 
         <!-- Page Content  -->
         <div id="contentainer" class="bg-Secondary ">
@@ -51,19 +51,19 @@
                     </button>
                     <form class="form-inline" id="search" action="{% url 'search' %}">
                         <div class="input-group">
-                          <div class="input-group-prepend">
-                            <select name="what" class="btn" style="background-color: #e9ecef;">
-                                <option>Issue</option>
-                                <option>Return</option>
-                                <option>Renew</option>
-                                <option>Member</option>
-                                <option>Item</option>
-                            </select>
-                          </div>
-                          <input required type="text" name="stext" class="form-control" placeholder="Search">
+                            <div class="input-group-prepend">
+                                <select name="what" class="btn" style="background-color: #e9ecef;">
+                                    <option>Issue</option>
+                                    <option>Return</option>
+                                    <option>Renew</option>
+                                    <option>Member</option>
+                                    <option>Item</option>
+                                </select>
+                            </div>
+                            <input required type="text" name="stext" class="form-control" placeholder="Search">
                         </div>
-                      </form>
-                    
+                    </form>
+
                     <span class="dropdown dropleft">
                         <div class="notification" data-toggle="dropdown" aria-expanded="false">
                             <i src="user.jpg" alt="User" class="fa fa-bell icon"></i>
@@ -95,23 +95,16 @@
                 </div>
             </nav>
 
-            <div id="content" class="p-3 ">
-                    <div id="message" class="toast shadow" data-autohide="false" style="position: absolute;bottom: 10px;min-width: 250px;">
-                            <div class="toast-header">
-                              <strong  class="mr-auto text-primary header">Toast Header</strong>
-                              <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
-                            </div>
-                            <div class="toast-body">
-                              Some text inside the toast body
-                            </div>
-                          </div>
+            <div id="content" class="p-3">
+                <div id="messages">
+                    </div>
                 {% block content %}
 
 
 
                 {% endblock %}
 
-             </div>
+            </div>
 
         </div>
     </div>

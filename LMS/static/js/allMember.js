@@ -66,7 +66,7 @@ document.querySelector('#table-form > div > ul > li:nth-child(2) > input').onkey
                     }, 500);
                 },
                 error: function (data) {
-                    makeToast('Cant connect to server');
+                    makeToast('Cant connect to server','error');
                 }
             });
         }

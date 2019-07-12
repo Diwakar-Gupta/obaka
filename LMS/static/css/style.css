@@ -341,6 +341,13 @@ changelist-filter
 
 
 
+#messages{
+    position: absolute;
+    bottom: 10px;min-width: 200px;
+    z-index: 100; 
+    background-color: #e9ecef;
+}
+
 
 /* ---------------------------------------------------
     MEDIAQUERIES

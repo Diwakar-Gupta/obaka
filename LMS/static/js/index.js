@@ -62,10 +62,18 @@ $('.changelist-filter .yesnoall>span').not("span.active").on('click',function(){
     input.form.submit();
 });
 
-function makeToast(message="",header=""){
-    let toast = document.getElementById('message')
-    toast.getElementsByClassName("header")[0].innerText = header
-    toast.getElementsByClassName("toast-body")[0].innerText = message
-    $(toast).toast('show');
-    setInterval(function(){$(toast).toast('hide');},3500)
-  }
+
+function makeToast(message,type="success"){
+    if(type=='success')
+        type="alert-success"
+    else
+        type='alert-warning'
+    let content = document.getElementById('messages');
+    let elem = document.createElement('div')
+    let ele = $(elem)
+    ele.addClass('alert '+type+' alert-dismissible')
+    ele.append('<button type="button" class="close" data-dismiss="alert">&times;</button><strong >'+message+'</strong>')
+    content.prepend(elem)
+    setInterval(function(){ele.fadeOut('')},3000)
+}
+
