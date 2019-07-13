@@ -67,16 +67,21 @@
                     <span class="dropdown dropleft">
                         <div class="notification" data-toggle="dropdown" aria-expanded="false">
                             <i src="user.jpg" alt="User" class="fa fa-bell icon"></i>
-                            <span class="num" style="">3</span>
+                            <span class="num" style="">{{ messages.count }}</span>
                         </div>
 
                         <div class="dropdown-menu notification-content">
-                            <a class="dropdown-item" href="#">
-                                <i class="fa fa-user-alt pr-2"></i>
-                                noti 23456hgccfgh
-                            </a>
-                            <a class="dropdown-item" href="#">Link</a>
-                            <a class="dropdown-item" href="#"><i class="fa fa-sign-out">Log Out</i></a>
+                            {% if messages %}
+                            {% for message in messages %}
+                                <div class="dropdown-item alert alert-{{ message.tags }} alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ message }}</strong>
+                                </div>
+                            {% endfor %}
+
+                        {% else %}
+                        <strong>Nothing to Display</strong>
+                        {% endif %}
                         </div>
                     </span>
 

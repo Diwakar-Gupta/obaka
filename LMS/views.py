@@ -1,6 +1,7 @@
 from django.shortcuts import render , HttpResponseRedirect , HttpResponse , get_object_or_404 , redirect
 from django.contrib import auth
 from django.contrib.auth.views import redirect_to_login
+from django.contrib import messages
 from . import handler
 from .models import *
 from datetime import datetime
@@ -11,10 +12,12 @@ import json
 
 
 def index(request):
+    #print(request.META['HTTP_USER_AGENT'])
     user = auth.get_user(request)
     if user.is_anonymous or not user.is_staff:
         return redirect_to_login(next=request.path)
 
+    messages.add_message(request,messages.INFO,'this is message info')
     return render(request, 'index.html')
 
 

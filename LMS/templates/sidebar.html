@@ -16,7 +16,6 @@
 					  class="fas fa-book-open"></i>
 				  <span>Book</span></a>
 					<div id="bookSubmenu" class="collapse">
-						<a class="dropdown-item" href="#">Category</a>
 						<a class="dropdown-item" target="_blank" href="{% url 'books' %}">All book</a>
 						<a class="dropdown-item" href="{% url 'book-add' %}"><i class="fas fa-plus"></i>add</a>
 					</div>
@@ -26,13 +25,12 @@
 						class="fas fa-user-alt"></i>
 					<span>Member</span></a>
 					<div id="memberSubmenu" class="collapse">
-						<a class="dropdown-item" href="#">Category</a>
 						<a class="dropdown-item" target="_blank" href="{% url 'member' %}">All Member</a>
 						<a class="dropdown-item" href="{% url 'member-add' %}"><i class="fas fa-plus"></i>add</a>
 					</div>
 				  </li>
 				  <li class="nav-item">
-					<a class="nav-link" href="{% url 'circulation' %}"><i class="fas fa-tachometer-alt"></i>
+					<a class="nav-link" href="{% url 'circulation' %}"><i class="fas fa-sync"></i>
 					  <span>Circulations</span></a>
 				  </li>
                   <li class="nav-item">

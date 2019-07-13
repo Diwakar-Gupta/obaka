@@ -2,6 +2,7 @@ from .models import *
 from django.shortcuts import get_object_or_404 ,render , render_to_response , render , HttpResponseRedirect , HttpResponse
 from datetime import datetime , timedelta ,date
 from django.contrib.contenttypes.models import ContentType
+from django.contrib import messages
 import json
 
 
@@ -56,6 +57,7 @@ def issue(request):
         member.count_issues += 1
         member.save()
         isbn.save()
+        messages.add_message(request,messages.SUCCESS,'Book Issued Successfully')
     except ISBN.DoesNotExist:
         print('book not exist')
         return {'error': 'Book Does not exist', 'member': member}
@@ -83,7 +85,7 @@ def returnn(request):
         issue.book.save()
         issue.member.save()
         issue.save()
-
+        messages.add_message(request, messages.SUCCESS, 'Book Returned Successfully.Currently you have'+str(issue.member.issued)+" books")
     except Issue.DoesNotExist:
         return {'error':'this item has no issue history'}
 

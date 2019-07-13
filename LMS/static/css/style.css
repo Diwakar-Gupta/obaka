@@ -222,9 +222,13 @@ a.article:hover {
 
 .notification-content{
     font-weight: lighter;
-    border-radius: 25%;
     transition-duration : 1s;
     transform: scale(0) rotate(90deg);
+    padding: 0px !important;
+}
+
+.notification-content .alert{
+        margin-bottom: 2px !important;
 }
 
 .notification-content.show{
