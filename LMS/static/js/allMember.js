@@ -26,7 +26,7 @@ document.querySelector('#table-form > div > ul > li:nth-child(2) > input').onkey
     let lastScrollTop = 0;
     document.getElementById('content').onscroll = function () {
         c = document.getElementById('content')
-        if (c.scrollHeight - c.offsetHeight - c.scrollTop <= 0 && infiniteLoopWorking == false && lastScrollTop != c.scrollTop) {
+        if (lastScrollTop != c.scrollTop && infiniteLoopWorking == false && c.scrollHeight - c.offsetHeight - c.scrollTop <= 0 &&  document.getElementById('allMember').children.length>=20) {
             lastScrollTop = c.scrollTop;
             infiniteLoopWorking = true;
             let form = $('#table-form')[0]

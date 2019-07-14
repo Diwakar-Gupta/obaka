@@ -179,6 +179,10 @@ def allMember(request):
                 filtered = sorted(filtered , key = lambda x:len([i.lateby() for i in Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,autorenew=False) if i.isLate()]))
             if sortType == 'overdue-down':
                 filtered = sorted(filtered , key = lambda x:len([i.lateby() for i in Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,autorenew=False) if i.isLate()]),reverse=True)
+            if sortType == 'tissue-up':
+                filtered = sorted(filtered , key = lambda x:x.count_issues)
+            if sortType == 'tissue-down':
+                filtered = sorted(filtered , key = lambda x:x.count_issues,reverse=True)
                 
         if 'have' in filters:
             if len(filtered) <= int(filters['have']):

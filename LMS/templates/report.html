@@ -3,39 +3,39 @@
 {% block content %}
 
 <fieldset>
-                <legend>Top lists</legend>
-                <ul>
-                    <li>
-                        <a href="#">Members with the most issues</a>
-                    </li>
-                    <li>
-                        <a href="#">Most-circulated items</a>
-                    </li>
-                </ul>
+    <legend>Top lists</legend>
+    <ul>
+        <li>
+            <a href="{% url 'member' %}?sort=tissue-down">Members with the most issues</a>
+        </li>
+        <li>
+            <a href="{% url 'books' %}?sort=tissue-down">Most-circulated items</a>
+        </li>
+    </ul>
 
-            </fieldset>
+</fieldset>
 
-    <fieldset>
-                <legend>Inactive</legend>
-                <ul>
-                    <li>
-                        <a href="#">Members who haven't borrowed anything</a>
-                    </li>
-                    <li>
-                        <a href="#">Items with no issues</a>
-                    </li>
-                </ul>
+<fieldset>
+    <legend>Inactive</legend>
+    <ul>
+        <li>
+            <a href="{% url 'member' %}?sort=tissue-up">Members who haven't borrowed anything</a>
+        </li>
+        <li>
+            <a href="{% url 'books' %}?sort=tissue-up">Items with no issues</a>
+        </li>
+    </ul>
 
-            </fieldset>
+</fieldset>
 
-        <fieldset>
-                <legend>Other</legend>
-                <ul>
-                    <li>
-                        <a href="#">Items lost</a>
-                    </li>
-                </ul>
+<fieldset>
+    <legend>Other</legend>
+    <ul>
+        <li>
+            <a href="#">Items lost</a>
+        </li>
+    </ul>
 
-            </fieldset>
+</fieldset>
 
 {% endblock %}

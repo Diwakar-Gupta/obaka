@@ -8,6 +8,7 @@ from datetime import datetime
 from django.views.generic.edit import CreateView , UpdateView
 # Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.http import require_GET, require_POST
 import json
 
 
@@ -62,6 +63,12 @@ def books(request):
                 filtered = [x for x in filtered if islate(x) ]
             if request.GET['overdue'] == 'no':
                 filtered = [x for x in filtered if not islate(x)]
+        if 'sort' in request.GET and len(request.GET['sort']):
+            sortType = request.GET['sort']
+            if sortType == 'tissue-up':
+                filtered = sorted(filtered , key = lambda x:x.count_issues)
+            if sortType == 'tissue-down':
+                filtered = sorted(filtered , key = lambda x:x.count_issues,reverse=True)
         if 'have' in filters:
             if len(filtered) <= int(filters['have']):
                 return HttpResponse('false')
@@ -153,6 +160,7 @@ def member(request):
     return handler.allMember(request)
 
 
+@require_POST
 def memberName(request):
     requested = request.POST['name']
     listS=[]
