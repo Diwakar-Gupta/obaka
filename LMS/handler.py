@@ -170,11 +170,11 @@ def allMember(request):
             if sortType == 'issue-up':
                 filtered = sorted(filtered , key = lambda x:Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk).count())
             if sortType == 'issue-down':
-                filtered = sorted(filtered , key = lambda x:x.fine,reverse=True)
+                filtered = sorted(filtered , key = lambda x:Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk).count(),reverse=True)
             if sortType == 'fine-up':
                 filtered = sorted(filtered , key = lambda x:x.fine)
             if sortType == 'fine-down':
-                filtered = sorted(filtered , key = lambda x:Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk).count(),reverse=True)
+                filtered = sorted(filtered , key = lambda x:x.fine, reverse=True)
             if sortType == 'overdue-up':
                 filtered = sorted(filtered , key = lambda x:len([i.lateby() for i in Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,autorenew=False) if i.isLate()]))
             if sortType == 'overdue-down':

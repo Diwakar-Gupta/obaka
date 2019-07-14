@@ -201,6 +201,7 @@ a.article:hover {
     border-radius: 50%;
     background-color: white;
     color: #999;
+    background-color: #f8f9fa;
 }
 
 .notification .icon{
@@ -343,6 +344,13 @@ changelist-filter
     height: 100px;
 }
 
+.sort{
+    cursor: pointer;    
+}
+
+.yesnoall .fa-sort-up , .yesnoall .fa-sort-down{
+    color:aqua;
+}
 
 
 #messages{
@@ -351,6 +359,7 @@ changelist-filter
     z-index: 100; 
     background-color: #e9ecef;
 }
+
 
 
 /* ---------------------------------------------------

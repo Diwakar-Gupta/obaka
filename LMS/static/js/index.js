@@ -76,4 +76,3 @@ function makeToast(message,type="success"){
     content.prepend(elem)
     setInterval(function(){ele.fadeOut('')},3000)
 }
-
