@@ -51,6 +51,8 @@ document.querySelector('#table-form > div > ul > li:nth-child(2) > input').onkey
                                 '<td><a target="_blank" href="/admin/LMS/userbasicsetting/' + e.type + '/change">' + e.type + '</a></td>\n' +
                                 '<td>' + e.active + '</td>\n' +
                                 '<td>' + e.issued + '</td>\n' +
+                                '<td>' + e.count_issues + '</td>\n' +
+                                '<td>' + e.fine + '</td>\n' +
                                 '</tr>'
                         })
                     }

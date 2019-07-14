@@ -165,6 +165,21 @@ def allMember(request):
                 filtered = [x for x in filtered if x.fine<=0]
             if request.GET['fine'] == 'yes':
                 filtered = [x for x in filtered if x.fine > 0]
+        if 'sort' in request.GET and len(request.GET['sort']):
+            sortType = request.GET['sort']
+            if sortType == 'issue-up':
+                filtered = sorted(filtered , key = lambda x:Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk).count())
+            if sortType == 'issue-down':
+                filtered = sorted(filtered , key = lambda x:x.fine,reverse=True)
+            if sortType == 'fine-up':
+                filtered = sorted(filtered , key = lambda x:x.fine)
+            if sortType == 'fine-down':
+                filtered = sorted(filtered , key = lambda x:Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk).count(),reverse=True)
+            if sortType == 'overdue-up':
+                filtered = sorted(filtered , key = lambda x:len([i.lateby() for i in Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,autorenew=False) if i.isLate()]))
+            if sortType == 'overdue-down':
+                filtered = sorted(filtered , key = lambda x:len([i.lateby() for i in Issue.objects.filter(member_type=ContentType.objects.get_for_model(x),member_id=x.pk,autorenew=False) if i.isLate()]),reverse=True)
+                
         if 'have' in filters:
             if len(filtered) <= int(filters['have']):
                 return HttpResponse('false')
@@ -177,6 +192,8 @@ def allMember(request):
                     da['type']=i.settings.type
                     da['active']=i.active
                     da['issued']=i.issued
+                    da['count_issues']=i.count_issues
+                    da['fine']=i.fine
                     li.append(da)
                     da={}
                 return li

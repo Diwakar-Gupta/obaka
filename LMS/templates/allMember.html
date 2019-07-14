@@ -50,13 +50,14 @@
                         value="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
                 </div>
             </li>
-
+            <input type="hidden" name="sort" {% if filters.sort %}value="{{filters.sort}}"{% endif %}>
             <li>
                 <h4>have Issued item</h4>
                 <div class="yesnoall">
                     <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
                     <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
                     <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
+                    <div value="issue" class="sort"></div>
                     <input type="hidden" name="issued"
                         value="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
                 </div>
@@ -68,6 +69,7 @@
                     <span class="{% if filters.fine == 'All' or not filters.fine %}active{% endif %}">All</span>
                     <span class="{% if filters.fine == 'yes' %}active{% endif %}">yes</span>
                     <span class="{% if filters.fine == 'no' %}active{% endif %}">no</span>
+                    <div value="fine" class="sort"></div>
                     <input type="hidden" name="fine"
                         value="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
                 </div>
@@ -79,6 +81,7 @@
                     <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
                     <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
                     <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
+                    <div value="overdue" class="sort"></div>
                     <input type="hidden" name="overdue"
                         value="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
                 </div>
@@ -93,7 +96,44 @@
         </ul>
     </div>
 </form>
+<script>
 
+    $('.sort').append('<i class="fas fa-sort"></i><i class="fas fa-sort-up" style="display:none"></i><i class="fas fa-sort-down" style="display:none"></i>');
+
+    let sort = document.getElementsByName('sort')[0];
+    function sortDisp(){
+        let type=sort.value.split('-')
+        cont=document.querySelector('.sort[value='+type[0]+']')
+        cont.querySelector('.fa-sort').style['display']='none'
+        cont.querySelector('.fa-sort-'+type[1]).style['display']='inline-block'
+    };
+    sortDisp();
+    function clearSort(){
+        $('.yesnoall .fas').css('display','none')
+        $('.yesnoall .fa-sort').css('display','inline-block')
+    };
+    $('.yesnoall .fa-sort-up').on('click',function(){
+        clearSort();
+        this.parentElement.querySelector('.fa-sort').style['display']="none"
+        this.parentElement.querySelector('.fa-sort-down').style['display']="inline-block"
+        sort.value=$(this.parentElement).attr('value')+"-down"
+    });
+    $('.yesnoall .fa-sort').on('click',function(){
+        clearSort();
+        this.style['display']="none"
+        this.parentElement.querySelector('.fa-sort-up').style['display']="inline-block"
+        sort.value=$(this.parentElement).attr('value')+"-up"
+    });
+    $('.yesnoall .fa-sort-down').on('click',function(){
+        clearSort();
+        sort.value="";
+    });
+</script>
+<style>
+.sort{
+    cursor: pointer;    
+}
+</style>
 {% endblock %}
 
 {% block content %}
@@ -108,7 +148,9 @@
             <th dtype="str">Name</th>
             <th dtype="str">Type</th>
             <th dtype="str">Active</th>
-            <th dtype="int">Issues</th>
+            <th dtype="int">Current Issues</th>
+            <th dtype="int">Total Issues</th>
+            <th dtype="int">Fine</th>
         </tr>
     </thead>
     <tbody id="allMember">
@@ -125,6 +167,8 @@
             </td>
             <td>{{ member.active }}</td>
             <td>{{ member.issued }}</td>
+            <td>{{ member.count_issues }}</td>
+            <td>{{ member.fine }}</td>
         </tr>
 
         {% endfor %}
