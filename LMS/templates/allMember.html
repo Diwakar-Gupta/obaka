@@ -57,7 +57,7 @@
                     <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
                     <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
                     <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
-                    <div value="issue" class="sort"></div>
+                    
                     <input type="hidden" name="issued"
                         value="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
                 </div>
@@ -69,7 +69,7 @@
                     <span class="{% if filters.fine == 'All' or not filters.fine %}active{% endif %}">All</span>
                     <span class="{% if filters.fine == 'yes' %}active{% endif %}">yes</span>
                     <span class="{% if filters.fine == 'no' %}active{% endif %}">no</span>
-                    <div value="fine" class="sort"></div>
+                    
                     <input type="hidden" name="fine"
                         value="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
                 </div>
@@ -108,13 +108,23 @@
 
     <thead>
         <tr>
-            <th dtype="int">ID</th>
-            <th dtype="str">Name</th>
-            <th dtype="str">Type</th>
-            <th dtype="str">Active</th>
-            <th dtype="int">Current Issues</th>
-            <th dtype="int">Total Issues</th>
-            <th dtype="int">Fine</th>
+            <th dtype="int">ID
+            </th>
+            <th dtype="str">Name
+            </th>
+            <th dtype="str">Type
+            </th>
+            <th dtype="str">Active
+            </th>
+            <th dtype="int">Current Issues
+                <div value="issue" class="sort"></div>
+            </th>
+            <th dtype="int">Total Issues
+                <div value="tissue" class="sort"></div>
+            </th>
+            <th dtype="int">Fine
+                <div value="fine" class="sort"></div>
+            </th>
         </tr>
     </thead>
     <tbody id="allMember">

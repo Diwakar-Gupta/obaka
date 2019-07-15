@@ -11,22 +11,25 @@ function sortDisp(){
 if(sort.value)
 sortDisp();
 function clearSort(){
-    $('.yesnoall .fas').css('display','none')
-    $('.yesnoall .fa-sort').css('display','inline-block')
+    $('thead .fas').css('display','none')
+    $('thead .fa-sort').css('display','inline-block')
 };
-$('.yesnoall .fa-sort-up').on('click',function(){
+$('thead .fa-sort-up').on('click',function(){
     clearSort();
     this.parentElement.querySelector('.fa-sort').style['display']="none"
     this.parentElement.querySelector('.fa-sort-down').style['display']="inline-block"
     sort.value=$(this.parentElement).attr('value')+"-down"
+    sort.form.submit()
 });
-$('.yesnoall .fa-sort').on('click',function(){
+$('thead .fa-sort').on('click',function(){
     clearSort();
     this.style['display']="none"
     this.parentElement.querySelector('.fa-sort-up').style['display']="inline-block"
     sort.value=$(this.parentElement).attr('value')+"-up"
+    sort.form.submit()
 });
-$('.yesnoall .fa-sort-down').on('click',function(){
+$('thead .fa-sort-down').on('click',function(){
     clearSort();
     sort.value="";
+    sort.form.submit()
 });

@@ -51,8 +51,8 @@ $('thead td input[type=checkbox] ').on('change',function(){
     }
 });
 
-$('th').click(sortThis);
-$('th').append('<i class="fas fa-long-arrow-alt-down sorted"></i>');
+$('.js-sort th').click(sortThis);
+$('.js-sort th').append('<i class="fas fa-long-arrow-alt-down sorted"></i>');
 $('.searchTable').on('keyup',searchTable);
 
 $('.changelist-filter .yesnoall>span').not("span.active").on('click',function(){
