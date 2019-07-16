@@ -90,9 +90,11 @@
                             <img src="{% static 'img/user.jpg' %}" alt="User" class="rounded-circle" width="40px">
                         </div>
                         <div class="dropdown-menu notification-content">
-                            <div class="dropdown-header">User</div>
+                            <div class="dropdown-header">
+                                <p>{{ user.get_username }}</p>
+                            </div>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Link 1</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-user" >Profile</i></a>
                             <a class="dropdown-item" href="#">Link 2</a>
                             <a class="dropdown-item" href="/admin/logout">Sign Out</a>
                         </div>

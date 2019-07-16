@@ -4,15 +4,6 @@ body {
     background: #f3f5fa;
 }
 
-p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1em;
-    font-weight: 300;
-    line-height: 1.7em;
-    color: #999;
-}
-
-
 
 
 
@@ -30,10 +21,6 @@ p {
 .wrapper {
     width: 100% !important;
     height: 100% !important;
-}
-
-fa , fas {
-    color: white;
 }
 
 #sidebar {
@@ -71,6 +58,10 @@ fa , fas {
 
 #sidebar ul li.nav-item a .fas:not(ul li ul .fas) {
     padding-right: 20px;
+}
+
+#sidebar ul li i {
+    margin-right: 20px;
 }
 
 ul.nav .dropdown-item {
@@ -183,14 +174,18 @@ a.article:hover {
 }
 
 #contentainer>#content>*:not(.alert){
-    background-color: white;
     margin-left: 0px;
     margin-right: 0px;
     border-radius: 5px;
     padding-top: 8px;
     padding-bottom: 8px;
 }
-
+#contentainer>#content .row .col{
+    background-color: white;
+    margin: 0.50rem;
+    border-radius: 7px;
+    padding: 0.50rem;    
+}
 /* ---------------------------------------------------
     NOTIFICATIONS
 ----------------------------------------------------- */
