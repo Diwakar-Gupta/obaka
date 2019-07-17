@@ -104,9 +104,11 @@
                                 <p>{{ user.get_username }}</p>
                             </div>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"><i class="fas fa-user" >Profile</i></a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="/admin/logout">Sign Out</a>
+                            <a class="dropdown-item" href="#"><i class="fas fa-user pr-2" ></i>Profile</a>
+                            {% if user.is_staff %}
+                            <a class="dropdown-item" href="/admin"><i class="fas fa-database pr-2"></i>admin Site</a>
+                            {% endif %}
+                            <a class="dropdown-item" href="/admin/logout"><i class="fas fa-sign-out-alt pr-2"></i>Sign Out</a>
                         </div>
                     </span>
                 </div>

@@ -180,7 +180,10 @@ a.article:hover {
     padding-top: 8px;
     padding-bottom: 8px;
 }
-#contentainer>#content .row .col{
+#contentainer>#content>*:not(.alert):not(.row){
+    background-color: white;
+}
+#contentainer>#content>.row>.col-12{
     background-color: white;
     margin: 0.50rem;
     border-radius: 7px;
