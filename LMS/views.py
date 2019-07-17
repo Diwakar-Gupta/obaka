@@ -112,15 +112,20 @@ def booksAdd(request):
 def search(request):
     stext=request.GET['stext']
     what = request.GET['what'].lower()
-    if what == 'issue':
+    if what == 'issue' or what=="member":
         try:
             stext = int(request.GET['stext'])
             members = Student.objects.filter(pk=stext)
+            go=''
+            if what=="issue":
+                go = 'member-issue'
+            else :
+                go = 'member-profile'
             if members.count() == 1:
-                return redirect('member-issue',membertype='Student',memberpk=stext)
+                return redirect(go,membertype='Student',memberpk=stext)
             members = Faculty.objects.filter(pk=stext)
             if members.count() == 1:
-                return redirect('member-issue', membertype='Faculty', memberpk=stext)
+                return redirect(go, membertype='Faculty', memberpk=stext)
         except:
             pass
         from django.http import HttpResponseRedirect

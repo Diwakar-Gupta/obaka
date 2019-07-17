@@ -52,15 +52,25 @@
                     <form class="form-inline" id="search" action="{% url 'search' %}">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <select name="what" class="btn" style="background-color: #e9ecef;">
-                                    <option>Issue</option>
-                                    <option>Return</option>
-                                    <option>Renew</option>
-                                    <option>Member</option>
-                                    <option>Item</option>
+                                <select name="what" class="btn"  style="background-color: #e9ecef;">
+                                    <option value="issue">Issue</option>
+                                    <option value="return">Return</option>
+                                    <option value="renew">Renew</option>
+                                    <option value="member">Member</option>
+                                    <option value="item">Item</option>
                                 </select>
                             </div>
-                            <input required type="text" name="stext" class="form-control" placeholder="Search">
+                            <script>
+                                document.getElementsByName('what')[0].onchange=function(){
+                                    what=this.value;
+                                    search=document.getElementById("top-search");
+                                    if(what=="issue"||what=="member")
+                                        search.type="text" 
+                                    else 
+                                        search.type="number";
+                                }
+                            </script>
+                            <input required type="text" id="top-search" name="stext" class="form-control" placeholder="Search">
                         </div>
                     </form>
 
