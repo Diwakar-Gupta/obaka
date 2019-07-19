@@ -238,15 +238,10 @@ def member_issue(request,membertype,memberpk):
             context = handler.issue(request)
         else :
             context['error'] = "user dosen't match to request"
-    else:
-        if membertype == 'student':
-            return render(request,'member/issue.html',context={'member': Student.objects.get(pk=memberpk), 'holds':Issue.objects.filter(member_type = ContentType.objects.get_for_model(Student), member_id= memberpk, is_returned=False )})
-        elif membertype == 'FACULTY':
-            return render(request,'member/issue.html',context={'member': Faculty.objects.get(pk=memberpk), 'holds':Issue.objects.filter(member_type = ContentType.objects.get_for_model(Faculty), member_id= memberpk, is_returned=False )})
-    if membertype == 'student':
-        context['holds'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Student), member_id=memberpk, is_returned=False)
-    elif membertype == 'faculty':
-        context['holds'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(Faculty),member_id=memberpk, is_returned=False)
+    context['holds'] = Issue.objects.filter(member_type=ContentType.objects.get_for_model(context['member']),
+                                            member_id=memberpk, is_returned=False)
+    if context['member'].issued >= context['member'].settings.maxBook:
+        context['messages'] = ['member already have maximum book']
 
     if 'success' in context.values():
         return HttpResponseRedirect(reverse('member/issue.html', context=context))

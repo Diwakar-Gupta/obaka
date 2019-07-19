@@ -103,7 +103,7 @@ def renew(request):
         issue.date = datetime.now()
         issue.duedate = datetime.now() + timedelta(days=issue.member.settings.maxDay)
         issue.save()
-
+        messages.add_message(request, messages.SUCCESS,'Book renewed')
     except Issue.DoesNotExist:
         return {'error': 'this item has no issue history'}
 

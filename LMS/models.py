@@ -30,6 +30,7 @@ class Student(models.Model):
     email = models.EmailField(null=True)
     issued = models.PositiveIntegerField(default=0)
     fine = models.PositiveIntegerField(default=0)
+    #attentionMessage = models.CharField(max_length=100,default='',null=True,blank=True)
     from django.contrib.auth.models import User
 
     account = models.OneToOneField(User,on_delete=models.DO_NOTHING,null=True,blank=True)

@@ -16,7 +16,7 @@
     {% endif %}
 
 <div class="row">
-    <div class="col-12 col-sm-6 shadow">
+    <div class="col-12 col-sm-5 shadow">
         <h6 style="color:royalblue">Check out for Diwakar gupta</h6>
         <form method="post" action="{% url 'member-issue' memberpk=member.pk membertype=member.settings.type %}">
             {% csrf_token %}

@@ -1,36 +1,7 @@
+{% extends 'frame.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=chrome">
-
-    <title>Obaka</title>
-
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
-    <!-- Scrollbar Custom CSS -->
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
-    <!-- Font Awesome css -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
-
-</head>
-
-<body>
-
-    <div class="wrapper">
-        <!-- Sidebar  -->
-        <nav id="sidebar">
-			<div id="dismiss">
-				<i class="fas fa-arrow-left"></i>
-			</div>
+{% block sidebar %}
 			<div class="sidebar-header">
 				<img src="{% static 'img/anon.svg' %}" width=200px height=200px>
                 <h3>{{ member.name }}</h3>
@@ -55,117 +26,10 @@
 				</li>
 
 			  </ul>
+{% endblock %}
 
-
-		</nav>
-
-        <!-- Page Content  -->
-        <div id="contentainer" class="bg-Secondary ">
-
-            <nav id="top-nav" class="navbar navbar-expand-lg navbar-light bg-light shadow">
-                <div style="display:inline-flex;width: 100%;justify-content: space-between;">
-                    <button type="button" id="sidebarCollapse" class="btn btn-info mr-2">
-                        <i class="fas fa-align-left"></i>
-                    </button>
-                    <form class="form-inline" id="search" action="{% url 'search' %}">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <select name="what" class="btn" style="background-color: #e9ecef;">
-                                    <option>Issue</option>
-                                    <option>Return</option>
-                                    <option>Renew</option>
-                                    <option>Member</option>
-                                    <option>Item</option>
-                                </select>
-                            </div>
-                            <input required type="text" name="stext" class="form-control" placeholder="Search">
-                        </div>
-                    </form>
-
-                    <span class="dropdown dropleft">
-                        <div class="notification" data-toggle="dropdown" aria-expanded="false">
-                            <i src="user.jpg" alt="User" class="fa fa-bell icon"></i>
-                            <span class="num" style="">3</span>
-                        </div>
-
-                        <div class="dropdown-menu notification-content">
-                            <a class="dropdown-item" href="#">
-                                <i class="fa fa-user-alt pr-2"></i>
-                                noti 23456hgccfgh
-                            </a>
-                            <a class="dropdown-item" href="#">Link</a>
-                            <a class="dropdown-item" href="#"><i class="fa fa-sign-out">Log Out</i></a>
-                        </div>
-                    </span>
-
-                    <span class="dropdown dropleft">
-                        <div class="" data-toggle="dropdown">
-                            <img src="{% static 'img/user.jpg' %}" alt="User" class="rounded-circle" width="40px">
-                        </div>
-                        <div class="dropdown-menu notification-content">
-                            <div class="dropdown-header">User</div>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="/admin/logout">Sign Out</a>
-                        </div>
-                    </span>
-                </div>
-            </nav>
-
-            <div id="content" class="p-3">
-                <div id="messages">
-                    </div>
-
-            <div id="content" class="p-3 ">
-                {% block content %}
+	             {% block content %}
 
 
 
                 {% endblock %}
-             </div>
-
-        </div>
-    </div>
-    <div class="overlay"></div>
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-
-    <!-- jQuery Custom Scroller CDN -->
-
-</body>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-
-<script src="{% static 'js/index.js' %}"></script>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#sidebar").mCustomScrollbar({
-            theme: "minimal"
-        });
-
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar, #contentainer').toggleClass('active');
-            $('.overlay').toggleClass('active');
-            $('.collapse.in').toggleClass('in');
-            $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-        });
-
-        $('#dismiss, .overlay').on('click', function () {
-            $('#sidebar, #contentainer').toggleClass('active');
-            $('.overlay').removeClass('active');
-        });
-    });
-</script>
-
-</html>
