@@ -65,6 +65,14 @@ def books(request):
                 filtered = [x for x in filtered if not islate(x)]
         if 'sort' in request.GET and len(request.GET['sort']):
             sortType = request.GET['sort']
+            if sortType == 'quantity-up':
+                filtered = sorted(filtered , key = lambda x:x.quantity)
+            if sortType == 'quantity-down':
+                filtered = sorted(filtered , key = lambda x:x.quantity,reverse=True)
+            if sortType == 'issued-up':
+                filtered = sorted(filtered , key = lambda x:x.issued)
+            if sortType == 'issued-down':
+                filtered = sorted(filtered , key = lambda x:x.issued,reverse=True)
             if sortType == 'tissue-up':
                 filtered = sorted(filtered , key = lambda x:x.count_issues)
             if sortType == 'tissue-down':

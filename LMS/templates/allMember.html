@@ -119,9 +119,11 @@
             <th dtype="int">Current Issues
                 <div value="issue" class="sort"></div>
             </th>
-            <th dtype="int">Total Issues
-                <div value="tissue" class="sort"></div>
-            </th>
+            {% if filters.sort == 'tissue-up' or filters.sort == 'tissue-down' %}
+                <th dtype="int">Total Issues
+                    <div value="tissue" class="sort"></div>
+                </th>
+            {% endif %}
             <th dtype="int">Fine
                 <div value="fine" class="sort"></div>
             </th>
@@ -141,12 +143,13 @@
             </td>
             <td>{{ member.active }}</td>
             <td>{{ member.issued }}</td>
-            <td>{{ member.count_issues }}</td>
+            {% if filters.sort and filters.sort == 'tissue-up' or  filters.sort == 'tissue-down' %}
+                <td>{{ member.count_issues }}</td>
+            {% endif %}
             <td>{{ member.fine }}</td>
         </tr>
 
         {% endfor %}
-
 
 
     </tbody>

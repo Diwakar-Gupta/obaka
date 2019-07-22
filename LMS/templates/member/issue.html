@@ -109,7 +109,7 @@ document.getElementsByName('duedate')[0].min=today.getFullYear()+'-'+today.getMo
 <tbody>
         {% for issue in holds %}
 
-        <tr>
+        <tr {% if issue.isLate %} style="color:red" {% endif %}>
           <td>
             <span>{{issue.date}}</span>
           </td>

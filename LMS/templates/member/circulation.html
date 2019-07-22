@@ -21,7 +21,7 @@
   <tbody id="circulations">
     {% for issue in issues%}
 
-    <tr>
+    <tr {% if issue.isLate %} style="color:red" {% endif %}>
       <td>
         <span>{{issue.date}}</span>
       </td>

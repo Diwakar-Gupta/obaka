@@ -74,8 +74,12 @@
                             <th dtype="int">ISBN</th>
                             <th dtype="str">Title</th>
                             <th dtype="str">Auther</th>
-                            <th dtype="int">Quantity</th>
-                            <th dtype="int">Issued</th>
+                            <th dtype="int">Quantity
+                                <div value="quantity" class="sort"></div>
+                            </th>
+                            <th dtype="int">Issued
+                                <div value="issued" class="sort"></div>
+                            </th>
                             <th dtype="int">Deactive</th>
                         </tr>
                     </thead>
@@ -98,5 +102,5 @@
                 </table>
 
 <script src="{% static 'js/allBook.js' %}"></script>
-
+<script src="{% static 'js/sort.js' %}"></script>
 {% endblock %}
