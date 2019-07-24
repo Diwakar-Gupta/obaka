@@ -1,106 +1,1 @@
-{% extends 'frame.html' %}
-
-{% load static %}
-
-{% block sidebar %}
-{% csrf_token %}
-<form method="get" action="{% url 'books' %}">
-    <div class="changelist-filter">
-        <h1 class="m-3">Filters</h1>
-        
-        <ul style="padding-inline-start: 5px;">
-        <li>
-            <h4> By Author </h4>
-        <input type="text" name="author" class="form-control" onChange="this.form.submit()" placeholder="Author" list="authors" {% if filters.author %}value="{{ filters.author }}"{% endif %}>
-
-        <datalist id="authors"> </datalist>
-
-        </li>
-
-        <li>
-            <input type="text" name="title" onchange="this.form.submit()" class="form-control"  placeholder="Title" {% if filters.title %}value="{{ filters.title }}" {% endif %}>
-        </li>
-
-        <li>
-            <h4>Issued</h4>
-            <div class="yesnoall">
-                <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
-                <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
-                <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
-                <input type="hidden" name="issued" value ="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
-            </div>
-        </li>
-
-
-        <li>
-            <h4>Active</h4>
-            <div class="yesnoall">
-                <span class="{% if filters.active == 'All' or not filters.active %}active{% endif %}">All</span>
-                <span class="{% if filters.active == 'yes' %}active{% endif %}">yes</span>
-                <span class="{% if filters.active == 'no' %}active{% endif %}">no</span>
-                <input type="hidden" name="active" value ="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
-            </div>
-        </li>
-
-        <li>
-            <h4>OverDue's</h4>
-            <div class="yesnoall">
-                <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
-                <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
-                <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
-                <input type="hidden" name="overdue"
-                    value="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
-            </div>
-        </li>
-
-        <li class="extra-space">
-
-        </li>
-    </ul>
-    </div>
-</form>
-
-{% endblock %}
-
-
-{% block content %}
-
-    <input onkeyup="searchTable()" data-target="#allBook" type="text" class="form-control searchTable" style="width:100%"
-                    placeholder="Search">
-                <table id="table" class="table table-striped bg-white">
-
-                    <thead>
-                        <tr>
-                            <th dtype="int">ISBN</th>
-                            <th dtype="str">Title</th>
-                            <th dtype="str">Auther</th>
-                            <th dtype="int">Quantity
-                                <div value="quantity" class="sort"></div>
-                            </th>
-                            <th dtype="int">Issued
-                                <div value="issued" class="sort"></div>
-                            </th>
-                            <th dtype="int">Deactive</th>
-                        </tr>
-                    </thead>
-                    <tbody id="allBook">
-
-                    {% for isbn in isbns %}
-
-                        <tr>
-                            <td>{{ isbn.isbn }}</td>
-                            <td>{{ isbn.title }}</td>
-                            <td>{{ isbn.author }}</td>
-                            <td>{{ isbn.quantity }}</td>
-                            <td>{{ isbn.issued }}</td>
-                            <td>{{ isbn.deactive }}</td>
-                        </tr>
-
-                    {% endfor %}
-
-                    </tbody>
-                </table>
-
-<script src="{% static 'js/allBook.js' %}"></script>
-<script src="{% static 'js/sort.js' %}"></script>
-{% endblock %}
+{% extends 'frame.html' %}{% load static %}{% block sidebar %}{% csrf_token %}<form method="get" action="{% url 'books' %}">    <div class="changelist-filter">        <h1 class="m-3">Filters</h1>        <input name="sort" type="hidden" {% if filters.sort %}value="{{filters.sort}}"{% endif %}>        <ul style="padding-inline-start: 5px;">        <li>            <h4> By Author </h4>        <input type="text" name="author" class="form-control" onChange="this.form.submit()" placeholder="Author" list="authors" {% if filters.author %}value="{{ filters.author }}"{% endif %}>        <datalist id="authors"> </datalist>        </li>        <li>            <input type="text" name="title" onchange="this.form.submit()" class="form-control"  placeholder="Title" {% if filters.title %}value="{{ filters.title }}" {% endif %}>        </li>        <li>            <h4>Issued</h4>            <div class="yesnoall">                <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>                <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>                <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>                <input type="hidden" name="issued" value ="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">            </div>        </li>        <li>            <h4>Active</h4>            <div class="yesnoall">                <span class="{% if filters.active == 'All' or not filters.active %}active{% endif %}">All</span>                <span class="{% if filters.active == 'yes' %}active{% endif %}">yes</span>                <span class="{% if filters.active == 'no' %}active{% endif %}">no</span>                <input type="hidden" name="active" value ="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">            </div>        </li>        <li>            <h4>OverDue's</h4>            <div class="yesnoall">                <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>                <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>                <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>                <input type="hidden" name="overdue"                    value="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">            </div>        </li>        <li class="extra-space">        </li>    </ul>    </div></form>{% endblock %}{% block content %}    <input onkeyup="searchTable()" data-target="#allBook" type="text" class="form-control searchTable" style="width:100%"                    placeholder="Search">                <table id="table" class="table table-striped bg-white">                    <thead>                        <tr>                            <th dtype="int">ISBN</th>                            <th dtype="str">Title</th>                            <th dtype="str">Auther</th>                            <th dtype="int">Quantity                                <div value="quantity" class="sort"></div>                            </th>                            <th dtype="int">Issued                                <div value="issued" class="sort"></div>                            </th>                            <th dtype="int">Deactive</th>                        </tr>                    </thead>                    <tbody id="allBook">                    {% for isbn in isbns %}                        <tr>                            <td>{{ isbn.isbn }}</td>                            <td>{{ isbn.title }}</td>                            <td>{{ isbn.author }}</td>                            <td>{{ isbn.quantity }}</td>                            <td>{{ isbn.issued }}</td>                            <td>{{ isbn.deactive }}</td>                        </tr>                    {% endfor %}                    </tbody>                </table><script src="{% static 'js/allBook.js' %}"></script><script src="{% static 'js/sort.js' %}"></script>{% endblock %}
