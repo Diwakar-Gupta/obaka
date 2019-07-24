@@ -4,38 +4,38 @@
 
 <div class="row">
     <div class="col-12 col-sm-5 m-1 p-1">
-        <p data-toggle="collapse" data-target="#bookOverView">Books(Total:300)</p>
+        <p data-toggle="collapse" data-target="#bookOverView">Books(Total:{{ books.total }})</p>
 
         <div id="bookOverView" class="collapse">
             <div>Total:
-                <div style="float:right">200</div>
+                <div style="float:right">{{ books.total }}</div>
             </div>
             <div>Issued:
-                <div style="float:right">20</div>
+                <div style="float:right">{{ books.issued }}</div>
             </div>
             <div>Deactive:
-                <div style="float:right">10</div>
+                <div style="float:right">{{ books.deactive }}</div>
             </div>
             <div>Reserved:
-                <div style="float:right">50</div>
+                <div style="float:right">0</div>
             </div>
         </div>
     </div>
     <div class="col-12 col-sm-5 m-1 p-1">
-        <p data-toggle="collapse" data-target="#memberOverView">Student(Total:300)</p>
+        <p data-toggle="collapse" data-target="#memberOverView">Members(Total:{{ members.total }})</p>
 
         <div id="memberOverView" class="collapse">
             <div>Total:
-                <div style="float:right">200</div>
+                <div style="float:right">{{ members.total }}</div>
             </div>
-            <div>Issued:
-                <div style="float:right">20</div>
+            <div>Student:
+                <div style="float:right">{{ members.student }}</div>
+            </div>
+            <div>Faculty:
+                <div style="float:right">{{ members.faculty }}</div>
             </div>
             <div>Deactive:
-                <div style="float:right">10</div>
-            </div>
-            <div>Reserved:
-                <div style="float:right">50</div>
+                <div style="float:right">{{ members.deactive }}</div>
             </div>
         </div>
     </div>

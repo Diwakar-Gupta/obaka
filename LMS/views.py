@@ -390,7 +390,30 @@ def report(request):
 
 
 def library(request):
-    return render(request,'library.html')
+    context={}
+    context['books']={}
+    total = 0
+    issued = 0
+    deactive = 0
+    for i in ISBN.objects.all():
+        total += i.quantity
+        issued += i.issued
+        deactive += i.deactive
+    context['books']['total'] = total
+    context['books']['issued'] = issued
+    context['books']['deactive'] = deactive
+
+    context['members']={}
+    student = Student.objects.all().count()
+    faculty = Faculty.objects.all().count()
+    deactive = Student.objects.filter(active=False).count() + Faculty.objects.filter(active=False).count()
+    total = student + faculty
+    context['members']['total'] = total
+    context['members']['student'] = student
+    context['members']['faculty'] = faculty
+    context['members']['deactive'] = deactive
+
+    return render(request,'library.html', context=context)
 
 
 def demo(request):
