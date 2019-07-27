@@ -97,6 +97,10 @@ class Newspaper(models.Model):
     def __str__(self):
         return self.name + '('+self.language+')'
 
+    def present_today(self):
+        self.present.add(Date.today)        
+        self.save()
+
 
 class ISBN(models.Model):
     isbn = models.PositiveIntegerField(primary_key=True)

@@ -6,7 +6,7 @@
     <legend>Top lists</legend>
     <ul>
         <li>
-            <a href="{% url 'member' %}?sort=tissue-down">Members with the most issues</a>
+            <a href="{% url 'member' %}?sort=tissue-down">Member with the most issues</a>
         </li>
         <li>
             <a href="{% url 'books' %}?sort=tissue-down">Most-circulated items</a>
@@ -19,10 +19,10 @@
     <legend>Inactive</legend>
     <ul>
         <li>
-            <a href="{% url 'member' %}?sort=tissue-up">Members who haven't borrowed anything</a>
+            <a href="{% url 'member' %}?tissue=no">Members who haven't borrowed anything</a>
         </li>
         <li>
-            <a href="{% url 'books' %}?sort=tissue-up">Items with no issues</a>
+            <a href="{% url 'books' %}?tissue=no">Items with no issues</a>
         </li>
     </ul>
 

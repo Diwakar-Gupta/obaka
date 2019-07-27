@@ -50,8 +50,13 @@ def books(request):
         if 'issued' in request.GET:
             if request.GET['issued'] == 'yes':
                 filtered = [x for x in filtered if  x.issued]
-            if request.GET['active'] == 'no':
+            if request.GET['issued'] == 'no':
                 filtered = [x for x in filtered if not x.issued]
+        if 'tissue' in request.GET:
+            if request.GET['tissue'] == 'yes':
+                filtered = [x for x in filtered if x.count_issues > 0]
+            if request.GET['tissue'] == 'no':
+                filtered = [x for x in filtered if x.count_issues == 0]
         if 'overdue' in request.GET:
             def islate(l):
                 issues = Issue.objects.filter(book=l,is_returned=False,autorenew=False)
@@ -412,6 +417,9 @@ def library(request):
     context['members']['student'] = student
     context['members']['faculty'] = faculty
     context['members']['deactive'] = deactive
+
+    context['newspaper'] = {}
+    context['newspaper']['total'] = Newspaper.objects.all().count()
 
     return render(request,'library.html', context=context)
 

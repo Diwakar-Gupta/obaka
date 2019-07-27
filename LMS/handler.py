@@ -149,6 +149,11 @@ def allMember(request):
                     filtered = [x for x in filtered if x.name.lower().startswith(nam)]
                 else :
                     filtered = [x for x in filtered if nam in x.name.lower() ]
+        if 'tissue' in filters:
+            if filters['tissue'] == 'yes':
+                filtered = [x for x in filtered if x.count_issues]
+            elif filters['tissue'] == 'no':
+                filtered = [x for x in filtered if x.count_issues==0 ]
         if 'overdue' in request.GET:
             def checklate(j):
                 for i in j:
