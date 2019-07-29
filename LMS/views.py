@@ -420,6 +420,12 @@ def library(request):
 
     context['newspaper'] = {}
     context['newspaper']['total'] = Newspaper.objects.all().count()
+    context['newspaper']['presenttoday'] = 0
+    present = 0
+    d = Date.today()
+    for n in Newspaper.objects.all():
+        if d in n.present.all():
+            context['newspaper']['presenttoday'] += 1
 
     return render(request,'library.html', context=context)
 

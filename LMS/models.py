@@ -98,7 +98,7 @@ class Newspaper(models.Model):
         return self.name + '('+self.language+')'
 
     def present_today(self):
-        self.present.add(Date.today)        
+        self.present.add(Date.today())        
         self.save()
 
 

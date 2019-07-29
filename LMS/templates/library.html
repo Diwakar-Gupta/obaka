@@ -4,7 +4,7 @@
 
 <div class="row">
     <div class="col-12 col-sm-5 m-1 p-1">
-        <p data-toggle="collapse" data-target="#bookOverView">Books(Total:{{ books.total }})</p>
+        <h4 data-toggle="collapse" data-target="#bookOverView">Books(Total:{{ books.total }})</h4>
 
         <div id="bookOverView" class="collapse">
             <div>Total:
@@ -22,7 +22,7 @@
         </div>
     </div>
     <div class="col-12 col-sm-5 m-1 p-1">
-        <p data-toggle="collapse" data-target="#memberOverView">Members(Total:{{ members.total }})</p>
+        <h4 data-toggle="collapse" data-target="#memberOverView">Members(Total:{{ members.total }})</h4>
 
         <div id="memberOverView" class="collapse">
             <div>Total:
@@ -40,25 +40,19 @@
         </div>
     </div>
     <div class="col-12 col-sm-5 m-1 p-1">
-        <p data-toggle="collapse" data-target="#newspaperOverView">Newspaper(Total:3)</p>
+        <h4 data-toggle="collapse" data-target="#newspaperOverView">Newspaper(Total:{{ newspaper.total }})</h4>
 
         <div id="newspaperOverView" class="collapse">
             <div>Total:
-                <div style="float:right">200</div>
+                <div style="float:right">{{ newspaper.total }}</div>
             </div>
-            <div>Issued:
-                <div style="float:right">20</div>
-            </div>
-            <div>Deactive:
-                <div style="float:right">10</div>
-            </div>
-            <div>Reserved:
-                <div style="float:right">50</div>
+            <div>Received Today:
+                <div style="float:right">{{ newspaper.presenttoday }}</div>
             </div>
         </div>
     </div>
     <div class="col-12 col-sm-5 m-1 p-1">
-        <p data-toggle="collapse" data-target="#accountOverView">Accounts(Total:300)</p>
+        <h4 data-toggle="collapse" data-target="#accountOverView">Accounts(Total:300)</h4>
 
         <div id="accountOverView" class="collapse">
             <div>Total:
@@ -74,6 +68,12 @@
                 <div style="float:right">50</div>
             </div>
         </div>
+    </div>
+    <div style="height: 50px;width: 100%;"></div>
+    <div class="col-12 col-sm-5 m-1 p-1">
+        <h4>Settings</h4>
+        <h5><a href="/admin/LMS/userbasicsetting/STUDENT/change/">Student</a></h5>
+        <h5><a href="/admin/LMS/userbasicsetting/FACULTY/change/">Faculty</a></h5>
     </div>
 </div>
 
