@@ -81,7 +81,7 @@
                     <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
                     <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
                     <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
-                    <div value="overdue" class="sort"></div>
+                    
                     <input type="hidden" name="overdue"
                         value="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
                 </div>
