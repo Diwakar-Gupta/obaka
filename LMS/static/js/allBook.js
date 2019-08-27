@@ -15,17 +15,12 @@
                                     'have':document.getElementById('allBook').children.length
                                 },
                                 success: function (data) {
-                                    list = JSON.parse(data);
                                     table = document.getElementById('allBook');
-                                    if(list == false){
+                                    if(data == "false"){
                                         makeToast('No more queries');
                                     }        
                                     else{
-                                        
-                
-                                        list.forEach(function(e){
-                                            table.innerHTML += '<tr><td>'+e.isbn+'</td><td>'+e.title+'</td><td>'+e.author +'</td><td>'+e.quantity+'</td><td>'+e.issued+'</td><td>'+e.deactive +'</td></tr>'
-                                        })
+                                        table.innerHTML += data
                                     }
                 
                                     setTimeout(function(){

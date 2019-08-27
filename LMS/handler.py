@@ -193,21 +193,20 @@ def allMember(request):
         if 'have' in filters:
             if len(filtered) <= int(filters['have']):
                 return HttpResponse('false')
+
             def serlise(l):
-                da={}
-                li=[]
+                memberH = ""
                 for i in l:
-                    da['id']=i.id
-                    da['name']=i.name
-                    da['type']=i.settings.type
-                    da['active']=i.active
-                    da['issued']=i.issued
-                    da['count_issues']=i.count_issues
-                    da['fine']=i.fine
-                    li.append(da)
-                    da={}
+                    memberH += "<tr>"
+                    memberH += "<td>"+i.id+"</td>"
+                    memberH += "<td>" + i.name + "</td>"
+                    memberH += "<td>" + i.active + "</td>"
+                    memberH += "<td>" + i.issued + "</td>"
+                    memberH += "<td>" + i.count_issues + "</td>"
+                    memberH += "<td>" + i.fine + "</td>"
+                    memberH += "</tr>"
                 return li
-            data = json.dumps(serlise(filtered[int(filters['have']):int(filters['have'])+20]))
+            data = serlise(filtered[int(filters['have']):int(filters['have'])+20])
             print(data)
             return HttpResponse(data)
 

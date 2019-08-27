@@ -7,6 +7,7 @@ from .models import *
 from datetime import datetime
 from django.views.generic.edit import CreateView , UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
 from django.contrib.admin.views.decorators import staff_member_required
 import json
@@ -18,7 +19,7 @@ def index(request):
     return render(request, 'index.html')
 
 
-@staff_member_required
+@login_required
 def books(request):
     filtered = [x for x in ISBN.objects.all()]
     filters = request.GET.copy()
@@ -79,21 +80,20 @@ def books(request):
         if 'have' in filters:
             if len(filtered) <= int(filters['have']):
                 return HttpResponse('false')
+
             def serlise(l):
-                da={}
-                li=[]
+                booksH=""
                 for i in l:
-                    da['isbn']=i.isbn
-                    da['title']=i.title
-                    da['author']=i.author
-                    da['quantity']=i.quantity
-                    da['issued']=i.issued
-                    da['deactive']=i.deactive
-                    li.append(da)
-                    da={}
-                return li
-            data = json.dumps(serlise(filtered[int(filters['have']):int(filters['have'])+20]))
-            return HttpResponse(data)
+                    booksH +="<tr>"
+                    booksH += "<td>" + str(i.isbn)+"</td>"
+                    booksH += "<td>" + str(i.title) + "</td>"
+                    booksH += "<td>" + str(i.author) + "</td>"
+                    booksH += "<td>" + str(i.quantity) + "</td>"
+                    booksH += "<td>" + str(i.issued) + "</td>"
+                    booksH += "<td>" + str(i.deactive) + "</td>"
+                    booksH += "</tr>"
+                return booksH
+            return HttpResponse(serlise(filtered[int(filters['have']):int(filters['have'])+20]))
     return render(request, 'allBook.html', context={'isbns': filtered[0:20], 'filters':request.GET})
 
 
