@@ -116,7 +116,7 @@ def allMember(request):
     filters = request.GET.copy()
     if request.method == 'GET':
         if 'membertype' in request.GET and len(request.GET['membertype']) > 0:
-            if request.GET['membertype'] == 'Student':
+            if request.GET['membertype'] == 'client':
                 filtered.extend([x for x in Student.objects.all()])
             elif request.GET['membertype'] == 'Faculty':
                 filtered.extend([x for x in Faculty.objects.all()])

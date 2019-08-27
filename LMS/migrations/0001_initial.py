@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Student',
+            name='client',
             fields=[
                 ('id', models.PositiveIntegerField(primary_key=True, serialize=False)),
                 ('name', models.CharField(max_length=20)),

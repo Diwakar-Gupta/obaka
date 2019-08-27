@@ -16,7 +16,7 @@ urlpatterns = [
     path('member/name',views.memberName,name='member-name'),
     path('member/add',views.memberAdd,name='member-add'),
 
-    path('Student/add', views.StudentAdd.as_view(),name= 'student-add'),
+    path('client/add', views.StudentAdd.as_view(),name= 'student-add'),
     path('Faculty/add', views.FacultyAdd.as_view(),name='faculty-add'),
 
     path('<str:membertype>/<int:memberpk>/',views.member_profile),
@@ -36,5 +36,8 @@ urlpatterns = [
 
     path('library',views.library,name='library'),
     path('demo',views.demo,name='demo'),
+
+    path('myProfile',views.myProfile, name="myprofile")
+
 ]
 

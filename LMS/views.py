@@ -1,4 +1,4 @@
-from django.shortcuts import render , HttpResponseRedirect , HttpResponse , get_object_or_404 , redirect
+from django.shortcuts import render , HttpResponseRedirect , HttpResponse , get_object_or_404 , redirect, Http404
 from django.contrib import auth
 from django.contrib.auth.views import redirect_to_login
 from django.contrib import messages
@@ -135,7 +135,7 @@ def search(request):
             else :
                 go = 'member-profile'
             if members.count() == 1:
-                return redirect(go,membertype='Student',memberpk=stext)
+                return redirect(go,membertype='client',memberpk=stext)
             members = Faculty.objects.filter(pk=stext)
             if members.count() == 1:
                 return redirect(go, membertype='Faculty', memberpk=stext)
@@ -438,3 +438,21 @@ def demo(request):
         print(dat)
 
     return render(request,'demo.html')
+
+
+def myProfile(request):
+    user = auth.get_user(request)
+    if user.is_anonymous:
+        return redirect_to_login(next=request.path)
+    try:
+        user = user.student
+        return HttpResponse(render(request, "client/myprofile.html"))
+    except ObjectDoesNotExist:
+        try:
+            user = user.faculty
+            return HttpResponse(render(request, "client/myprofile.html"))
+        except ObjectDoesNotExist:
+            pass
+
+    return HttpResponse("seems u dont have account")
+
