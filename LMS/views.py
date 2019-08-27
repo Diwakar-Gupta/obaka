@@ -1,4 +1,4 @@
-from django.shortcuts import render , HttpResponseRedirect , HttpResponse , get_object_or_404 , redirect, Http404
+from django.shortcuts import render , HttpResponseRedirect , HttpResponse , redirect
 from django.contrib import auth
 from django.contrib.auth.views import redirect_to_login
 from django.contrib import messages
@@ -6,26 +6,20 @@ from . import handler
 from .models import *
 from datetime import datetime
 from django.views.generic.edit import CreateView , UpdateView
-# Create your views here.
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.decorators.http import require_GET, require_POST
+from django.contrib.admin.views.decorators import staff_member_required
 import json
 
 
+@staff_member_required
 def index(request):
-    #print(request.META['HTTP_USER_AGENT'])
-    user = auth.get_user(request)
-    if user.is_anonymous or not user.is_staff:
-        return redirect_to_login(next=request.path)
-
     messages.add_message(request,messages.INFO,'this is message info')
     return render(request, 'index.html')
 
 
+@staff_member_required
 def books(request):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
     filtered = [x for x in ISBN.objects.all()]
     filters = request.GET.copy()
     
@@ -103,25 +97,21 @@ def books(request):
     return render(request, 'allBook.html', context={'isbns': filtered[0:20], 'filters':request.GET})
 
 
+@staff_member_required
 def book(request,pk):
-    user = auth.get_user(request)
-    if user.is_anonymous or not user.is_staff:
-        return redirect_to_login(next=request.path)
-
     isbn = ISBN.objects.get(pk=pk)
     return render(request,'bookDetail.html',context={'isbn':isbn})
     
 
+@staff_member_required
 def booksAdd(request):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
     context={}
     if request.method == 'POST':
         context = handler.addBook(request.POST)
     return render(request, 'bookform.html',context=context)
 
 
+@staff_member_required
 def search(request):
     stext=request.GET['stext']
     what = request.GET['what'].lower()
@@ -170,11 +160,8 @@ def search(request):
     return HttpResponse('hjk')
 
 
+@staff_member_required
 def member(request):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
-
     return handler.allMember(request)
 
 
@@ -209,26 +196,27 @@ def memberName(request):
     return HttpResponse(list)
 
 
+@staff_member_required
 def memberAdd(request):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
-
     return render(request,'memberForm.html',context={'student':UserBasicSetting.objects.filter(type='STUDENT'), 'faculty' : UserBasicSetting.objects.filter(type='FACULTY')})
 
 
+from django.utils.decorators import method_decorator
+@method_decorator(staff_member_required, name='dispatch')
 class StudentAdd(LoginRequiredMixin,CreateView):
     model = Student
     fields = ['name', 'id', 'email']
     template_name = 'formLoop.html'
 
 
+@method_decorator(staff_member_required, name='dispatch')
 class FacultyAdd(LoginRequiredMixin,CreateView):
     model = Faculty
     fields = ['name', 'isHOD', 'email']
     template_name = 'formLoop.html'
 
 
+@staff_member_required
 def member_profile(request,membertype,memberpk):
     member = None
     if membertype == 'STUDENT':
@@ -239,10 +227,8 @@ def member_profile(request,membertype,memberpk):
     return render(request,'member/profile.html',context={'member':member})
 
 
+@staff_member_required
 def member_issue(request,membertype,memberpk):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
     membertype = membertype.lower()
     context = {'member':Student.objects.get(pk=memberpk) if membertype == 'student' else Faculty.objects.get(pk=memberpk)}
 
@@ -262,10 +248,8 @@ def member_issue(request,membertype,memberpk):
         return render(request,'member/issue.html',context=context)
 
 
+@staff_member_required
 def member_circulation(request,membertype,memberpk):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
     context={}
     if membertype == 'STUDENT':
         member = Student.objects.get(pk=memberpk)
@@ -301,31 +285,26 @@ def member_circulation(request,membertype,memberpk):
     return render(request,'member/circulation.html',context=context)
 
 
+@staff_member_required
 def newspaper(request,pk):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
-
     if request.method == 'POST':
         if 'presentToday' in request.POST:
             newspaper = Newspaper.objects.get(pk = pk)
             newspaper.present.add(Date().today())
 
 
+@staff_member_required
 def notifiedDelayed(request):
     user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
     return render(request, 'notifiedDealyed.html',context={'issues':[x for x in Issue.objects.filter(is_returned=False,autorenew=False) if x.isLate]})
 
 
+@staff_member_required
 def circulation(request):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
     return render(request, 'circulation.html')
 
 
+@staff_member_required
 def issue(request,context={}):
     from django.utils.datastructures import MultiValueDictKeyError
     try:
@@ -345,11 +324,8 @@ def issue(request,context={}):
     return render(request,'issue.html',context={})
 
 
+@staff_member_required
 def returnn(request,context={}):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
-
     if request.method=='POST':
         if 'pk' in request.POST:
             context = handler.returnn(request)
@@ -367,11 +343,8 @@ def returnn(request,context={}):
     return render(request, 'renewreturn.html', context=context)
 
 
+@staff_member_required
 def renew(request,context={}):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
-
     if request.method=='POST':
         if 'pk' in request.POST:
             context = handler.renew(request)
@@ -386,14 +359,12 @@ def renew(request,context={}):
     return render(request, 'renewreturn.html', context=context)
 
 
+@staff_member_required
 def report(request):
-    user = auth.get_user(request)
-    if not user.is_staff:
-        return redirect_to_login(next=request.path)
-    
     return render(request, 'report.html')
 
 
+@staff_member_required
 def library(request):
     context={}
     context['books']={}
@@ -446,13 +417,48 @@ def myProfile(request):
         return redirect_to_login(next=request.path)
     try:
         user = user.student
-        return HttpResponse(render(request, "client/myprofile.html"))
+        return render(request, "client/myprofile.html", context={'member':user})
     except ObjectDoesNotExist:
         try:
             user = user.faculty
-            return HttpResponse(render(request, "client/myprofile.html"))
+            return render(request, "client/myprofile.html", context={'member':user})
         except ObjectDoesNotExist:
             pass
 
     return HttpResponse("seems u dont have account")
+
+
+def hold(request, issue=-1):
+    user = auth.get_user(request)
+    if user.is_anonymous:
+        return redirect_to_login(next=request.path)
+    try:
+        user = user.student
+    except ObjectDoesNotExist:
+        try:
+            user = user.faculty
+        except ObjectDoesNotExist:
+            return HttpResponse("seems u dont have account")
+
+    if issue == -1:
+        issues = Issue.objects.filter(member_id=user.pk,member_type=ContentType.objects.get_for_model(user))
+        pass
+        return render(request, 'client/holds.html', context={'issues':issues})
+    else:
+        issueD = Issue.objects.get(pk = issue)
+        pass
+
+
+
+def fine(request, fine=-1):
+    user = auth.get_user(request)
+    if user.is_anonymous:
+        return redirect_to_login(next=request.path)
+    try:
+        user = user.student
+    except ObjectDoesNotExist:
+        try:
+            user = user.faculty
+        except ObjectDoesNotExist:
+            return HttpResponse("seems u dont have account")
 

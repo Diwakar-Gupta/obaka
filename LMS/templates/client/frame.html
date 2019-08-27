@@ -16,6 +16,12 @@
 
     <!-- Font Awesome css -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+
 
 </head>
 
@@ -24,49 +30,68 @@
     <div class="wrapper">
         <!-- Sidebar  -->
         <nav id="sidebar" class="p-2">
-			<div id="dismiss">
-				<i class="fas fa-arrow-left"></i>
-			</div>
+            <div id="dismiss">
+                <i class="fas fa-arrow-left"></i>
+            </div>
 
             {% block sidebar %}
 
             {% endblock %}
 
 
-		</nav>
+        </nav>
 
         <!-- Page Content  -->
         <div id="contentainer" class="bg-Secondary ">
 
             <nav id="top-nav" class="navbar navbar-expand-lg navbar-light bg-light shadow">
-                <div style="display:inline-flex;width: -webkit-fill-available;justify-content: space-between;">
+                <div style="display:inline-flex;width: 100%;justify-content: space-between;">
                     <button type="button" id="sidebarCollapse" class="btn btn-info mr-2">
                         <i class="fas fa-align-left"></i>
                     </button>
-                    <form class="form-inline" id="search" action="#">
-
-                        <div class="input-group mb-0">
-                            <input id="search-top" type="text" class="form-control collapse" placeholder="Search"
-                                style="min-width: 3cm;">
-                            <div class="input-group-append">
-                                <span data-toggle="collapse" data-target="#search-top" class="fa fa-search fa-2x"
-                                    style="color:#999999" aria-expanded="true"></span>
+                    <form class="form-inline" id="search" action="{% url 'search' %}">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <select name="what" class="btn"  style="background-color: #e9ecef;">
+                                    <option value="issue">Issue</option>
+                                    <option value="return">Return</option>
+                                    <option value="renew">Renew</option>
+                                    <option value="member">Member</option>
+                                    <option value="item">Item</option>
+                                </select>
                             </div>
+                            <script>
+                                document.getElementsByName('what')[0].onchange=function(){
+                                    what=this.value;
+                                    search=document.getElementById("top-search");
+                                    if(what=="issue"||what=="member")
+                                        search.type="text" 
+                                    else 
+                                        search.type="number";
+                                }
+                            </script>
+                            <input required type="text" id="top-search" name="stext" class="form-control" placeholder="Search">
                         </div>
+                    </form>
 
-                    </form><span class="dropdown dropleft">
+                    <span class="dropdown dropleft">
                         <div class="notification" data-toggle="dropdown" aria-expanded="false">
                             <i src="user.jpg" alt="User" class="fa fa-bell icon"></i>
-                            <span class="num" style="">3</span>
+                            <span class="num" style="">{{ messages.count }}</span>
                         </div>
 
                         <div class="dropdown-menu notification-content">
-                            <a class="dropdown-item" href="#">
-                                <i class="fa fa-user-alt pr-2"></i>
-                                noti 23456hgccfgh
-                            </a>
-                            <a class="dropdown-item" href="#">Link</a>
-                            <a class="dropdown-item" href="#"><i class="fa fa-sign-out">Log Out</i></a>
+                            {% if messages %}
+                            {% for message in messages %}
+                                <div class="dropdown-item alert alert-{{ message.tags }} alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <strong>{{ message }}</strong>
+                                </div>
+                            {% endfor %}
+
+                        {% else %}
+                        <strong>Nothing to Display</strong>
+                        {% endif %}
                         </div>
                     </span>
 
@@ -75,44 +100,36 @@
                             <img src="{% static 'img/user.jpg' %}" alt="User" class="rounded-circle" width="40px">
                         </div>
                         <div class="dropdown-menu notification-content">
-                            <div class="dropdown-header">User</div>
+                            <div class="dropdown-header">
+                                <p>{{ user.get_username }}</p>
+                            </div>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Sign Out</a>
+                            {% if user.is_staff %}
+                            <a class="dropdown-item" href="/"><i class="fas fa-database pr-2"></i>admin Site</a>
+                            {% endif %}
+                            <a class="dropdown-item" href="/admin/logout"><i class="fas fa-sign-out-alt pr-2"></i>Sign Out</a>
                         </div>
                     </span>
                 </div>
             </nav>
 
-            <div id="content" class="p-3 ">
+            <div id="content" class="p-3">
+                <div id="messages">
+                    </div>
                 {% block content %}
 
 
 
                 {% endblock %}
-             </div>
+
+            </div>
 
         </div>
     </div>
     <div class="overlay"></div>
-    <!-- jQuery CDN - Slim version (=without AJAX) -->
-
-
 
 </body>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
-<script src="{% static 'js/table.js' %}"></script>
-
+<script src="{% static 'js/index.js' %}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
 

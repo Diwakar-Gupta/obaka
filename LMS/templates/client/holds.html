@@ -1,0 +1,42 @@
+{% extends "client/sidebar.html" %}
+
+{% block content %}
+
+    <table class="table table-striped bg-white">
+
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Barcode</th>
+            <th>Number of renewals</th>
+            <th>Checked out on</th>
+            <th>Checked out from</th>
+            <th>Date due</th>
+            <th>Return date</th>
+        </tr>
+    </thead>
+    <tbody >
+    {% for issue in issues %}
+
+    <tr>
+            <td><a
+                    href="{% url 'member-profile' membertype=member.settings.type memberpk=member.pk  %}">{{ member.id }}</a>
+            </td>
+            <td>{{ member.name }}</td>
+            <td>
+            </td>
+            <td>{{ member.active }}</td>
+            <td>{{ member.issued }}</td>
+            {% if filters.sort and filters.sort == 'tissue-up' or  filters.sort == 'tissue-down' %}
+                <td>{{ member.count_issues }}</td>
+            {% endif %}
+            <td>{{ member.fine }}</td>
+        </tr>
+
+    {% endfor %}
+    </tbody>
+    </tbody>
+
+{% endblock %}

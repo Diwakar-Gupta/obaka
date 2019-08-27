@@ -2,54 +2,38 @@
 {% load static %}
 
 {% block sidebar %}
-			<div class="sidebar-header">
-				<h3>Bootstrap Sidebar</h3>
-			</div>
+<div class="sidebar-header">
+	<h3>{{ member.name }}</h3>
+</div>
 
-			<ul class="nav nav-pills flex-column pt-3">
-				<li class="nav-item ">
-				  <a class="nav-link active" href="/"><i class="fas fa-tachometer-alt"></i>
-					<span>Dashboard</span></a>
-				</li>
-				<li class="nav-item ">
-					<a class="nav-link " data-toggle="collapse" data-target="#bookSubmenu"><i
-					  class="fas fa-book-open"></i>
-				  <span>Book</span></a>
-					<div id="bookSubmenu" class="collapse">
-						<a class="dropdown-item" href="#">Category</a>
-						<a class="dropdown-item" target="_blank" href="{% url 'books' %}">All book</a>
-						<a class="dropdown-item" href="{% url 'book-add' %}"><i class="fas fa-plus"></i>add</a>
-					</div>
-				  </li>
-				  <li class="nav-item ">
-					<a class="nav-link " data-toggle="collapse" data-target="#memberSubmenu"><i
-						class="fas fa-user-alt"></i>
-					<span>Member</span></a>
-					<div id="memberSubmenu" class="collapse">
-						<a class="dropdown-item" href="#">Category</a>
-						<a class="dropdown-item" target="_blank" href="{% url 'member' %}">All Member</a>
-						<a class="dropdown-item" href="{% url 'member-add' %}"><i class="fas fa-plus"></i>add</a>
-					</div>
-				  </li>
-				  <li class="nav-item">
-					<a class="nav-link" href="{% url 'circulation' %}"><i class="fas fa-tachometer-alt"></i>
-					  <span>Circulations</span></a>
-				  </li>
-                  <li class="nav-item">
-					<a class="nav-link" href="{% url 'library' %}"><i class="fas fa-tachometer-alt"></i>
-					  <span>Library</span></a>
-                  </li>
-                  <li class="nav-item">
-					<a class="nav-link" href="{% url 'demo' %}"><i class="fas fa-tachometer-alt"></i>
-					  <span>demo</span></a>
-				  </li>
-			  </ul>
+<ul class="nav nav-pills flex-column pt-3">
+	<li class="nav-item ">
+		<a class="nav-link active" href="/"><i class="fas fa-tachometer-alt"></i>
+			<span>Dashboard</span></a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'holds' %}"><i class="fas fa-tachometer-alt"></i>
+			<span>Holds</span></a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'library' %}"><i class="fas fa-tachometer-alt"></i>
+			<span>History</span></a>
+	</li>
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'fines' %}"><i class="fas fa-tachometer-alt"></i>
+			<span>Fines</span></a>
+	</li>	
+	<li class="nav-item">
+		<a class="nav-link" href="{% url 'demo' %}"><i class="fas fa-tachometer-alt"></i>
+			<span>demo</span></a>
+	</li>
+</ul>
 
 
-		{% endblock %}
+{% endblock %}
 
-                {% block content %}
+{% block content %}
 
 
 
-                {% endblock %}
+{% endblock %}
