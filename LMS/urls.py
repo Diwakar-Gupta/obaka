@@ -37,9 +37,10 @@ urlpatterns = [
     path('library',views.library,name='library'),
     path('demo',views.demo,name='demo'),
 
+    #client profile
     path('itsme',views.myProfile, name="myprofile"),
     path('itsme/hold',views.hold, name="holds"),
-    path('itsme/hold/<int: issue>',views.hold, name="hold"),
+    path('itsme/hold/<int: issuepk>',views.hold, name="hold"),
     path('itsme/fines',views.fine, name="fines"),
     path('itsme/fines/<int: fine>',views.fine, name="fine")
 

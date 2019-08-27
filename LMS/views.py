@@ -428,7 +428,7 @@ def myProfile(request):
     return HttpResponse("seems u dont have account")
 
 
-def hold(request, issue=-1):
+def hold(request, issuepk=-1):
     user = auth.get_user(request)
     if user.is_anonymous:
         return redirect_to_login(next=request.path)
@@ -440,14 +440,12 @@ def hold(request, issue=-1):
         except ObjectDoesNotExist:
             return HttpResponse("seems u dont have account")
 
-    if issue == -1:
-        issues = Issue.objects.filter(member_id=user.pk,member_type=ContentType.objects.get_for_model(user))
-        pass
-        return render(request, 'client/holds.html', context={'issues':issues})
+    if issuepk == -1:
+        issues = Issue.objects.filter(member_id=user.pk,member_type=ContentType.objects.get_for_model(user),is_returned=False)
+        return render(request, 'client/holds.html', context={'member':user,'issues':issues})
     else:
-        issueD = Issue.objects.get(pk = issue)
+        issue = Issue.objects.get(pk = issuepk)
         pass
-
 
 
 def fine(request, fine=-1):
