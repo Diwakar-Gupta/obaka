@@ -40,9 +40,7 @@ urlpatterns = [
     #client profile
     path('itsme',views.myProfile, name="myprofile"),
     path('itsme/hold',views.hold, name="holds"),
-    path('itsme/hold/<int: issuepk>',views.hold, name="hold"),
     path('itsme/fines',views.fine, name="fines"),
-    path('itsme/fines/<int: fine>',views.fine, name="fine")
 
 ]
 

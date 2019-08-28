@@ -125,7 +125,7 @@ def search(request):
             else :
                 go = 'member-profile'
             if members.count() == 1:
-                return redirect(go,membertype='client',memberpk=stext)
+                return redirect(go,membertype='student',memberpk=stext)
             members = Faculty.objects.filter(pk=stext)
             if members.count() == 1:
                 return redirect(go, membertype='Faculty', memberpk=stext)
@@ -219,6 +219,7 @@ class FacultyAdd(LoginRequiredMixin,CreateView):
 @staff_member_required
 def member_profile(request,membertype,memberpk):
     member = None
+    membertype = membertype.upper()
     if membertype == 'STUDENT':
         member = Student.objects.get(pk=memberpk)
     elif membertype == 'FACULTY':
