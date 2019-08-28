@@ -21,7 +21,7 @@
   <tbody id="circulations">
     {% for issue in issues%}
 
-    <tr {% if issue.isLate %} style="color:red" {% endif %}>
+    <tr {% if not issue.is_returned %} {% if issue.isLate %} style="color:red" {% else %} style="color:green" {% endif %} {% endif %}>
       <td>
         <span>{{issue.date}}</span>
       </td>
@@ -39,9 +39,9 @@
       </td>
       <td>
         {% if issue.is_returned %}
-        <span>Checked out</span>
+        <span>{{ issue.return_date.date }}</span>
         {% else %}
-        <span>{{ issue.return_date }}</span>
+        <span>-</span>
         {% endif %}
       </td>
     </tr>

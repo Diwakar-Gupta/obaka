@@ -277,13 +277,15 @@ def member_circulation(request,membertype,memberpk):
                 d['issued_time']=str(i.issued_time)
                 d['issuefrom']=i.issuefrom
                 d['duedate']=str(i.duedate)
-                d['return_date']=str(i.return_date)
+                d['return_date']=str(i.return_date.date())
                 li.append(d)
                 d={}
             return li
-        data = json.dumps(serlise([x for x in context['issues']][have:have+2]))
+        context['issues'].reverse()
+        data = json.dumps(serlise([x for x in context['issues']][have:have+10]))
         return HttpResponse(data)
-    context['issues']=context['issues'][0:7]
+    context['issues'].reverse()
+    context['issues']=context['issues'][0:10]
     return render(request,'member/circulation.html',context=context)
 
 
@@ -342,6 +344,7 @@ def returnn(request,context={}):
             except ISBN.DoesNotExist:
                 context = {'error': "Can't find this item"}
     context['mode'] = 'return'
+    print(context)
     return render(request, 'renewreturn.html', context=context)
 
 

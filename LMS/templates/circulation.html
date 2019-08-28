@@ -22,10 +22,10 @@
                 <h3>Overdues</h3>
                 <ul class="nav nav-tabs box flex-column">
                     <li  ">
-                        <a href="#" class="nav-link"><i class="far fa-clock"></i>Overdues</a>
+                        <a href="{% url 'member' %}?overdue=yes" class="nav-link"><i class="far fa-clock"></i>Overdues</a>
                     </li>
                     <li  ">
-                        <a href="#" class="nav-link"><i class="far fa-clock"></i>Overdues with fines</a>
+                        <a href="{% url 'member' %}?overdue=yes&fine=yes" class="nav-link"><i class="far fa-clock"></i>Overdues with fines</a>
                     </li>
 
                 </ul>

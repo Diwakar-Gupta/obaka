@@ -39,7 +39,11 @@ def issue(request):
         if isbn.quantity - isbn.deactive -isbn.issued <= 0:
             return {'error': 'No Sufficient Book', 'member': member}
 
-        duedate =  datetime.strptime(request.POST['duedate'],"%Y-%m-%d") if 'duedate' in request.POST and request.POST['duedate'] else date.today() + timedelta(days=member.settings.maxDay)
+        duedate = date.today() + timedelta(days=member.settings.maxDay)
+        if 'duedate' in request.POST:
+            if datetime.strptime(request.POST['duedate'],"%Y-%m-%d") < datetime.now():
+                return {'error': 'Duedate in past', 'member': member}
+        
         autorenew = True if 'autorenewal' in request.POST else False
         from django.contrib import auth
         issuefrom = auth.get_user(request).get_username()
@@ -74,10 +78,17 @@ def returnn(request):
         issue = Issue.objects.get(pk=request.POST['pk'])
         if issue.is_returned:
             return {'error':'already returned'}
+
+        if request.POST['returndate']:
+            if datetime.strptime(request.POST['returndate'],"%Y-%m-%d") > datetime.now():
+                return {'error' : 'return date in future', 'Issues': [issue] }
+            issue.return_date = datetime.strptime(request.POST['returndate'],"%Y-%m-%d")
+        else:
+            issue.return_date = datetime.now()
+            
         issue.book.issued -= 1
         issue.member.issued -= 1
         issue.is_returned = True
-        issue.return_date = datetime.now()
 
         if issue.isLate() and not ('forgiveoverdue' in request.POST and len(request.POST['forgiveoverdue'])>0):
             issue.member.fine += issue.fine()

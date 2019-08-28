@@ -39,8 +39,6 @@
             <fieldset id="checkin_options">
                 <legend>Options</legend>
 
-
-
                 <input type="checkbox" id="forgiveoverdue" name="forgiveoverdue">
 
                 <label for="forgiveoverdue">Forgive overdue charges</label>
@@ -51,6 +49,11 @@
                 <input type="checkbox" id="dropboxcheck" name="dropboxmode">
 
                 <label for="dropboxcheck">Book drop mode</label>
+
+                <br>
+                <label for="duedate">Custom Return Date</label>
+
+<input name="returndate" pattern="'%y-%m-%d'" min="2019-7/29" class="form-control" type="date">
 
                 <!-- overduecharges -->
             </fieldset>
@@ -97,7 +100,7 @@
                 </thead>
                 <tbody id="allMember">
 
-                    {% for issue in Issues.all %}
+                    {% for issue in Issues %}
 
                     <tr>
                         <td>{{ issue.duedate }}</td>
