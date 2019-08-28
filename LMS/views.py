@@ -1,4 +1,5 @@
 from django.shortcuts import render , HttpResponseRedirect , HttpResponse , redirect
+from django.http import Http404
 from django.contrib import auth
 from django.contrib.auth.views import redirect_to_login
 from django.contrib import messages
@@ -157,7 +158,7 @@ def search(request):
             return redirect('book',pk=isbn.pk)
         except:
             pass
-    return HttpResponse('hjk')
+    raise Http404()
 
 
 @staff_member_required
