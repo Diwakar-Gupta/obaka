@@ -1,0 +1,170 @@
+{% extends 'frame.html' %}
+{% load static %}
+
+{% block sidebar %}
+{% csrf_token %}
+<form method="get" id="table-form" action="{% url 'issues' %}">
+    <div class="changelist-filter">
+        <h1 class="m-3">Filters</h1>
+
+        <ul style="padding-inline-start: 5px;">
+            <li>
+                <h4> By Member type </h4>
+                <select name="membertype" onchange="this.form.submit()" class="form-control">
+                    <option {% if filters.membertype == 'All' %}selected{% endif %}>All</option>
+                    <option {% if filters.membertype == 'client' %}selected{% endif %}>Student</option>
+                    <option {% if filters.membertype == 'Faculty' %}selected{% endif %}>Faculty</option>
+                    <option {% if filters.membertype == 'Others' %}selected{% endif %}>Others</option>
+                </select>
+            </li>
+            <li>
+                <input type="text" name="name" onchange="this.form.submit()" class="form-control"  placeholder="name"
+                    list="name" {% if filters.name %}value="{{ filters.name }}" {% endif %}>
+
+                <datalist id="name">
+                </datalist>
+
+
+
+            </li>
+            <li>
+                <h4> By ID range </h4>
+                <div class="input-group mb-3">
+                    <input type="number" min="0" onchange="document.getElementsByName('idrangemax')[0].min=this.value;"
+                        class="form-control" name="idrangemin" placeholder="From 0"
+                        {% if filters.idrangemin %}value="{{ filters.idrangemin }}" {% endif %}>
+                    <i class="form-control" style="max-width: 40px">to</i>
+                    <input type="number" class="form-control" id="idrangemax" name="idrangemax"
+                        placeholder="till &#8734" {% if filters.idrangemax %}value="{{ filters.idrangemax }}"
+                        {% endif %}>
+                </div>
+            </li>
+
+            <li>
+                <h4>Active</h4>
+                <div class="yesnoall">
+                    <span class="{% if filters.active == 'All' or not filters.active %}active{% endif %}">All</span>
+                    <span class="{% if filters.active == 'yes' %}active{% endif %}">yes</span>
+                    <span class="{% if filters.active == 'no' %}active{% endif %}">no</span>
+                    <input type="hidden" name="active"
+                        value="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
+                </div>
+            </li>
+            <input type="hidden" name="sort" {% if filters.sort %}value="{{filters.sort}}"{% endif %}>
+            <li>
+                <h4>have Issued item</h4>
+                <div class="yesnoall">
+                    <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
+                    <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
+                    <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
+                    
+                    <input type="hidden" name="issued"
+                        value="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
+                </div>
+            </li>
+
+            <li>
+                <h4>have Fine</h4>
+                <div class="yesnoall">
+                    <span class="{% if filters.fine == 'All' or not filters.fine %}active{% endif %}">All</span>
+                    <span class="{% if filters.fine == 'yes' %}active{% endif %}">yes</span>
+                    <span class="{% if filters.fine == 'no' %}active{% endif %}">no</span>
+                    
+                    <input type="hidden" name="fine"
+                        value="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
+                </div>
+            </li>
+
+            <li>
+                <h4>OverDue's</h4>
+                <div class="yesnoall">
+                    <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
+                    <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
+                    <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
+                    
+                    <input type="hidden" name="overdue"
+                        value="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
+                </div>
+            </li>
+
+            <li>
+                <input type="submit" class="btn btn-primary">
+            </li>
+            <li class="extra-space">
+
+            </li>
+        </ul>
+    </div>
+</form>
+
+
+{% endblock %}
+
+{% block content %}
+
+<input onkeyup="searchTable()" data-target="#allMember" type="text" class="form-control searchTable" style="width:100%"
+    placeholder="Search">
+<table id="table" class="table table-striped bg-white">
+
+    <thead>
+        <tr>
+            <th dtype="int">Date
+                <div value="date" class="sort"></div>
+            </th>
+            <th dtype="str">Title
+            </th>
+            <th dtype="str">Author
+            </th>
+            <th dtype="str">Barcode
+            </th>
+            <th dtype="int">Number of renewals
+
+            </th>
+            <th dtype="int">Checked out on
+                    <div value="idate" class="sort"></div>
+                </th>
+            <th dtype="int">Checked out from
+            </th>
+            <th dtype="str">Date due
+            </th>
+            <th dtype="str">Return date
+            </th>
+        </tr>
+    </thead>
+    <tbody id="allMember">
+
+       {% for issue in issues%}
+
+    <tr {% if not issue.is_returned %} {% if issue.isLate %} style="color:red" {% else %} style="color:green" {% endif %} {% endif %}>
+      <td>
+        <span>{{issue.date}}</span>
+      </td>
+      <td><a href="#">{{issue.book.title}}</a></td>
+
+      <td>{{issue.book.author}}</td>
+      <td><a target="_blank" href="/admin/LMS/isbn/{{ issue.book.isbn }}/change">{{issue.book.isbn}}</a></td>
+      <td>{{issue.countrenewal}}</td>
+      <td>
+        <span>{{ issue.issued_time }}</span>
+      </td>
+      <td>{{ issue.issuefrom }}</td>
+      <td>
+        <span>{{ issue.duedate }}</span>
+      </td>
+      <td>
+        {% if issue.is_returned %}
+        <span>{{ issue.return_date.date }}</span>
+        {% else %}
+        <span>-</span>
+        {% endif %}
+      </td>
+    </tr>
+
+    {% endfor %}
+
+
+    </tbody>
+</table>
+<script src="{% static 'js/allMember.js' %}"></script>
+<script src="{% static 'js/sort.js' %}"></script>
+{% endblock %}

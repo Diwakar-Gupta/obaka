@@ -365,6 +365,12 @@ def renew(request,context={}):
 
 
 @staff_member_required
+def issues(request):
+    issues = Issue.objects.all()
+    return render(request,'issues.html',context={'issues':issues})
+
+
+@staff_member_required
 def report(request):
     return render(request, 'report.html')
 
