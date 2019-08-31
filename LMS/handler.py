@@ -41,8 +41,11 @@ def issue(request):
 
         duedate = date.today() + timedelta(days=member.settings.maxDay)
         if 'duedate' in request.POST:
-            if datetime.strptime(request.POST['duedate'],"%Y-%m-%d") < datetime.now():
-                return {'error': 'Duedate in past', 'member': member}
+            try:
+                if datetime.strptime(request.POST['duedate'],"%Y-%m-%d") < datetime.now():
+                    return {'error': 'Duedate in past', 'member': member}
+            except:
+                pass
         
         autorenew = True if 'autorenewal' in request.POST else False
         from django.contrib import auth
@@ -80,9 +83,12 @@ def returnn(request):
             return {'error':'already returned'}
 
         if request.POST['returndate']:
-            if datetime.strptime(request.POST['returndate'],"%Y-%m-%d") > datetime.now():
-                return {'error' : 'return date in future', 'Issues': [issue] }
-            issue.return_date = datetime.strptime(request.POST['returndate'],"%Y-%m-%d")
+            try:
+                if datetime.strptime(request.POST['returndate'],"%Y-%m-%d") > datetime.now():
+                    return {'error' : 'return date in future', 'Issues': [issue] }
+                issue.return_date = datetime.strptime(request.POST['returndate'],"%Y-%m-%d")
+            except:
+                pass
         else:
             issue.return_date = datetime.now()
             
