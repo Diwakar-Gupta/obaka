@@ -28,6 +28,7 @@ def addBook(request):
 def issue(request):
     print(request.POST)
     member = None
+    issue = None
     try :
         membertype = request.POST['membertype']
         if membertype == 'STUDENT':
@@ -71,7 +72,7 @@ def issue(request):
     except (Student.DoesNotExist , Faculty.DoesNotExist):
         print('member does not exist')
         return {'error': 'Member Does not exist','member':member}
-    return {'success':True,'member':member}
+    return {'success':"Issued "+str(issue.book.isbn)+" at "+str(issue.date),'member':member}
 
 
 def returnn(request):
