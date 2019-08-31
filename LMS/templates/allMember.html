@@ -1,109 +1,132 @@
 {% extends 'frame.html' %}
 {% load static %}
 
-{% block sidebar %}
+{% block content %}
 {% csrf_token %}
-<form method="get" id="table-form" action="{% url 'member' %}">
-    <div class="changelist-filter">
-        <h1 class="m-3">Filters</h1>
-
-        <ul style="padding-inline-start: 5px;">
-            <li>
-                <h4> By Member type </h4>
-                <select name="membertype" onchange="this.form.submit()" class="form-control">
-                    <option {% if filters.membertype == 'All' %}selected{% endif %}>All</option>
-                    <option {% if filters.membertype == 'client' %}selected{% endif %}>Student</option>
-                    <option {% if filters.membertype == 'Faculty' %}selected{% endif %}>Faculty</option>
-                    <option {% if filters.membertype == 'Others' %}selected{% endif %}>Others</option>
-                </select>
-            </li>
-            <li>
-                <input type="text" name="name" onchange="this.form.submit()" class="form-control"  placeholder="name"
-                    list="name" {% if filters.name %}value="{{ filters.name }}" {% endif %}>
-
-                <datalist id="name">
-                </datalist>
-
-
-
-            </li>
-            <li>
-                <h4> By ID range </h4>
-                <div class="input-group mb-3">
-                    <input type="number" min="0" onchange="document.getElementsByName('idrangemax')[0].min=this.value;"
-                        class="form-control" name="idrangemin" placeholder="From 0"
-                        {% if filters.idrangemin %}value="{{ filters.idrangemin }}" {% endif %}>
-                    <i class="form-control" style="max-width: 40px">to</i>
-                    <input type="number" class="form-control" id="idrangemax" name="idrangemax"
-                        placeholder="till &#8734" {% if filters.idrangemax %}value="{{ filters.idrangemax }}"
-                        {% endif %}>
-                </div>
-            </li>
-
-            <li>
-                <h4>Active</h4>
-                <div class="yesnoall">
-                    <span class="{% if filters.active == 'All' or not filters.active %}active{% endif %}">All</span>
-                    <span class="{% if filters.active == 'yes' %}active{% endif %}">yes</span>
-                    <span class="{% if filters.active == 'no' %}active{% endif %}">no</span>
-                    <input type="hidden" name="active"
-                        value="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
-                </div>
-            </li>
-            <input type="hidden" name="sort" {% if filters.sort %}value="{{filters.sort}}"{% endif %}>
-            <li>
-                <h4>have Issued item</h4>
-                <div class="yesnoall">
-                    <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
-                    <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
-                    <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
-                    
-                    <input type="hidden" name="issued"
-                        value="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
-                </div>
-            </li>
-
-            <li>
-                <h4>have Fine</h4>
-                <div class="yesnoall">
-                    <span class="{% if filters.fine == 'All' or not filters.fine %}active{% endif %}">All</span>
-                    <span class="{% if filters.fine == 'yes' %}active{% endif %}">yes</span>
-                    <span class="{% if filters.fine == 'no' %}active{% endif %}">no</span>
-                    
-                    <input type="hidden" name="fine"
-                        value="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
-                </div>
-            </li>
-
-            <li>
-                <h4>OverDue's</h4>
-                <div class="yesnoall">
-                    <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
-                    <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
-                    <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
-                    
-                    <input type="hidden" name="overdue"
-                        value="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
-                </div>
-            </li>
-
-            <li>
-                <input type="submit" class="btn btn-primary">
-            </li>
-            <li class="extra-space">
-
-            </li>
-        </ul>
+<form>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <button type="button" class="btn btn-primary input-group-text" data-toggle="modal"
+                data-target="#filterAllMembers">Filter
+            </button>
+        </div>
+        <input onkeyup="searchTable()" data-target="#filterAllMembers" type="text" class="form-control searchTable"
+            placeholder="Search">
     </div>
 </form>
+<form method="get" id="table-form" action="{% url 'member' %}">
+    <div class="modal" id="filterAllMembers">
+        <div class="modal-dialog modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Filters</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
 
 
-{% endblock %}
+                    <div class="changelist-filter">
+                        <ul style="padding-inline-start: 5px;">
+                            <li>
+                                <h4> By Member type </h4>
+                                <select name="membertype" class="form-control">
+                                    <option {% if filters.membertype == 'All' %}selected{% endif %}>All</option>
+                                    <option {% if filters.membertype == 'client' %}selected{% endif %}>Student</option>
+                                    <option {% if filters.membertype == 'Faculty' %}selected{% endif %}>Faculty</option>
+                                    <option {% if filters.membertype == 'Others' %}selected{% endif %}>Others</option>
+                                </select>
+                            </li>
+                            <li>
+                                <input type="text" name="name" class="form-control" placeholder="name" list="name"
+                                    {% if filters.name %}value="{{ filters.name }}" {% endif %}>
 
-{% block content %}
+                                <datalist id="name">
+                                </datalist>
+                            </li>
+                            <li>
+                                <h4> By ID range </h4>
+                                <div class="input-group mb-3">
+                                    <input type="number" min="0"
+                                        onchange="document.getElementsByName('idrangemax')[0].min=this.value;"
+                                        class="form-control" name="idrangemin" placeholder="From 0"
+                                        {% if filters.idrangemin %}value="{{ filters.idrangemin }}" {% endif %}>
+                                    <i class="form-control" style="max-width: 40px">to</i>
+                                    <input type="number" class="form-control" id="idrangemax" name="idrangemax"
+                                        placeholder="till &#8734"
+                                        {% if filters.idrangemax %}value="{{ filters.idrangemax }}" {% endif %}>
+                                </div>
+                            </li>
 
-<input onkeyup="searchTable()" data-target="#allMember" type="text" class="form-control searchTable" style="width:100%"
-    placeholder="Search">
+                            <li>
+
+                                <div class="yesnoall">
+                                    <h4>Active</h4>
+
+                                    <span
+                                        class="{% if filters.active == 'All' or not filters.active %}active{% endif %}">All</span>
+                                    <span class="{% if filters.active == 'yes' %}active{% endif %}">yes</span>
+                                    <span class="{% if filters.active == 'no' %}active{% endif %}">no</span>
+                                    <input type="hidden" name="active"
+                                        value="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
+                                </div>
+                            </li>
+                            <input type="hidden" name="sort" {% if filters.sort %}value="{{filters.sort}}" {% endif %}>
+                            <li>
+                                <h4>have Issued item</h4>
+                                <div class="yesnoall">
+                                    <span
+                                        class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
+                                    <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
+                                    <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
+
+                                    <input type="hidden" name="issued"
+                                        value="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
+                                </div>
+                            </li>
+
+                            <li>
+                                <h4>have Fine</h4>
+                                <div class="yesnoall">
+                                    <span
+                                        class="{% if filters.fine == 'All' or not filters.fine %}active{% endif %}">All</span>
+                                    <span class="{% if filters.fine == 'yes' %}active{% endif %}">yes</span>
+                                    <span class="{% if filters.fine == 'no' %}active{% endif %}">no</span>
+
+                                    <input type="hidden" name="fine"
+                                        value="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
+                                </div>
+                            </li>
+
+                            <li>
+                                <h4>OverDue's</h4>
+                                <div class="yesnoall">
+                                    <span
+                                        class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
+                                    <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
+                                    <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
+
+                                    <input type="hidden" name="overdue"
+                                        value="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" style="float: left">Close</button>
+                    <button type="submit" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 <table id="table" class="table table-striped bg-white">
 
     <thead>
@@ -120,9 +143,9 @@
                 <div value="issue" class="sort"></div>
             </th>
             {% if filters.sort == 'tissue-up' or filters.sort == 'tissue-down' %}
-                <th dtype="int">Total Issues
-                    <div value="tissue" class="sort"></div>
-                </th>
+            <th dtype="int">Total Issues
+                <div value="tissue" class="sort"></div>
+            </th>
             {% endif %}
             <th dtype="int">Fine
                 <div value="fine" class="sort"></div>
@@ -144,7 +167,7 @@
             <td>{{ member.active }}</td>
             <td>{{ member.issued }}</td>
             {% if filters.sort and filters.sort == 'tissue-up' or  filters.sort == 'tissue-down' %}
-                <td>{{ member.count_issues }}</td>
+            <td>{{ member.count_issues }}</td>
             {% endif %}
             <td>{{ member.fine }}</td>
         </tr>

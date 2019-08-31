@@ -59,7 +59,6 @@ $('.changelist-filter .yesnoall>span').not("span.active").on('click',function(){
     parent=this.parentNode
     input=parent.querySelector('input[type=hidden]')
     input.value=this.innerText
-    input.form.submit();
 });
 
 
