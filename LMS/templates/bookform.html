@@ -70,7 +70,8 @@
                 url: "/book/details/"+this.value,
                 success: function (data) {
                     details = JSON.parse(data);
-                    let all = ['author','title','publisher','price','category','quantity']
+                    if(!details)return 0;
+let all = ['author','title','publisher','price','category','quantity']
                     all.forEach(element => {
                         const ele = document.getElementsByName(element)[0]
                         ele.value = details[element]
