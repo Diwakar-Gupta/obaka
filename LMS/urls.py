@@ -9,6 +9,7 @@ urlpatterns = [
     path('books/', views.books, name='books'),
     path('book/<int:pk>', views.book, name='book'),
     path('books/add', views.booksAdd, name='book-add'),
+    path('book/details/<int:isbn>', views.bookDetail, name="bookD"),
 
     path('search/',views.search,name='search'),
 

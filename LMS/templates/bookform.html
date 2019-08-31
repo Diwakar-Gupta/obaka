@@ -1,63 +1,97 @@
 {% extends 'frame.html' %}
 
 {% block content %}
-        {% if success %}
-        <div class="alert alert-success alert-dismissible">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Success!</strong> {{ message }}
+{% if success %}
+<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Success!</strong> {{ success }}
 </div>
-    {% endif %}
-                <div class="bg-white shadow">
-                    <form method="post" action="{% url 'book-add' %}" >
-{% csrf_token %}
-                        <div class="row ml-0 mr-0">
-                            <div class="col-12 col-md-6" style="padding:0 16px;">
-                                <div class="form-group">
-                                    <label for="isbn">ISBN:</label>
-                                    <input type="number" min="1000000000" max="9999999999999"  class="form-control" placeholder="ISBN"
-                                        name="isbn" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="author">Author:</label>
-                                    <input type="text" class="form-control" placeholder="Author"
-                                        name="author" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="title">Title:</label>
-                                    <input type="text" class="form-control" placeholder="Title:"
-                                        name="title" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="publisher">Publisher:</label>
-                                    <input type="text" class="form-control" placeholder="Publisher:"
-                                        name="publisher" required>
-                                </div>
-                                
-                            </div>
-                            <div class="col-12 col-md-6" style="padding:0 16px;">
-
-                                <div class="form-group">
-                                    <label for="price">Price:</label>
-                                    <input type="number" class="form-control" min="0" placeholder="Price:"
-                                        name="price" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="category">Category:</label>
-                                    <input type="text" class="form-control" placeholder="Category:"
-                                        name="category" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <label>Quantity:</label>
-                                    <input value="0" type="number" class="form-control" placeholder="Quantity:"
-                                        name="quantity" required>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                    </form>
+{% endif %}
+{% if error %}
+<div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Error!</strong> {{ error }}
+</div>
+{% endif %}
+<div class="bg-white shadow">
+    <form method="post" action="{% url 'book-add' %}">
+        {% csrf_token %}
+        <div class="row ml-0 mr-0">
+            <div class="col-12 col-md-6" style="padding:0 16px;">
+                <div class="form-group">
+                    <label for="isbn">ISBN:</label>
+                    <input type="number" min="1000000000" max="9999999999999" class="form-control" placeholder="ISBN"
+                        name="isbn" required>
                 </div>
+                <div class="form-group">
+                    <label for="author">Author:</label>
+                    <input type="text" class="form-control" placeholder="Author" name="author" required>
+                </div>
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" class="form-control" placeholder="Title:" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="publisher">Publisher:</label>
+                    <input type="text" class="form-control" placeholder="Publisher:" name="publisher" required>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-6" style="padding:0 16px;">
+
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" class="form-control" min="0" placeholder="Price:" name="price" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <input type="text" class="form-control" placeholder="Category:" name="category" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity:</label>
+                    <input value="0" type="number" class="form-control" placeholder="Quantity:" name="quantity"
+                        required>
+                </div>
+
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+    </form>
+</div>
+
+<script>
+    document.getElementsByName('isbn')[0].onchange = function () {
+        if (this.value > 1000000000) {
+            $.ajax({
+                type: 'GET',
+                url: "/book/details/"+this.value,
+                success: function (data) {
+                    details = JSON.parse(data);
+                    let all = ['author','title','publisher','price','category','quantity']
+                    all.forEach(element => {
+                        const ele = document.getElementsByName(element)[0]
+                        ele.value = details[element]
+                        ele.setAttribute('disabled',0)
+                    });
+                    
+                    let ele = document.getElementsByName('quantity')[0]
+                    ele.removeAttribute('name')
+                    ele.parentElement.parentElement.innerHTML +=  '<div class="form-group"><label>Add :</label><input value="0" type="number" class="form-control" placeholder="Quantity:" name="quantity"required></div>'
+
+                    setTimeout(function () {
+                        infiniteLoopWorking = false
+                    }, 500);
+                },
+                error: function (data) {
+                    makeToast('Cant connect to server', 'error');
+                }
+
+            });
+        }
+    }
+</script>
+
 {% endblock %}

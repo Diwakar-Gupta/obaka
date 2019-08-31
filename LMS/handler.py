@@ -7,9 +7,9 @@ import json
 
 
 def addBook(request):
-    print(request)
+    if int(request['quantity'])<0:
+        return {'error':'Negative Amount of Book'}
     isbnObject=ISBN.objects.get_or_create(isbn=request['isbn'])
-    print(isbnObject[1])
     if isbnObject[1]:
         isbnObject[0].author = request['author']
         isbnObject[0].title = request['title']
@@ -22,7 +22,7 @@ def addBook(request):
 
     isbnObject[0].save()
 
-    return {'success':True,'message':"added "+ request['quantity']+" book's with isbn :"+request['isbn']}
+    return {'success':"added "+ request['quantity']+" book's with isbn :"+request['isbn']}
 
 
 def issue(request):

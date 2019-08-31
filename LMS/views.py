@@ -112,6 +112,23 @@ def booksAdd(request):
     return render(request, 'bookform.html',context=context)
 
 
+@login_required
+def bookDetail(request,isbn):
+    try:
+        isbn=ISBN.objects.get(pk=isbn)
+        detail = {}
+        detail['author'] = isbn.author
+        detail['title'] = isbn.title
+        detail['category'] = isbn.category
+        detail['publisher'] = isbn.publisher
+        detail['price'] = isbn.price
+        detail['quantity'] = isbn.quantity
+        details = json.dumps(detail)
+        return HttpResponse(details)
+    except:
+        return HttpResponse('false')
+
+
 @staff_member_required
 def search(request):
     stext=request.GET['stext']
