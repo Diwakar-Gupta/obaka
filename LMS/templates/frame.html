@@ -110,10 +110,14 @@
                                     document.getElementsByName('what')[0].onchange = function () {
                                         what = this.value;
                                         search = document.getElementById("top-search");
-                                        if (what == "issue" || what == "member")
+                                        if (what == "issue" || what == "member"){
                                             search.type = "text"
-                                        else
+                                            search.placeholder = 'ID / Name'
+                                        }
+                                        else{
                                             search.type = "number";
+                                            search.placeholder = 'barcode / isbn'
+                                        }                                        
                                     }
                                 </script>
                                 <input required type="text" id="top-search" name="stext" class="form-control"

@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block sidebar %}
+
 {% csrf_token %}
 <form method="get" id="table-form" action="{% url 'member' %}">
     <div class="changelist-filter">
@@ -9,8 +10,8 @@
 
         <ul style="padding-inline-start: 5px;">
             <li>
-                <h4> By Member type </h4>
-                <select name="membertype" onchange="this.form.submit()" class="form-control">
+                <h3>Member type </h3>
+                <select name="membertype" class="form-control">
                     <option {% if filters.membertype == 'All' %}selected{% endif %}>All</option>
                     <option {% if filters.membertype == 'client' %}selected{% endif %}>Student</option>
                     <option {% if filters.membertype == 'Faculty' %}selected{% endif %}>Faculty</option>
@@ -18,7 +19,7 @@
                 </select>
             </li>
             <li>
-                <input type="text" name="name" onchange="this.form.submit()" class="form-control"  placeholder="name"
+                <input type="text" name="name" class="form-control"  placeholder="name"
                     list="name" {% if filters.name %}value="{{ filters.name }}" {% endif %}>
 
                 <datalist id="name">
@@ -28,12 +29,12 @@
 
             </li>
             <li>
-                <h4> By ID range </h4>
+                <h3>ID range </h3>
                 <div class="input-group mb-3">
                     <input type="number" min="0" onchange="document.getElementsByName('idrangemax')[0].min=this.value;"
                         class="form-control" name="idrangemin" placeholder="From 0"
                         {% if filters.idrangemin %}value="{{ filters.idrangemin }}" {% endif %}>
-                    <i class="form-control" style="max-width: 40px">to</i>
+                    <i class="form-control" style="max-width: 40px; margin-right:0px;">to</i>
                     <input type="number" class="form-control" id="idrangemax" name="idrangemax"
                         placeholder="till &#8734" {% if filters.idrangemax %}value="{{ filters.idrangemax }}"
                         {% endif %}>
@@ -41,51 +42,93 @@
             </li>
 
             <li>
-                <h4>Active</h4>
-                <div class="yesnoall">
-                    <span class="{% if filters.active == 'All' or not filters.active %}active{% endif %}">All</span>
-                    <span class="{% if filters.active == 'yes' %}active{% endif %}">yes</span>
-                    <span class="{% if filters.active == 'no' %}active{% endif %}">no</span>
-                    <input type="hidden" name="active"
-                        value="{% if filters.active %}{{ filters.active }}{% else %}All{% endif %}">
-                </div>
-            </li>
-            <input type="hidden" name="sort" {% if filters.sort %}value="{{filters.sort}}"{% endif %}>
-            <li>
-                <h4>have Issued item</h4>
-                <div class="yesnoall">
-                    <span class="{% if filters.issued == 'All' or not filters.issued %}active{% endif %}">All</span>
-                    <span class="{% if filters.issued == 'yes' %}active{% endif %}">yes</span>
-                    <span class="{% if filters.issued == 'no' %}active{% endif %}">no</span>
-                    
-                    <input type="hidden" name="issued"
-                        value="{% if filters.issued %}{{ filters.issued }}{% else %}All{% endif %}">
-                </div>
-            </li>
-
-            <li>
-                <h4>have Fine</h4>
-                <div class="yesnoall">
-                    <span class="{% if filters.fine == 'All' or not filters.fine %}active{% endif %}">All</span>
-                    <span class="{% if filters.fine == 'yes' %}active{% endif %}">yes</span>
-                    <span class="{% if filters.fine == 'no' %}active{% endif %}">no</span>
-                    
-                    <input type="hidden" name="fine"
-                        value="{% if filters.fine %}{{ filters.fine }}{% else %}All{% endif %}">
-                </div>
-            </li>
-
-            <li>
-                <h4>OverDue's</h4>
-                <div class="yesnoall">
-                    <span class="{% if filters.overdue == 'All' or not filters.overdue %}active{% endif %}">All</span>
-                    <span class="{% if filters.overdue == 'yes' %}active{% endif %}">yes</span>
-                    <span class="{% if filters.overdue == 'no' %}active{% endif %}">no</span>
-                    
-                    <input type="hidden" name="overdue"
-                        value="{% if filters.overdue %}{{ filters.overdue }}{% else %}All{% endif %}">
-                </div>
-            </li>
+                    <div data-toggle="collapse" data-target="#memberfilteractive">
+                            <span >Active</span>
+                            <span style="float: right" class="fas fa-caret-down"></span>
+                    </div>
+    
+                    <div id="memberfilteractive" class="collapse">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" name="active" class="form-check-input"
+                                    {% if filters.active == 'yes' %}checked{% endif %} value="yes">Yes
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" name="active" class="form-check-input"
+                                    {% if filters.active == 'no' %}checked{% endif %} value="no">No
+                            </label>
+                        </div>
+                    </div>
+                </li>
+    
+    
+                <input type="hidden" name="sort" {% if filters.sort %}value="{{filters.sort}}" {% endif %}>
+                <li>
+                    <div data-toggle="collapse" data-target="#memberfilterissues">
+                            <span >Issues</span>
+                            <span style="float: right" class="fas fa-caret-down"></span>
+                    </div>
+                    <div id="memberfilterissues" class="collapse">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" name="issue" class="form-check-input"
+                                    {% if filters.issue == 'yes' %}checked{% endif %} value="yes">1 & Above
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" name="issue" class="form-check-input"
+                                    {% if filters.issue == 'no' %}checked{% endif %} value="no">0
+                            </label>
+                        </div>
+                    </div>
+                </li>
+    
+                <li>
+                        <div data-toggle="collapse" data-target="#memberfilterfine">
+                                <span >Fine</span>
+                                <span style="float: right" class="fas fa-caret-down"></span>
+                        </div>
+    
+                    <div id="memberfilterfine" class="collapse">
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" name="fine" class="form-check-input"
+                                    {% if filters.fine == 'yes' %}checked{% endif %} value="yes">₹1 & Above
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="checkbox" name="fine" class="form-check-input"
+                                    {% if filters.fine == 'no' %}checked{% endif %} value="no">₹0
+                            </label>
+                        </div>
+                    </div>
+                </li>
+    
+                <li>
+                        <div data-toggle="collapse" data-target="#memberfilteroverdue">
+                                <span >Overdue</span>
+                                <span style="float: right" class="fas fa-caret-down"></span>
+                        </div>
+    
+                        <div id="memberfilteroverdue" class="collapse">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="overdue" class="form-check-input"
+                                        {% if filters.overdue == 'yes' %}checked{% endif %} value="yes">1 Day & Above
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input type="checkbox" name="overdue" class="form-check-input"
+                                        {% if filters.overdue == 'no' %}checked{% endif %} value="no">0 Day
+                                </label>
+                            </div>
+                        </div>
+                </li>
 
             <li>
                 <input type="submit" class="btn btn-primary">
@@ -130,9 +173,7 @@
         </tr>
     </thead>
     <tbody id="allMember">
-
         {% for member in members %}
-
         <tr>
             <td><a
                     href="{% url 'member-profile' membertype=member.settings.type memberpk=member.pk  %}">{{ member.id }}</a>
@@ -148,12 +189,10 @@
             {% endif %}
             <td>{{ member.fine }}</td>
         </tr>
-
         {% endfor %}
-
-
     </tbody>
 </table>
 <script src="{% static 'js/allMember.js' %}"></script>
 <script src="{% static 'js/sort.js' %}"></script>
+
 {% endblock %}
