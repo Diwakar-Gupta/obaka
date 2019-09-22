@@ -25,10 +25,10 @@
       <td>
         <span>{{issue.date}}</span>
       </td>
-      <td><a href="#">{{issue.book.title}}</a></td>
+      <td><a href="#">{{issue.book.isbn.title}}</a></td>
 
-      <td>{{issue.book.author}}</td>
-      <td><a target="_blank" href="/admin/LMS/isbn/{{ issue.book.isbn }}/change">{{issue.book.isbn}}</a></td>
+      <td>{{issue.book.isbn.author}}</td>
+      <td>{{issue.book.barcode}}</td>
       <td>{{issue.countrenewal}}</td>
       <td>
         <span>{{ issue.issued_time }}</span>

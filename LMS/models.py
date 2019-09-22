@@ -24,7 +24,7 @@ class UserBasicSetting(models.Model):
 class Student(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=20)
-    count_issues = models.PositiveIntegerField(default=0)
+    total_issues = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
     email = models.EmailField(null=True)
@@ -53,7 +53,7 @@ class Student(models.Model):
 class Faculty(models.Model):
     name = models.CharField(max_length=20,)
     isHOD = models.BooleanField(default=False)
-    count_issues = models.PositiveIntegerField(default=0)
+    total_issues = models.PositiveIntegerField(default=0)
     settings = models.ForeignKey(UserBasicSetting,on_delete=models.ProtectedError)
     active = models.BooleanField(default=True)
     email = models.EmailField(null=True)
@@ -100,6 +100,7 @@ class Newspaper(models.Model):
     def present_today(self):
         self.present.add(Date.today())        
         self.save()
+  
 
 
 class ISBN(models.Model):
@@ -109,10 +110,8 @@ class ISBN(models.Model):
     category = models.CharField(max_length=30)
     publisher = models.CharField(max_length=30)
     price = models.PositiveIntegerField(default=0)
-    quantity = models.PositiveIntegerField(default=0)
-    issued = models.PositiveIntegerField(default=0)
-    deactive = models.PositiveIntegerField(default=0)
-    count_issues = models.PositiveIntegerField(default=0)
+
+    total_issues = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return str(self.isbn)
@@ -121,8 +120,16 @@ class ISBN(models.Model):
         return reverse('books')
 
 
+class Book(models.Model):
+    barcode = models.PositiveIntegerField(primary_key=True)
+    isbn = models.ForeignKey(ISBN,models.CASCADE)
+    issued = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Barcode: {self.barcode}, Issued: {self.issued}"
+
 class Issue(models.Model):
-    book = models.ForeignKey(ISBN,models.CASCADE)
+    book = models.ForeignKey(Book,models.CASCADE)
 
     member_type = models.ForeignKey(ContentType,on_delete=models.CASCADE)
     member_id = models.PositiveIntegerField()

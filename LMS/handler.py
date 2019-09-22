@@ -9,7 +9,7 @@ import json
 def addBook(request):
     if int(request['quantity'])<0:
         return {'error':'Negative Amount of Book'}
-    isbnObject=ISBN.objects.get_or_create(isbn=request['isbn'])
+    isbnObject = ISBN.objects.get_or_create(isbn=request['isbn'])
     if isbnObject[1]:
         isbnObject[0].author = request['author']
         isbnObject[0].title = request['title']
@@ -35,10 +35,11 @@ def issue(request):
             member = Student.objects.get(id=request.POST['memberid'])
         else:
             member = Faculty.objects.get(id=request.POST['memberid'])
-        isbn = ISBN.objects.get(isbn=request.POST['isbn'])
+        book = Book.objects.get(barcode=request.POST['barcode'])
+        isbn = book.isbn
 
-        if isbn.quantity - isbn.deactive -isbn.issued <= 0:
-            return {'error': 'No Sufficient Book', 'member': member}
+        if book.issued :
+            return {'error': 'Book already Issued', 'member': member}
 
         duedate = date.today() + timedelta(days=member.settings.maxDay)
         if 'duedate' in request.POST:
@@ -55,18 +56,18 @@ def issue(request):
         if contentype[1]:
             contentype[0].save()
         contentype = contentype[0]
-        issue = Issue(book=isbn, member_type=contentype, member_id=member.pk, issuefrom=issuefrom,
+        issue = Issue(book=book, member_type=contentype, member_id=member.pk, issuefrom=issuefrom,
                       duedate=duedate, autorenew=autorenew, return_date=None )
         issue.member = member
-        isbn.issued += 1
-        isbn.count_issues += 1
+        isbn.total_issues += 1
         issue.save()
         member.issued += 1
-        member.count_issues += 1
+        member.total_issues += 1
         member.save()
         isbn.save()
-        messages.add_message(request,messages.SUCCESS,'Book Issued Successfully')
-    except ISBN.DoesNotExist:
+        book.issued = True
+        book.save()
+    except Book.DoesNotExist:
         print('book not exist')
         return {'error': 'Book Does not exist', 'member': member}
     except (Student.DoesNotExist , Faculty.DoesNotExist):

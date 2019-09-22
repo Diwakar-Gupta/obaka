@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+#    'webpush'    
 ]
 
 MIDDLEWARE = [
@@ -50,6 +50,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+WEBPUSH_SETTINGS = {
+   "VAPID_PUBLIC_KEY": "BLx8u2iq4QlXh5zdc_fCVX7C-ZpvuOVsN61ubrfpsN0xLv3n4jEDcXV8VSJcEr-v2QRCco6eVNhcAvuQRlMIFYY",
+   "VAPID_PRIVATE_KEY": "A6_yBo5mhkxOWCV0z3HQ4D1EGOr3Z4i7XXzfeHRS7RY",
+   "VAPID_ADMIN_EMAIL": "fbuttowski814@gmail.com"
+}
 
 ROOT_URLCONF = 'obaka.urls'
 

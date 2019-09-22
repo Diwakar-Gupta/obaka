@@ -11,12 +11,18 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
 from django.contrib.admin.views.decorators import staff_member_required
+#from webpush import send_user_notification
+from django.contrib.auth.models import User
 import json
 
 
 @staff_member_required
 def index(request):
-    messages.add_message(request,messages.INFO,'this is message info')
+    user = User.objects.get(pk=1)
+    #payload = {'head': 'this is head', 'body': 'this is body'}
+    #send_user_notification(user=user, payload=payload, ttl=1000)
+
+    #messages.add_message(request,messages.INFO,'this is message info')
     return render(request, 'index.html')
 
 
@@ -45,9 +51,9 @@ def books(request):
                 filtered = [x for x in filtered if x.deactive]
         if 'issued' in request.GET:
             if request.GET['issued'] == 'yes':
-                filtered = [x for x in filtered if  x.issued]
+                filtered = [x for x in filtered if  len(x.book_set.filter(issued=True)) ]
             if request.GET['issued'] == 'no':
-                filtered = [x for x in filtered if not x.issued]
+                filtered = [x for x in filtered if not len(x.book_set.filter(issued=True)) ]
         if 'tissue' in request.GET:
             if request.GET['tissue'] == 'yes':
                 filtered = [x for x in filtered if x.count_issues > 0]
@@ -273,11 +279,11 @@ def member_circulation(request,membertype,memberpk):
     if membertype == 'STUDENT':
         member = Student.objects.get(pk=memberpk)
         context['member'] = member
-        context['issues'] = [x for x in Issue.objects.filter(member_type=ContentType.objects.get_for_model(Student),member_id=member.pk)]
+        context['issues'] = [x for x in Issue.objects.filter(member_id=member.pk,member_type=ContentType.objects.get_for_model(Student))]
     elif membertype == 'FACULTY':
         member = Faculty.objects.get(pk=memberpk)
         context['member'] = member
-        context['issues'] = [x for x in Issue.objects.filter(member_type=ContentType.objects.get_for_model(Faculty),member_id=member.pk)]
+        context['issues'] = [x for x in Issue.objects.filter(member_id=member.pk,member_type=ContentType.objects.get_for_model(Faculty))]
     if 'have' in request.GET and len(request.GET['have'])>0:
         have = int(request.GET['have'])
         if have >= len(context['issues']):
@@ -287,9 +293,9 @@ def member_circulation(request,membertype,memberpk):
             li=[]
             for i in l:
                 d['date']=str(i.date)
-                d['title']=i.book.title
-                d['author']=i.book.author
-                d['barcode']=i.book.isbn
+                d['title']=i.book.isbn.title
+                d['author']=i.book.isbn.author
+                d['barcode']=i.book.barcode
                 d['countrenewal']=i.countrenewal
                 d['issued_time']=str(i.issued_time)
                 d['issuefrom']=i.issuefrom
