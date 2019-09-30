@@ -125,6 +125,10 @@ class Book(models.Model):
     isbn = models.ForeignKey(ISBN,models.CASCADE)
     issued = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = (('barcode', 'isbn'),)
+
+
     def __str__(self):
         return f"Barcode: {self.barcode}, Issued: {self.issued}"
 

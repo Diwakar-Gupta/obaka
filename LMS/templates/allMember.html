@@ -13,7 +13,7 @@
                 <h3>Member type </h3>
                 <select name="membertype" class="form-control">
                     <option {% if filters.membertype == 'All' %}selected{% endif %}>All</option>
-                    <option {% if filters.membertype == 'client' %}selected{% endif %}>Student</option>
+                    <option {% if filters.membertype == 'Student' %}selected{% endif %}>Student</option>
                     <option {% if filters.membertype == 'Faculty' %}selected{% endif %}>Faculty</option>
                     <option {% if filters.membertype == 'Others' %}selected{% endif %}>Others</option>
                 </select>
